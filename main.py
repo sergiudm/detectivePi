@@ -2,12 +2,17 @@ import cv2
 import mediapipe as mp
 import math
 import time
+import RPi.GPIO as GPIO
+import smbus
 
-# 两个初始化
+# initializations
 mpPose = mp.solutions.pose
 pose = mpPose.Pose()
-# 初始化画图工具
 mpDraw = mp.solutions.drawing_utils
+
+# GPIO setup
+GPIO.setmode(GPIO.BCM)
+# TODO
 
 # 调用摄像头，在同级目录下新建videos文件夹，然后在里面放一些MP4文件，方便读取
 cap = cv2.VideoCapture("assets/videos/sit.mp4")
