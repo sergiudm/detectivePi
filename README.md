@@ -8,6 +8,8 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 ## 安装依赖
     
 ```bash
+conda create -n your_env_name python=3.12
+conda activate your_env_name
 pip install -r requirements.txt
 ```
 

@@ -2,57 +2,30 @@ import cv2
 import mediapipe as mp
 import math
 import time
-import RPi.GPIO as GPIO
-import smbus
+#import RPi.GPIO as GPIO
+#import smbus
+from modules import *
+from modules import is_sitting
+
 
 # initializations
 mpPose = mp.solutions.pose
 pose = mpPose.Pose()
 mpDraw = mp.solutions.drawing_utils
+MODES = ["others", "master"]  # object to detect
+MODE = MODES[0]  # default mode set to others
 
 # GPIO setup
-GPIO.setmode(GPIO.BCM)
+# GPIO.setmode(GPIO.BCM)
 # TODO
 
-# 调用摄像头，在同级目录下新建videos文件夹，然后在里面放一些MP4文件，方便读取
+# setup path
 cap = cv2.VideoCapture("assets/videos/sit.mp4")
 if not cap.isOpened():
     print("Error: Cannot open video file")
     exit()
 
-# 计算pfs值需要用到的变量，先初始化以一下
 pTime = 0
-
-
-def is_sitting(landmarks):
-    left_hip = landmarks[mpPose.PoseLandmark.LEFT_HIP.value]
-    left_knee = landmarks[mpPose.PoseLandmark.LEFT_KNEE.value]
-    left_ankle = landmarks[mpPose.PoseLandmark.LEFT_ANKLE.value]
-
-    # Calculate angle at the left knee
-    angle = calculate_angle(left_hip, left_knee, left_ankle)
-
-    if angle < 140:
-        return True
-    else:
-        return False
-
-
-def calculate_angle(a, b, c):
-    a = [a.x, a.y]
-    b = [b.x, b.y]
-    c = [c.x, c.y]
-
-    ab = [a[0] - b[0], a[1] - b[1]]
-    cb = [c[0] - b[0], c[1] - b[1]]
-
-    dot_product = ab[0] * cb[0] + ab[1] * cb[1]
-    ab_magnitude = math.hypot(ab[0], ab[1])
-    cb_magnitude = math.hypot(cb[0], cb[1])
-
-    angle = math.acos(dot_product / (ab_magnitude * cb_magnitude))
-    return math.degrees(angle)
-
 
 while True:
     # 读取图像
