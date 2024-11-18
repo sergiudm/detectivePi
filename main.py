@@ -10,7 +10,7 @@ pose = mpPose.Pose()
 mpDraw = mp.solutions.drawing_utils
 
 # 调用摄像头，在同级目录下新建videos文件夹，然后在里面放一些MP4文件，方便读取
-cap = cv2.VideoCapture("videos/sit.mp4")
+cap = cv2.VideoCapture("assets/videos/sit.mp4")
 if not cap.isOpened():
     print("Error: Cannot open video file")
     exit()
