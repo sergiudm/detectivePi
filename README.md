@@ -24,3 +24,12 @@ python3 main.py
     - 如果有，会自动响起警报，并且发微信通知你
 - 检测你是不是卷过头了
     - 如果连续工作超过2小时（可在`config.json`中配置），会自动响起警报，并提醒你休息一下
+
+## 5. 如何贡献
+
+- 提交PR
+- 提交Issue
+- 传播给更多的室友
+
+## 6. Acknowledgement
+[mediapipe](https://github.com/google-ai-edge/mediapipe)
