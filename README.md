@@ -16,7 +16,7 @@ pip install -r requirements.txt
 ```bash
 git clone https://github.com/sergiudm/detective.git
 cd detective
-python3 detective.py
+python3 main.py
 ```
 
 ## 4. 功能
