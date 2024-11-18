@@ -3,20 +3,25 @@ detective：一款更适合中国宝宝的室友内卷监测工具
 
 ## 介绍
 
-detective是一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的室友生活更加和谐。
+detective是一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。
+> TODO：demo
 
 ## 环境要求
-| 环境 | 版本 |
-| --- | --- |
-| OS | Ubuntu22.04, Raspberry Pi OS |
-| Python | 3.12 |
+| 环境   | 版本                         |
+| ------ | ---------------------------- |
+| OS     | Ubuntu22.04, Raspberry Pi OS |
+| Python | 3.12                         |
 
 ## 安装依赖
-    
+创建虚拟环境
 ```bash
 conda create -n your_env_name python=3.12
 conda activate your_env_name
+```
+安装依赖
+```bash
 git clone https://github.com/sergiudm/detective.git
+cd detective
 pip install -r requirements.txt
 ```
 
