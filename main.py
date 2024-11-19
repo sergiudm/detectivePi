@@ -5,7 +5,7 @@ import time
 #import RPi.GPIO as GPIO
 #import smbus
 from modules import *
-from modules import is_sitting
+from modules import is_sitting, is_slouching
 
 
 # initializations
@@ -20,7 +20,9 @@ MODE = MODES[0]  # default mode set to others
 # TODO
 
 # setup path
-cap = cv2.VideoCapture("assets/videos/sit.mp4")
+#cap = cv2.VideoCapture("D:/A_Data_of_2024_Full/微机课/project/detective/assets/videos/sit.mp4") #D:\A_Data_of_2024_Full\微机课\project\detective\assets\videos\sit.mp4
+cap = cv2.VideoCapture(0) #D:\A_Data_of_2024_Full\微机课\project\detective\assets\videos\sit.mp4
+#cap.set(cv2.CAP_PROP_FPS, 5)
 if not cap.isOpened():
     print("Error: Cannot open video file")
     exit()
@@ -58,10 +60,22 @@ while True:
 
         # Display the result
         status_text = "Sitting" if is_sitting(landmarks) else "Not Sitting"
+        j_test = is_slouching(landmarks) and is_sitting(landmarks)
+        j_text = "neijuan" if j_test else "bu neijuan"
         cv2.putText(
             img,
             status_text,
             (100, 100),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            3,
+            (0, 255, 0) if sitting else (0, 0, 255),
+            3,
+        )
+
+        cv2.putText(
+            img,
+            j_text,
+            (150, 100),
             cv2.FONT_HERSHEY_SIMPLEX,
             3,
             (0, 255, 0) if sitting else (0, 0, 255),
@@ -74,4 +88,4 @@ while True:
     pTime = cTime
     cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
     cv2.imshow("Image", img)
-    cv2.waitKey(1)
+    cv2.waitKey(100)

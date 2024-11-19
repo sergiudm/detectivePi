@@ -31,3 +31,15 @@ def calculate_angle(a, b, c):
 
     angle = math.acos(dot_product / (ab_magnitude * cb_magnitude))
     return math.degrees(angle)
+
+
+def is_slouching(landmarks):
+    left_shoulder = landmarks[mpPose.PoseLandmark.LEFT_SHOULDER.value]
+    left_hip = landmarks[mpPose.PoseLandmark.LEFT_HIP.value]
+    left_knee = landmarks[mpPose.PoseLandmark.LEFT_KNEE.value]
+
+    # Calculate angle at the left hip
+    angle = calculate_angle(left_shoulder, left_hip, left_knee)
+
+    # Assuming an angle less than 160 degrees indicates slouching
+    return angle < 160
