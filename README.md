@@ -15,7 +15,7 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 ## 安装依赖
 创建虚拟环境
 ```bash
-conda create -n your_env_name python=3.12
+conda create -n your_env_name python=3.10
 conda activate your_env_name
 ```
 安装依赖
