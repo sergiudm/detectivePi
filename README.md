@@ -9,8 +9,8 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 ## 环境要求
 | 环境   | 版本                         |
 | ------ | ---------------------------- |
-| OS     | Ubuntu22.04, Raspberry Pi OS |
-| Python | 3.12                         |
+| OS     | Ubuntu22.04, Raspberry Pi OS, Window11 |
+| Python | 3.10                         |
 
 ## 安装依赖
 创建虚拟环境
@@ -26,6 +26,17 @@ pip install -r requirements.txt
 ```
 
 ## 使用说明
+开始前，你需要配置`config.json`文件，
+以下是一个示例：
+```json
+{
+    "default_detect_mode": "others", # 检测室友内卷还是提示自己休息
+    "use_camera": true, # 是否使用摄像头
+    "video_path": "assets/videos/sit.mp4" # debug视频路径，仅当use_camera为false时有效
+}
+```
+>[!CAUTION] 
+实际使用时，请删除`config.json`中的所有注释!
 
 ```bash
 cd detective
