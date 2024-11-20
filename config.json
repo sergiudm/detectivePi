@@ -1,0 +1,5 @@
+{
+    "default_detect_mode": "others",
+    "use_camera": true,
+    "video_path": "assets/videos/sit.mp4"
+}

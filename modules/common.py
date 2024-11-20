@@ -1,4 +1,3 @@
-import cv2
 import mediapipe as mp
 import math
 
@@ -14,7 +13,7 @@ def is_sitting(landmarks):
     # Calculate angle at the left knee
     angle = calculate_angle(left_hip, left_knee, left_ankle)
 
-    return angle < 140
+    return angle < 130
 
 
 def calculate_angle(a, b, c):
