@@ -1,19 +1,9 @@
 import mediapipe as mp
 import math
 
-mpPose = mp.solutions.pose
-pose = mpPose.Pose()
 
-
-def is_sitting(landmarks):
-    left_hip = landmarks[mpPose.PoseLandmark.LEFT_HIP.value]
-    left_knee = landmarks[mpPose.PoseLandmark.LEFT_KNEE.value]
-    left_ankle = landmarks[mpPose.PoseLandmark.LEFT_ANKLE.value]
-
-    # Calculate angle at the left knee
-    angle = calculate_angle(left_hip, left_knee, left_ankle)
-
-    return angle < 130
+def points_distance(x0, y0, x1, y1):
+    return math.sqrt((x0 - x1) ** 2 + (y0 - y1) ** 2)
 
 
 def calculate_angle(a, b, c):
@@ -31,13 +21,14 @@ def calculate_angle(a, b, c):
     angle = math.acos(dot_product / (ab_magnitude * cb_magnitude))
     return math.degrees(angle)
 
+
 def calculate_angle2(x0, y0, x1, y1, x2, y2, x3, y3):
     AB = [x1 - x0, y1 - y0]
     CD = [x3 - x2, y3 - y2]
 
     dot_product = AB[0] * CD[0] + AB[1] * CD[1]
 
-    AB_distance = points_distance(x0, y0, x1, y1) + 0.001   # 防止分母出现0
+    AB_distance = points_distance(x0, y0, x1, y1) + 0.001  # 防止分母出现0
     CD_distance = points_distance(x2, y2, x3, y3) + 0.001
 
     cos_theta = dot_product / (AB_distance * CD_distance)
@@ -47,7 +38,18 @@ def calculate_angle2(x0, y0, x1, y1, x2, y2, x3, y3):
     return theta
 
 
-def is_slouching(landmarks):
+def is_sitting(landmarks, mpPose):
+    left_hip = landmarks[mpPose.PoseLandmark.LEFT_HIP.value]
+    left_knee = landmarks[mpPose.PoseLandmark.LEFT_KNEE.value]
+    left_ankle = landmarks[mpPose.PoseLandmark.LEFT_ANKLE.value]
+
+    # Calculate angle at the left knee
+    angle = calculate_angle(left_hip, left_knee, left_ankle)
+
+    return angle < 130
+
+
+def is_slouching(landmarks, mpPose):
     left_shoulder = landmarks[mpPose.PoseLandmark.LEFT_SHOULDER.value]
     left_hip = landmarks[mpPose.PoseLandmark.LEFT_HIP.value]
     left_knee = landmarks[mpPose.PoseLandmark.LEFT_KNEE.value]
@@ -57,10 +59,6 @@ def is_slouching(landmarks):
 
     # Assuming an angle less than 160 degrees indicates slouching
     return angle < 160
-
-
-def points_distance(x0, y0, x1, y1):
-    return math.sqrt((x0 - x1) ** 2 + (y0 - y1) ** 2)
 
 
 def detect_all_finger_state(all_points):
@@ -188,6 +186,30 @@ def detect_all_finger_state(all_points):
     return bend_states, straighten_states
 
 
+def detect_hand_state(all_points, bend_states, straighten_states):
+    state_OK = judge_OK(all_points, bend_states, straighten_states)
+    state_Return = judge_Return(all_points, bend_states, straighten_states)
+    state_Left = judge_Left(all_points, bend_states, straighten_states)
+    state_Right = judge_Right(all_points, bend_states, straighten_states)
+    state_Like = judge_Like(all_points, bend_states, straighten_states)
+    state_Pause = judge_Pause(all_points, bend_states, straighten_states)
+
+    if state_OK == "OK":
+        return "OK"
+    elif state_Return == "Return":
+        return "Return"
+    elif state_Left == "Left":
+        return "Left"
+    elif state_Right == "Right":
+        return "Right"
+    elif state_Like == "Like":
+        return "Like"
+    elif state_Pause == "Pause":
+        return "Pause"
+    else:
+        return "None"
+
+
 def judge_OK(all_points, bend_states, straighten_states):
     angle5_6_and_6_8 = calculate_angle2(
         all_points["point5"][0],
@@ -239,7 +261,6 @@ def judge_OK(all_points, bend_states, straighten_states):
 
 
 def judge_Like(all_points, bend_states, straighten_states):
-
     angle2_4_and_2_8 = calculate_angle2(
         all_points["point2"][0],
         all_points["point2"][1],
@@ -446,26 +467,264 @@ def judge_Pause(all_points, bend_states, straighten_states):
             return False
     else:
         return False
-    
-def detect_hand_state(all_points, bend_states, straighten_states):
-    state_OK = judge_OK(all_points, bend_states, straighten_states)
-    # state_Return = judge_Return(all_points, bend_states, straighten_states)
-    # state_Left = judge_Left(all_points, bend_states, straighten_states)
-    # state_Right = judge_Right(all_points, bend_states, straighten_states)
-    state_Like = judge_Like(all_points, bend_states, straighten_states)
-    state_Pause = judge_Pause(all_points, bend_states, straighten_states)
 
-    if state_OK == 'OK':
-        return 'OK'
-    # elif state_Return == 'Return':
-    #     return 'Return'
-    # elif state_Left == 'Left':
-    #     return 'Left'
-    # elif state_Right == 'Right':
-    #     return 'Right'
-    elif state_Like == 'Like':
-        return 'Like'
-    elif state_Pause == 'Pause':
-        return 'Pause'
+
+def judge_Left(all_points, bend_states, straighten_states):
+    angle5_6_and_6_8 = calculate_angle2(
+        all_points["point5"][0],
+        all_points["point5"][1],
+        all_points["point6"][0],
+        all_points["point6"][1],
+        all_points["point6"][0],
+        all_points["point6"][1],
+        all_points["point8"][0],
+        all_points["point8"][1],
+    )
+    angle9_10_and_10_12 = calculate_angle2(
+        all_points["point9"][0],
+        all_points["point9"][1],
+        all_points["point10"][0],
+        all_points["point10"][1],
+        all_points["point10"][0],
+        all_points["point10"][1],
+        all_points["point12"][0],
+        all_points["point12"][1],
+    )
+    angle13_14_and_14_16 = calculate_angle2(
+        all_points["point13"][0],
+        all_points["point13"][1],
+        all_points["point14"][0],
+        all_points["point14"][1],
+        all_points["point14"][0],
+        all_points["point14"][1],
+        all_points["point16"][0],
+        all_points["point16"][1],
+    )
+    angle17_18_and_18_20 = calculate_angle2(
+        all_points["point17"][0],
+        all_points["point17"][1],
+        all_points["point18"][0],
+        all_points["point18"][1],
+        all_points["point18"][0],
+        all_points["point18"][1],
+        all_points["point20"][0],
+        all_points["point20"][1],
+    )
+    angle0_6_and_0_4 = calculate_angle2(
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point6"][0],
+        all_points["point6"][1],
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point4"][0],
+        all_points["point4"][1],
+    )
+    angle0_5_and_0_17 = calculate_angle2(
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point5"][0],
+        all_points["point5"][1],
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point17"][0],
+        all_points["point17"][1],
+    )
+
+    if (
+        straighten_states["first"]
+        and bend_states["second"]
+        and bend_states["third"]
+        and bend_states["fourth"]
+        and bend_states["fifth"]
+    ) or (
+        straighten_states["first"]
+        and angle5_6_and_6_8 > 0.2 * math.pi
+        and angle9_10_and_10_12 > 0.2 * math.pi
+        and angle13_14_and_14_16 > 0.2 * math.pi
+        and angle17_18_and_18_20 > 0.2 * math.pi
+    ):
+
+        angle0_0__and_0_4 = calculate_angle2(
+            all_points["point0"][0],
+            all_points["point0"][1],
+            all_points["point0"][0] + 10,
+            all_points["point0"][1],
+            all_points["point0"][0],
+            all_points["point0"][1],
+            all_points["point4"][0],
+            all_points["point4"][1],
+        )
+
+        if (
+            angle0_5_and_0_17 > 0.15 * math.pi
+            and angle0_0__and_0_4 > 0.7 * math.pi
+            and all_points["point3"][0] < all_points["point2"][0]
+            and angle0_6_and_0_4 > 0.1 * math.pi
+            and all_points["point11"][1] > all_points["point10"][1]
+            and all_points["point7"][1] > all_points["point6"][1]
+            and all_points["point15"][1] > all_points["point14"][1]
+            and all_points["point19"][1] > all_points["point18"][1]
+        ):
+            return "Left"
+        else:
+            return False
     else:
-        return 'None'
+        return False
+
+
+def judge_Right(all_points, bend_states, straighten_states):
+    angle0_5_and_0_17 = calculate_angle2(
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point5"][0],
+        all_points["point5"][1],
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point17"][0],
+        all_points["point17"][1],
+    )
+    angle5_6_and_6_8 = calculate_angle2(
+        all_points["point5"][0],
+        all_points["point5"][1],
+        all_points["point6"][0],
+        all_points["point6"][1],
+        all_points["point6"][0],
+        all_points["point6"][1],
+        all_points["point8"][0],
+        all_points["point8"][1],
+    )
+    angle9_10_and_10_12 = calculate_angle2(
+        all_points["point9"][0],
+        all_points["point9"][1],
+        all_points["point10"][0],
+        all_points["point10"][1],
+        all_points["point10"][0],
+        all_points["point10"][1],
+        all_points["point12"][0],
+        all_points["point12"][1],
+    )
+    angle13_14_and_14_16 = calculate_angle2(
+        all_points["point13"][0],
+        all_points["point13"][1],
+        all_points["point14"][0],
+        all_points["point14"][1],
+        all_points["point14"][0],
+        all_points["point14"][1],
+        all_points["point16"][0],
+        all_points["point16"][1],
+    )
+    angle17_18_and_18_20 = calculate_angle2(
+        all_points["point17"][0],
+        all_points["point17"][1],
+        all_points["point18"][0],
+        all_points["point18"][1],
+        all_points["point18"][0],
+        all_points["point18"][1],
+        all_points["point20"][0],
+        all_points["point20"][1],
+    )
+    angle0_6_and_0_4 = calculate_angle2(
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point6"][0],
+        all_points["point6"][1],
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point4"][0],
+        all_points["point4"][1],
+    )
+
+    if (
+        straighten_states["first"]
+        and bend_states["second"]
+        and bend_states["third"]
+        and bend_states["fourth"]
+        and bend_states["fifth"]
+    ) or (
+        straighten_states["first"]
+        and angle5_6_and_6_8 > 0.2 * math.pi
+        and angle9_10_and_10_12 > 0.2 * math.pi
+        and angle13_14_and_14_16 > 0.2 * math.pi
+        and angle17_18_and_18_20 > 0.2 * math.pi
+    ):
+
+        angle0_0__and_0_4 = calculate_angle2(
+            all_points["point0"][0],
+            all_points["point0"][1],
+            all_points["point0"][0] + 10,
+            all_points["point0"][1],
+            all_points["point0"][0],
+            all_points["point0"][1],
+            all_points["point4"][0],
+            all_points["point4"][1],
+        )
+
+        if (
+            angle0_5_and_0_17 > 0.15 * math.pi
+            and angle0_0__and_0_4 < 0.25 * math.pi
+            and all_points["point3"][0] > all_points["point2"][0]
+            and angle0_6_and_0_4 > 0.1 * math.pi
+            and all_points["point11"][1] > all_points["point10"][1]
+            and all_points["point7"][1] > all_points["point6"][1]
+            and all_points["point15"][1] > all_points["point14"][1]
+            and all_points["point19"][1] > all_points["point18"][1]
+        ):
+            return "Right"
+        else:
+            return False
+    else:
+        return False
+
+
+def judge_Return(all_points, bend_states, straighten_states):
+    angle18_6_and_18_18_ = calculate_angle2(
+        all_points["point18"][0],
+        all_points["point18"][1],
+        all_points["point6"][0],
+        all_points["point6"][1],
+        all_points["point18"][0],
+        all_points["point18"][1],
+        all_points["point18"][0] + 10,
+        all_points["point18"][1],
+    )
+    angle_6_18_and_6_6_ = calculate_angle2(
+        all_points["point6"][0],
+        all_points["point6"][1],
+        all_points["point18"][0],
+        all_points["point18"][1],
+        all_points["point6"][0],
+        all_points["point6"][1],
+        all_points["point6"][0] + 10,
+        all_points["point6"][1],
+    )
+    angle_0_2_and_0_17 = calculate_angle2(
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point2"][0],
+        all_points["point2"][1],
+        all_points["point0"][0],
+        all_points["point0"][1],
+        all_points["point17"][0],
+        all_points["point17"][1],
+    )
+
+    if (
+        bend_states["first"]
+        and bend_states["second"]
+        and bend_states["third"]
+        and bend_states["fourth"]
+        and bend_states["fifth"]
+        and angle_0_2_and_0_17 > 0.15 * math.pi
+        and all_points["point7"][1] > all_points["point6"][1]
+        and all_points["point11"][1] > all_points["point10"][1]
+        and all_points["point15"][1] > all_points["point14"][1]
+        and all_points["point19"][1] > all_points["point18"][1]
+    ):
+
+        if angle18_6_and_18_18_ < 0.1 * math.pi or angle_6_18_and_6_6_ < 0.1 * math.pi:
+            return "Return"
+        else:
+            return False
+    else:
+        return False
