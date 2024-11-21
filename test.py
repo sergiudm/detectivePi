@@ -1,7 +1,7 @@
 import cv2
 
 # 初始化摄像头
-cap = cv2.VideoCapture(0)  # 参数0通常表示默认的摄像头
+cap = cv2.VideoCapture(1)  # 参数0通常表示默认的摄像头
 
 # 检查摄像头是否成功打开
 if not cap.isOpened():

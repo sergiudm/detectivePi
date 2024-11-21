@@ -2,12 +2,17 @@ import cv2
 import mediapipe as mp
 import time
 from .common import is_sitting, is_slouching
-
-# import RPi.GPIO as GPIO
+from .device import activate_buzzer
+import RPi.GPIO as GPIO
 # import smbus
 
 
-def working_detect(mpPose, pose, mpDraw, cap, vis=True):
+def working_detect(mpPose, pose, mpDraw, cap, pin=None,vis=True):
+    # initial sensor pin
+    #Pin_buzzer = 18
+    #GPIO.setmode(GPIO.BCM)
+    #GPIO.setup(Pin_buzzer, GPIO.OUT)
+
     pTime = 0
     try:
         while True:
@@ -40,9 +45,17 @@ def working_detect(mpPose, pose, mpDraw, cap, vis=True):
                 sitting = is_sitting(landmarks)
 
                 # Display the result
-                status_text = "Sitting" if is_sitting(landmarks) else "Not Sitting"
+                status_text = "Sitting" if sitting else "Not Sitting"
                 j_test = is_slouching(landmarks) and is_sitting(landmarks)
                 j_text = "neijuan" if j_test else "bu neijuan"
+
+
+                #activate sensor
+                if sitting:
+                    activate_buzzer(pin, GPIO.HIGH)
+                else:
+                    activate_buzzer(pin, GPIO.LOW) 
+
                 cv2.putText(
                     img,
                     status_text,
@@ -70,8 +83,18 @@ def working_detect(mpPose, pose, mpDraw, cap, vis=True):
             cv2.putText(
                 img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3
             )
+
+                # 按'q'退出循环
+            if cv2.waitKey(1) == ord('q'):
+                break
+
             cv2.imshow("Image", img)
-            cv2.waitKey(1)
+            cv2.waitKey(100)
+        
+        # 释放摄像头资源
+        cap.release()
+        # 关闭所有OpenCV窗口
+        cv2.destroyAllWindows()
     except KeyboardInterrupt:
         cap.release()
         cv2.destroyAllWindows()
