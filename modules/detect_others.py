@@ -3,7 +3,7 @@ import mediapipe as mp
 import time
 from common import is_sitting, is_slouching
 from device import activate_buzzer
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 # import smbus
 
