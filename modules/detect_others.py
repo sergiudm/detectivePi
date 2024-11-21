@@ -4,26 +4,27 @@ import time
 from .common import is_sitting, is_slouching
 from .device import activate_buzzer
 import RPi.GPIO as GPIO
+
 # import smbus
 
 
-def working_detect(mpPose, pose, mpDraw, cap, pin=None,vis=True):
+def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
     # initial sensor pin
-    #Pin_buzzer = 18
-    #GPIO.setmode(GPIO.BCM)
-    #GPIO.setup(Pin_buzzer, GPIO.OUT)
+    # Pin_buzzer = 18
+    # GPIO.setmode(GPIO.BCM)
+    # GPIO.setup(Pin_buzzer, GPIO.OUT)
 
     pTime = 0
     try:
         while True:
             # 读取图像
             success, img = cap.read()
-            
+
             if not success:
                 print("Error: Failed to read frame")
                 break
-            #save pic 
-            cv2.imwrite('output_image.jpg', img)
+            # save pic
+            cv2.imwrite("output_image.jpg", img)
             # 转换为RGB格式，因为Pose类智能处理RGB格式，读取的图像格式是BGR格式
             imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # 处理一下图像
@@ -32,7 +33,9 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None,vis=True):
             # 检测到人体的话：
             if results.pose_landmarks:
                 # 使用mpDraw来刻画人体关键点并连接起来
-                mpDraw.draw_landmarks(img, results.pose_landmarks, mpPose.POSE_CONNECTIONS)
+                mpDraw.draw_landmarks(
+                    img, results.pose_landmarks, mpPose.POSE_CONNECTIONS
+                )
                 # 如果我们想对33个关键点中的某一个进行特殊操作，需要先遍历33个关键点
                 for id, lm in enumerate(results.pose_landmarks.landmark):
                     # 打印出来的关键点坐标都是百分比的形式，我们需要获取一下视频的宽和高
@@ -45,19 +48,19 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None,vis=True):
                 landmarks = results.pose_landmarks.landmark
 
                 # Check if the person is sitting
-                sitting = is_sitting(landmarks)
+                sitting = is_sitting(landmarks, mpPose=mpPose)
+                slouching = is_slouching(landmarks, mpPose=mpPose)
+                working = sitting and slouching
 
                 # Display the result
                 status_text = "Sitting" if sitting else "Not Sitting"
-                j_test = is_slouching(landmarks) and is_sitting(landmarks)
-                j_text = "neijuan" if j_test else "bu neijuan"
+                j_text = "neijuan" if working else "bu neijuan"
 
-
-                #activate sensor
+                # activate sensor
                 if sitting:
                     activate_buzzer(pin, GPIO.HIGH)
                 else:
-                    activate_buzzer(pin, GPIO.LOW) 
+                    activate_buzzer(pin, GPIO.LOW)
 
                 cv2.putText(
                     img,
@@ -87,14 +90,14 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None,vis=True):
                 img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3
             )
 
-                # 按'q'退出循环
-            if cv2.waitKey(1) == ord('q'):
+            # 按'q'退出循环
+            if cv2.waitKey(1) == ord("q"):
                 break
 
             cv2.imshow("Image", img)
-            
+
             cv2.waitKey(100)
-        
+
         # 释放摄像头资源
         cap.release()
         # 关闭所有OpenCV窗口
