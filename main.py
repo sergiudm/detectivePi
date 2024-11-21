@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 # import smbus
 from modules import *
 from modules import working_detect, relax_detect
@@ -9,8 +9,8 @@ from modules import parse_json
 
   # initial sensor pin
 Pin_buzzer = 18
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(Pin_buzzer, GPIO.OUT)
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(Pin_buzzer, GPIO.OUT)
 
 
 # initializations
