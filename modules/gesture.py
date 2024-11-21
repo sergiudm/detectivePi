@@ -7,8 +7,8 @@ mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(
     static_image_mode=False,
     max_num_hands=2,
-    min_detection_confidence=0.75,
-    min_tracking_confidence=0.75,
+    min_detection_confidence=0.65,
+    min_tracking_confidence=0.65,
 )
 
 
@@ -25,7 +25,7 @@ def show_message(frame, message, position=(10, 30)):
     )
 
 
-recent_states = [""] * 30
+recent_states = [""] * 20
 cap = cv2.VideoCapture(0)
 while True:
     ret, frame = cap.read()
