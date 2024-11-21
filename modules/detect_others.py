@@ -18,9 +18,12 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None,vis=True):
         while True:
             # 读取图像
             success, img = cap.read()
+            
             if not success:
                 print("Error: Failed to read frame")
                 break
+            #save pic 
+            cv2.imwrite('output_image.jpg', img)
             # 转换为RGB格式，因为Pose类智能处理RGB格式，读取的图像格式是BGR格式
             imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # 处理一下图像
@@ -89,6 +92,7 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None,vis=True):
                 break
 
             cv2.imshow("Image", img)
+            
             cv2.waitKey(100)
         
         # 释放摄像头资源

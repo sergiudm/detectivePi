@@ -50,11 +50,19 @@ def send_email(subject, body, to_emails, from_email, password, smtp_server, smtp
 # Example usage
 if __name__ == "__main__":
     # Get the first image from the directory
-    image_directory = "D:/A_Data_of_2024_Full/微机课/project/mailBot/pic"
+    # 获取当前文件的绝对路径
+    current_file_path = os.path.abspath(__file__)
+
+    # 获取当前文件的父文件夹路径
+    parent_parent_directory = os.path.dirname(os.path.dirname(current_file_path))
+
+    # 构建指向父文件夹中的 mailPic 目录的路径
+    image_directory = os.path.join(parent_parent_directory, "mailPic")
+    
     image_files = [f for f in os.listdir(image_directory) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
     
     if image_files:
-        first_image_path = os.path.join(image_directory, image_files[1])
+        first_image_path = os.path.join(image_directory, image_files[0])
     else:
         first_image_path = None
         print("No image files found in the directory.")
