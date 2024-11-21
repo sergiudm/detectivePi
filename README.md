@@ -12,6 +12,12 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 | OS     | Ubuntu22.04, Raspberry Pi OS, Window11 |
 | Python | 3.10                         |
 
+## 硬件清单
+- Raspberry Pi 4B * 2
+- 摄像头 * 2
+- 蜂鸣器
+- LED灯
+
 ## 安装依赖
 创建虚拟环境
 ```bash
@@ -40,7 +46,8 @@ pip install -r requirements.txt
 
 ```bash
 cd detective
-python3 main.py
+sudo chmod +x run.sh
+./run.sh
 ```
 
 ## 功能
