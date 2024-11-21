@@ -39,6 +39,7 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
             # 读取图像
             success, img = cap.read()
 
+
             if not success:
                 print("Error: Failed to read frame")
                 break
@@ -53,6 +54,9 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
             # 检测到人体的话：
             if results.pose_landmarks:
                 # 使用mpDraw来刻画人体关键点并连接起来
+                mpDraw.draw_landmarks(
+                    img, results.pose_landmarks, mpPose.POSE_CONNECTIONS
+                )
                 mpDraw.draw_landmarks(
                     img, results.pose_landmarks, mpPose.POSE_CONNECTIONS
                 )
@@ -141,6 +145,8 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
 
             # 按'q'退出循环
             if cv2.waitKey(1) == ord("q"):
+            # 按'q'退出循环
+            if cv2.waitKey(1) == ord("q"):
                 break
 
             cv2.imshow("Image", img)
@@ -148,6 +154,7 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
                 os.remove(output_path)
                 if_save=0
             cv2.waitKey(100)
+
 
         # 释放摄像头资源
         cap.release()
