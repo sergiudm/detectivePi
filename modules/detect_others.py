@@ -145,8 +145,6 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
 
             # 按'q'退出循环
             if cv2.waitKey(1) == ord("q"):
-            # 按'q'退出循环
-            if cv2.waitKey(1) == ord("q"):
                 break
 
             cv2.imshow("Image", img)
