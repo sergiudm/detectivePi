@@ -143,9 +143,7 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
                 img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3
             )
 
-            # 按'q'退出循环
-            if cv2.waitKey(1) == ord("q"):
-            # 按'q'退出循环
+             # 按'q'退出循环
             if cv2.waitKey(1) == ord("q"):
                 break
 
