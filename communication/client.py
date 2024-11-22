@@ -2,7 +2,7 @@ import socket
 import struct
 
 # 设置服务器的IP地址和端口号
-server_ip = '192.168.1.X'  # 替换X为服务器的实际IP地址
+server_ip = '10.13.220.234'  # 替换X为服务器的实际IP地址
 server_port = 12345
 
 # 创建一个socket对象
