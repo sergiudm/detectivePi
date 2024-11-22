@@ -4,7 +4,6 @@ import mediapipe as mp
 from modules import *
 from modules import working_detect, relax_detect
 from modules import Config
-import os
 
 
 # initializations
@@ -26,6 +25,9 @@ smtp_server = config.get_param("smtp_server")
 smtp_port = config.get_param("smtp_port")
 target_email = config.get_param("target_email")
 protocol = [server_email, server_password, smtp_server, smtp_port, target_email]
+use_vis = config.get_param("use_visualization")
+packet_transfer = config.get_param("packet_tansfer")#true: windows
+print(packet_transfer)
 print("Configuration:")
 config.print_info()
 
@@ -47,7 +49,8 @@ if not cap.isOpened():
 # q --- quit the program
 if detect_other:
     working_detect(
-        mpPose, pose, mpDraw, cap, image_path=image_path, protocol=protocol, pin=LED_pin
+        mpPose, pose, mpDraw, cap, image_path=image_path,
+          protocol=protocol, pin=LED_pin, use_vis=use_vis,pack_trans=packet_transfer
     )
 else:
     relax_detect(mpPose, pose, mpDraw, cap)

@@ -2,6 +2,8 @@ import cv2
 import mediapipe as mp
 import time
 from .common import is_sitting, is_slouching
+import socket
+import struct
 
 # from .device import activate_buzzer
 # import RPi.GPIO as GPIO
@@ -25,9 +27,9 @@ def get_path(parent_path):
     return paths
 
 
-def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vis=True):
+def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin, use_vis,pack_trans):
     # initial sensor pin
-    # Pin_buzzer = 18
+    # Pin_buzzer = pin
     # GPIO.setmode(GPIO.BCM)
     # GPIO.setup(Pin_buzzer, GPIO.OUT)
     path = get_path(image_path)
@@ -41,6 +43,9 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vi
     try:
         model_1_time, model_1_state = 0, 0
         while True:
+            #while cap.isOpened() and cap.grab():
+            #    print("iii")
+            #    pass
             # 读取图像
             while cap.isOpened() and cap.grab():
                 pass
@@ -59,6 +64,7 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vi
             # print(results.pose_landmarks)
             # 检测到人体的话：
             if results.pose_landmarks:
+                print("person detected!")
                 # 使用mpDraw来刻画人体关键点并连接起来
                 mpDraw.draw_landmarks(
                     img, results.pose_landmarks, mpPose.POSE_CONNECTIONS
@@ -79,6 +85,7 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vi
 
                 # Check if the person is sitting
                 sitting = is_sitting(landmarks, mpPose=mpPose)
+                if sitting :print("sitting!")  
                 slouching = is_slouching(landmarks, mpPose=mpPose)
                 working = sitting and slouching
 
@@ -93,17 +100,41 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vi
                     success, img_output = cap.read()
                     cv2.imwrite(output_path, img_output)
                     if_save = 1
-                    send_email(
-                        subject="国家反卷总局消息",
-                        body="<h1>来自 🤡🤡🤡🤡🤡</h1><p>With an image attached below.</p>",
-                        to_emails=["2824174663@qq.com", "12212635@mail.sustech.edu.cn"],
-                        from_email=server_email,
-                        password=server_password,
-                        smtp_server=smtp_server,
-                        smtp_port=smtp_port,
-                        image_path=output_path,  # Use the first image found
-                    )
-                    # 发邮件
+                    print("aaaaaaaaaa")
+                    if pack_trans:
+                        # 设置服务器的IP地址和端口号
+                        server_ip = "10.13.220.234"  # 替换X为服务器的实际IP地址
+                        server_port = 12345
+
+                        # 创建一个socket对象
+                        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                        print(11234)
+                        # 连接到服务器
+                        client_socket.connect((server_ip, server_port))
+                        print(4322)
+                    
+                        # 创建一个8位的布尔数组
+                        bool_array = [1, 0, 0, 1, 0, 0, 1, 0]  # 示例数组
+
+                        # 将布尔数组打包成一个字节
+                        packed_data = struct.pack("B", int("".join(map(str, bool_array)), 2))
+
+                        # 发送数据到服务器
+                        client_socket.sendall(packed_data)
+                        print("abbbbbbbbbb")
+                    else:
+                        print(987987)
+                        send_email(
+                            subject="国家反卷总局消息",
+                            body="<h1>来自 🤡🤡🤡🤡🤡</h1><p>With an image attached below.</p>",
+                            to_emails=["2824174663@qq.com", "12212635@mail.sustech.edu.cn"],
+                            from_email=server_email,
+                            password=server_password,
+                            smtp_server=smtp_server,
+                            smtp_port=smtp_port,
+                            #image_path=output_path,  # Use the first image found
+                        )
+                        # 发邮件
                 if time.time() - model_1_time > 13 and model_1_state == 1:
                     model_1_state = 0
                     model_1_time = 0
@@ -144,6 +175,7 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vi
             # 计算fps值
             cTime = time.time()
             fps = 1.0 / (cTime - pTime)
+            #print(fps) 
             pTime = cTime
             cv2.putText(
                 img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3
@@ -152,12 +184,12 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vi
             # 按'q'退出循环
             if cv2.waitKey(1) == ord("q"):
                 break
-
-            cv2.imshow("Image", img)
+            if use_vis:
+                cv2.imshow("Image", img)
             if if_save == 1:
                 os.remove(output_path)
                 if_save = 0
-            cv2.waitKey(100)
+            cv2.waitKey(1)
 
         # 释放摄像头资源
         cap.release()

@@ -36,9 +36,20 @@ pip install -r requirements.txt
 以下是一个示例：
 ```json
 {
-    "default_detect_mode": "others", # 检测室友内卷还是提示自己休息
-    "use_camera": true, # 是否使用摄像头
-    "video_path": "assets/videos/sit.mp4" # debug视频路径，仅当use_camera为false时有效
+    "default_detect_mode": "others",
+    "use_camera": true,
+    "LED_pin": 18, # LED灯的引脚
+    "use_visualization": false, # 是否使用可视化
+    "server_email": "youremail@example.com",
+    "server_email_password": "your email password",# 请使用授权码
+    "target_email": [
+        "email1",
+        "email2"
+    ],
+    "smtp_server":"your smtp server",
+    "smtp_port": 587,
+    "video_path": "assets/videos/sit.mp4", # use_camera为false时，使用该视频
+    "image_path": "resources" # 邮件中的图片
 }
 ```
 >[!CAUTION] 
@@ -65,6 +76,7 @@ sudo chmod +x run.sh
   - 
 
 ## 如何贡献
+本仓库仅使用了[mediapipe](https://github.com/google-ai-edge/mediapipe)中的人体姿态检测和手部检测功能，如果你有更多想法，欢迎：
 
 - 提交PR
 - 提交Issue
