@@ -3,7 +3,7 @@ import struct
 import threading
 
 # 设置服务器的IP地址和端口号
-server_ip = "10.12.107.213"#"10.13.220.234"
+server_ip = "10.12.107.213"  # "10.13.220.234"
 server_port = 12345
 
 # 创建一个socket对象
@@ -17,6 +17,7 @@ server_socket.listen(5)
 
 print(f"Server listening on {server_ip}:{server_port}")
 
+
 def handle_client(client_socket, addr):
     print(f"Connected by {addr}")
     try:
@@ -26,7 +27,7 @@ def handle_client(client_socket, addr):
             return
 
         # 解包数据
-        bool_array = struct.unpack('B', data)[0]
+        bool_array = struct.unpack("B", data)[0]
         print(f"Received boolean array as integer: {bool_array}")
         print(f"Received boolean array as binary: {bin(bool_array)[2:].zfill(8)}")
 
@@ -51,9 +52,13 @@ def handle_client(client_socket, addr):
     finally:
         client_socket.close()
 
-while True:
-    # 等待客户端连接
-    client_socket, addr = server_socket.accept()
-    # 为每个客户端连接创建一个新线程
-    client_thread = threading.Thread(target=handle_client, args=(client_socket, addr))
-    client_thread.start()
+
+if __name__ == "__main__":
+    while True:
+        # 等待客户端连接
+        client_socket, addr = server_socket.accept()
+        # 为每个客户端连接创建一个新线程
+        client_thread = threading.Thread(
+            target=handle_client, args=(client_socket, addr)
+        )
+        client_thread.start()
