@@ -9,6 +9,7 @@
         "12212635@mail.sustech.edu.cn",
         "surgiu@qq.com"
     ],
+    "packet_tansfer":true,
     "smtp_server":"smtp.qq.com",
     "smtp_port": 587,
     "video_path": "assets/videos/sit.mp4",
