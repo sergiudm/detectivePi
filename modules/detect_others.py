@@ -29,7 +29,14 @@ def get_path(parent_path):
 
 
 def handle_detection(
-    cap, path, pack_trans, server_email, server_password, smtp_server, smtp_port
+    cap,
+    path,
+    pack_trans,
+    server_email,
+    server_password,
+    smtp_server,
+    smtp_port,
+    target_email,
 ):
     output_path = os.path.join(path, "output_image.jpeg")
     success, img_output = cap.read()
@@ -54,21 +61,26 @@ def handle_detection(
 
         # 发送数据到服务器
         client_socket.sendall(packed_data)
+        with open("resources/test.png", "rb") as image_file:
+            image_data = image_file.read()
+
+        # 发送图片数据长度
+        client_socket.sendall(len(image_data).to_bytes(4, byteorder="big"))
+
+        # 发送图片数据
+        client_socket.sendall(image_data)
         print("abbbbbbbbbb")
     else:
         print(987987)
         send_email(
             subject="国家反卷总局消息",
             body="<h1>来自 🤡🤡🤡🤡🤡</h1><p>With an image attached below.</p>",
-            to_emails=[
-                "2824174663@qq.com",
-                "12212635@mail.sustech.edu.cn",
-            ],
+            to_emails=target_email,
             from_email=server_email,
             password=server_password,
             smtp_server=smtp_server,
             smtp_port=smtp_port,
-            # image_path=output_path,  # Use the first image found
+            image_path=output_path,  # Use the first image found
         )
         # 发邮件
     os.remove(output_path)
@@ -98,7 +110,6 @@ def working_detect(
     smtp_port = int(protocol[3])
     target_email = protocol[4]
     pTime = 0
-    if_save = 0
     try:
         model_1_time, model_1_state = 0, 0
         sitting_start_time = None
@@ -111,8 +122,6 @@ def working_detect(
             if not success:
                 print("Error: Failed to read frame")
                 break
-            # save pic
-            output_path = os.path.join(path, "output_image.jpeg")
             imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             results = pose.process(imgRGB)
 
@@ -160,6 +169,7 @@ def working_detect(
                             server_password,
                             smtp_server,
                             smtp_port,
+                            target_email,
                         ),
                     )
                     detection_thread.start()
@@ -169,7 +179,9 @@ def working_detect(
                     model_1_time = 0
 
                 status_text = "Sitting" if sitting else "Not Sitting"
-                j_text = "neijuan" if working else "bu neijuan"
+                j_text = ""
+                if slouching:
+                    j_text = "内卷！"
 
                 cv2.putText(
                     img,
@@ -192,9 +204,6 @@ def working_detect(
                 break
             if use_vis:
                 cv2.imshow("Image", img)
-            if if_save == 1:
-                os.remove(output_path)
-                if_save = 0
             cv2.waitKey(1)
 
         cap.release()
