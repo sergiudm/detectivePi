@@ -5,12 +5,14 @@
     "use_visualization": false,
     "server_email": "3815288578@qq.com",
     "server_email_password": "vozebkdjzmrkccgf",
+    "server_ip": "10.13.220.234",
+    "server_port": 12345,
     "target_email": [
         "12212635@mail.sustech.edu.cn",
         "surgiu@qq.com"
     ],
-    "packet_tansfer":true,
-    "smtp_server":"smtp.qq.com",
+    "packet_tansfer": true,
+    "smtp_server": "smtp.qq.com",
     "smtp_port": 587,
     "video_path": "assets/videos/sit.mp4",
     "image_path": "resources",
