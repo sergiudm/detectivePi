@@ -76,6 +76,7 @@ sudo chmod +x run.sh
   - 
 
 ## 如何贡献
+本仓库仅使用了[mediapipe](https://github.com/google-ai-edge/mediapipe)中的人体姿态检测和手部检测功能，如果你有更多想法，欢迎：
 
 - 提交PR
 - 提交Issue
