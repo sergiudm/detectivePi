@@ -42,6 +42,8 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vi
         model_1_time, model_1_state = 0, 0
         while True:
             # 读取图像
+            while cap.isOpened() and cap.grab():
+                pass
             success, img = cap.read()
 
             if not success:

@@ -34,6 +34,9 @@ while True:
 
         # 回传确认信息
         client_socket.sendall(b"Received")
+        
+
+
     except KeyboardInterrupt:
         client_socket.close()
     finally:
