@@ -2,7 +2,7 @@ import socket
 import struct
 
 # 设置服务器的IP地址和端口号
-server_ip = '10.13.220.234'
+server_ip = "10.13.220.234"
 server_port = 12345
 
 # 创建一个socket对象
@@ -35,15 +35,13 @@ while True:
         # # 回传确认信息
         # client_socket.sendall(b"Received")
 
-
-
         ###
 
         # 接收图片数据长度
-        data_length = int.from_bytes(client_socket.recv(4), byteorder='big')
+        data_length = int.from_bytes(client_socket.recv(4), byteorder="big")
 
         # 接收图片数据
-        image_data = b''
+        image_data = b""
         while len(image_data) < data_length:
             packet = client_socket.recv(4096)  # 每次接收4096字节
             if not packet:
@@ -51,12 +49,10 @@ while True:
             image_data += packet
 
         # 将接收到的图片数据写入文件
-        with open('D:/A_Data_of_2024_Full/MicroPC/project/detective/store/received_image.jpg', 'wb') as image_file:
+        with open("store/received_image.jpg", "wb") as image_file:
             image_file.write(image_data)
 
         ###
-        
-
 
     except KeyboardInterrupt:
         client_socket.close()
