@@ -25,9 +25,9 @@ def get_path(parent_path):
     return paths
 
 
-def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vis=True):
+def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin, use_vis):
     # initial sensor pin
-    # Pin_buzzer = 18
+    # Pin_buzzer = pin
     # GPIO.setmode(GPIO.BCM)
     # GPIO.setup(Pin_buzzer, GPIO.OUT)
     path = get_path(image_path)
@@ -150,8 +150,8 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vi
             # 按'q'退出循环
             if cv2.waitKey(1) == ord("q"):
                 break
-
-            cv2.imshow("Image", img)
+            if use_vis:
+                cv2.imshow("Image", img)
             if if_save == 1:
                 os.remove(output_path)
                 if_save = 0

@@ -2,7 +2,7 @@
     "default_detect_mode": "others",
     "use_camera": true,
     "LED_pin": 18,
-    "use_visual": true,
+    "use_visualization": false,
     "server_email": "3815288578@qq.com",
     "server_email_password": "vozebkdjzmrkccgf",
     "target_email": [
