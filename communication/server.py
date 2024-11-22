@@ -53,7 +53,7 @@ while True:
             image_data += packet
 
         # 将接收到的图片数据写入文件
-        with open("store/received_image.jpg", "wb") as image_file:
+        with open("resources/store/received_image.jpg", "wb") as image_file:
             image_file.write(image_data)
 
         ###
