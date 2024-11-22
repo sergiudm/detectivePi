@@ -31,6 +31,10 @@ while True:
         bool_array = struct.unpack('B', data)[0]
         print(f"Received boolean array as integer: {bool_array}")
         print(f"Received boolean array as binary: {bin(bool_array)[2:].zfill(8)}")
+        # 解包数据
+        bool_array = struct.unpack('B', data)[0]
+        print(f"Received boolean array as integer: {bool_array}")
+        print(f"Received boolean array as binary: {bin(bool_array)[2:].zfill(8)}")
 
         # # 回传确认信息
         # client_socket.sendall(b"Received")
