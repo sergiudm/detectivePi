@@ -84,6 +84,7 @@ def handle_detection(
         )
         # 发邮件
     os.remove(output_path)
+    print("Thread finished")
 
 
 def working_detect(
@@ -126,7 +127,7 @@ def working_detect(
             results = pose.process(imgRGB)
 
             if results.pose_landmarks:
-                print("person detected!")
+                #print("person detected!")
                 mpDraw.draw_landmarks(
                     img, results.pose_landmarks, mpPose.POSE_CONNECTIONS
                 )
@@ -173,6 +174,7 @@ def working_detect(
                         ),
                     )
                     detection_thread.start()
+                    print("Detection thread started")
 
                 if time.time() - model_1_time > send_delay and model_1_state == 1:
                     model_1_state = 0
