@@ -1,5 +1,6 @@
 import mediapipe as mp
 import math
+import time
 
 
 def points_distance(x0, y0, x1, y1):
@@ -36,6 +37,18 @@ def calculate_angle2(x0, y0, x1, y1, x2, y2, x3, y3):
     theta = math.acos(cos_theta)
 
     return theta
+
+
+def check_status(detect_function, landmarks, mpPose, start_time, threshold):
+    status = detect_function(landmarks, mpPose=mpPose)
+    if status:
+        if start_time is None:
+            start_time = time.time()
+        elif time.time() - start_time >= threshold:
+            return True, start_time
+    else:
+        start_time = None
+    return False, start_time
 
 
 def is_sitting(landmarks, mpPose):
