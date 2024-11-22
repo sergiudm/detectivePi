@@ -1,5 +1,4 @@
 import cv2
-import mediapipe as mp
 import time
 from .common import is_sitting, is_slouching
 from .common import check_status

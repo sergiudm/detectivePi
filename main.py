@@ -29,7 +29,9 @@ use_vis = config.get_param("use_visualization")
 packet_transfer = config.get_param("packet_tansfer")#true: windows
 send_delay = config.get_param("send_delay")
 effective_detection_duration = config.get_param("effective_detection_duration")
-print(packet_transfer)
+max_num_hands = config.get_param("max_num_hands")
+min_detection_confidence = config.get_param("min_detection_confidence")
+min_tracking_confidence = config.get_param("min_tracking_confidence")
 print("Configuration:")
 config.print_info()
 
