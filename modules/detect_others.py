@@ -12,7 +12,7 @@ from communication.mailbot import send_email
 # import smbus
 
 
-def get_path():
+def get_path(parent_path):
     # 获取当前文件的绝对路径
     current_file_path = os.path.abspath(__file__)
 
@@ -20,32 +20,36 @@ def get_path():
     parent_parent_directory = os.path.dirname(os.path.dirname(current_file_path))
 
     # 构建指向父文件夹中的 mailPic 目录的路径
-    paths = os.path.join(parent_parent_directory, "resources")
+    paths = os.path.join(parent_parent_directory, parent_path)
     print(paths)
     return paths
 
 
-def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
+def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vis=True):
     # initial sensor pin
     # Pin_buzzer = 18
     # GPIO.setmode(GPIO.BCM)
     # GPIO.setup(Pin_buzzer, GPIO.OUT)
-    path = get_path()
+    path = get_path(image_path)
+    server_email = protocol[0]
+    server_password = protocol[1]
+    smtp_server = protocol[2]
+    smtp_port = int(protocol[3])
+    target_email = protocol[4]
     pTime = 0
-    if_save =0
+    if_save = 0
     try:
         model_1_time, model_1_state = 0, 0
         while True:
             # 读取图像
             success, img = cap.read()
 
-
             if not success:
                 print("Error: Failed to read frame")
                 break
             # save pic
             output_path = os.path.join(path, "output_image.jpeg")
-            #cv2.imwrite(output_path, img)
+            # cv2.imwrite(output_path, img)
             # 转换为RGB格式，因为Pose类智能处理RGB格式，读取的图像格式是BGR格式
             imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # 处理一下图像
@@ -86,15 +90,15 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
                     # first_image_path = os.path.join(path, image_files[0])
                     success, img_output = cap.read()
                     cv2.imwrite(output_path, img_output)
-                    if_save=1
+                    if_save = 1
                     send_email(
-                        subject="Test Email",
-                        body="<h1>This is a test email for 🤡🤡🤡🤡🤡</h1><p>With an image attached below.</p>",
+                        subject="国家反卷总局消息",
+                        body="<h1>来自 🤡🤡🤡🤡🤡</h1><p>With an image attached below.</p>",
                         to_emails=["2824174663@qq.com", "12212635@mail.sustech.edu.cn"],
-                        from_email="2990973166@qq.com",
-                        password="xfmhwdmoutajdhed",
-                        smtp_server="smtp.qq.com",
-                        smtp_port=587,
+                        from_email=server_email,
+                        password=server_password,
+                        smtp_server=smtp_server,
+                        smtp_port=smtp_port,
                         image_path=output_path,  # Use the first image found
                     )
                     # 发邮件
@@ -148,11 +152,10 @@ def working_detect(mpPose, pose, mpDraw, cap, pin=None, vis=True):
                 break
 
             cv2.imshow("Image", img)
-            if if_save ==1 : 
+            if if_save == 1:
                 os.remove(output_path)
-                if_save=0
+                if_save = 0
             cv2.waitKey(100)
-
 
         # 释放摄像头资源
         cap.release()

@@ -1,24 +1,28 @@
 import json
 import os
 
-def parse_json(json_file_path):
-    """parse a json file and return a dictionary"""
-    # Windows
-    if os.name == "nt":
-        print("running on Windows")
-        json_file_path = json_file_path.replace("/", "\\")
-        abs_path = os.path.abspath(json_file_path)
-        parent_dir = os.path.dirname(abs_path)
-        # append "detective" to the parent directory
-        #parent_dir = os.path.join(parent_dir, "detective")
-        path = os.path.join(parent_dir, json_file_path)
-    # Ubuntu (or other Unix-like systems)
-    elif os.name == "posix":
-        print("running on Ubuntu")
-        abs_path = os.path.abspath(json_file_path)
-        parent_dir = os.path.dirname(abs_path)
-        # append "detective" to the parent directory
-        #parent_dir = os.path.join(parent_dir, "detective")
-        path = os.path.join(parent_dir, json_file_path)
-    with open(path, "r") as file:
-        return json.load(file)
+class Config:
+    def __init__(self, config_path="config.json"):
+        self.config_path = config_path
+        self.config_data = self.load_config()
+
+    def modify_path(self, path):
+        if os.name == "nt":
+            print("running on Windows")
+            json_file_path = json_file_path.replace("/", "\\")
+            path = os.path.abspath(json_file_path)
+
+        return path
+
+    def load_config(self):
+        if not os.path.exists(self.config_path):
+            raise FileNotFoundError(f"Config file '{self.config_path}' not found.")
+        with open(self.config_path, "r") as file:
+            return json.load(file)
+
+    def get_param(self, key, default=None):
+        return self.config_data.get(key, default)
+    
+    def print_info(self):
+        for key, value in self.config_data.items():
+            print(f"{key}: {value}")

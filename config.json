@@ -1,5 +1,16 @@
 {
     "default_detect_mode": "others",
-    "use_camera": true, 
-    "video_path": "assets/videos/sit.mp4"
+    "use_camera": true,
+    "LED_pin": 18,
+    "use_visual": true,
+    "server_email": "2990973166@qq.com",
+    "server_email_password": "xfmhwdmoutajdhed",
+    "target_email": [
+        "12212635@mail.sustech.edu.cn",
+        "surgiu@qq.com"
+    ],
+    "smtp_server":"smtp.qq.com",
+    "smtp_port": 587,
+    "video_path": "assets/videos/sit.mp4",
+    "image_path": "resources"
 }
