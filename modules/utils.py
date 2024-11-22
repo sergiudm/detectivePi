@@ -22,3 +22,7 @@ class Config:
 
     def get_param(self, key, default=None):
         return self.config_data.get(key, default)
+    
+    def print_info(self):
+        for key, value in self.config_data.items():
+            print(f"{key}: {value}")

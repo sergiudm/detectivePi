@@ -25,12 +25,17 @@ def get_path(parent_path):
     return paths
 
 
-def working_detect(mpPose, pose, mpDraw, cap, image_path, pin=None, vis=True):
+def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin=None, vis=True):
     # initial sensor pin
     # Pin_buzzer = 18
     # GPIO.setmode(GPIO.BCM)
     # GPIO.setup(Pin_buzzer, GPIO.OUT)
     path = get_path(image_path)
+    server_email = protocol[0]
+    server_password = protocol[1]
+    smtp_server = protocol[2]
+    smtp_port = int(protocol[3])
+    target_email = protocol[4]
     pTime = 0
     if_save = 0
     try:
@@ -90,10 +95,10 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, pin=None, vis=True):
                         subject="国家反卷总局消息",
                         body="<h1>来自 🤡🤡🤡🤡🤡</h1><p>With an image attached below.</p>",
                         to_emails=["2824174663@qq.com", "12212635@mail.sustech.edu.cn"],
-                        from_email="2990973166@qq.com",
-                        password="xfmhwdmoutajdhed",
-                        smtp_server="smtp.qq.com",
-                        smtp_port=587,
+                        from_email=server_email,
+                        password=server_password,
+                        smtp_server=smtp_server,
+                        smtp_port=smtp_port,
                         image_path=output_path,  # Use the first image found
                     )
                     # 发邮件
