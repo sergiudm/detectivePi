@@ -2,7 +2,7 @@ import socket
 import struct
 
 # 设置服务器的IP地址和端口号
-server_ip = '0.0.0.0'
+server_ip = '10.13.220.234'
 server_port = 12345
 
 # 创建一个socket对象
@@ -34,6 +34,8 @@ while True:
 
         # 回传确认信息
         client_socket.sendall(b"Received")
+    except KeyboardInterrupt:
+        client_socket.close()
     finally:
         # 关闭连接
         client_socket.close()
