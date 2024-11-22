@@ -49,7 +49,9 @@ pip install -r requirements.txt
     "smtp_server":"your smtp server",
     "smtp_port": 587,
     "video_path": "assets/videos/sit.mp4", # use_camera为false时，使用该视频
-    "image_path": "resources" # 邮件中的图片
+    "image_path": "resources", # 邮件中的图片
+    "send_delay": 13,
+    "effective_detection_duration": 1
 }
 ```
 >[!CAUTION] 

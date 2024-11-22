@@ -13,5 +13,7 @@
     "smtp_server":"smtp.qq.com",
     "smtp_port": 587,
     "video_path": "assets/videos/sit.mp4",
-    "image_path": "resources"
+    "image_path": "resources",
+    "send_delay": 13,
+    "effective_detection_duration": 1
 }

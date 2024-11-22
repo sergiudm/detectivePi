@@ -27,6 +27,8 @@ target_email = config.get_param("target_email")
 protocol = [server_email, server_password, smtp_server, smtp_port, target_email]
 use_vis = config.get_param("use_visualization")
 packet_transfer = config.get_param("packet_tansfer")#true: windows
+send_delay = config.get_param("send_delay")
+effective_detection_duration = config.get_param("effective_detection_duration")
 print(packet_transfer)
 print("Configuration:")
 config.print_info()
@@ -50,7 +52,9 @@ if not cap.isOpened():
 if detect_other:
     working_detect(
         mpPose, pose, mpDraw, cap, image_path=image_path,
-          protocol=protocol, pin=LED_pin, use_vis=use_vis,pack_trans=packet_transfer
+        send_delay=send_delay, effective_detection_duration=effective_detection_duration,
+          protocol=protocol, pin=LED_pin, use_vis=use_vis,
+          pack_trans=packet_transfer
     )
 else:
     relax_detect(mpPose, pose, mpDraw, cap)

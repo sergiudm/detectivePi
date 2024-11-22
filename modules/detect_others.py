@@ -27,7 +27,9 @@ def get_path(parent_path):
     return paths
 
 
-def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin, use_vis,pack_trans):
+def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin, 
+                   send_delay, effective_detection_duration,
+                   use_vis,pack_trans):
     # initial sensor pin
     # Pin_buzzer = pin
     # GPIO.setmode(GPIO.BCM)
@@ -135,7 +137,7 @@ def working_detect(mpPose, pose, mpDraw, cap, image_path, protocol, pin, use_vis
                             #image_path=output_path,  # Use the first image found
                         )
                         # 发邮件
-                if time.time() - model_1_time > 13 and model_1_state == 1:
+                if time.time() - model_1_time > send_delay and model_1_state == 1:
                     model_1_state = 0
                     model_1_time = 0
                 # 10秒后解封
