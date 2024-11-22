@@ -18,6 +18,18 @@ try:
     # 将布尔数组打包成一个字节
     packed_data = struct.pack("B", int("".join(map(str, bool_array)), 2))
 
+    ###
+    with open('D:/A_Data_of_2024_Full/MicroPC/project/detective/resources/test.png', 'rb') as image_file:
+        image_data = image_file.read()
+
+    # 发送图片数据长度
+    client_socket.sendall(len(image_data).to_bytes(4, byteorder='big'))
+
+    # 发送图片数据
+    #client_socket.sendall(image_data)
+
+    ###
+
     # 发送数据到服务器
     client_socket.sendall(packed_data)
 
