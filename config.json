@@ -8,8 +8,9 @@
     "server_ip": "10.13.220.234",
     "server_port": 12345,
     "target_email": [
-        "12212635@mail.sustech.edu.cn",
+        "12212634@mail.sustech.edu.cn",
         "surgiu@qq.com"
+
     ],
     "packet_tansfer": false,
     "smtp_server": "smtp.qq.com",

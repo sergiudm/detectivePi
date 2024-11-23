@@ -5,6 +5,7 @@ from .common import check_status
 import socket
 import struct
 import threading
+import datetime
 
 # from .device import activate_buzzer
 # import RPi.GPIO as GPIO
@@ -71,10 +72,10 @@ def handle_detection(
         client_socket.sendall(image_data)
         print("abbbbbbbbbb")
     else:
-        print(987987)
+        current_time = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
         send_email(
             subject="国家反卷总局消息",
-            body="<h1>来自 🤡🤡🤡🤡🤡</h1><p>With an image attached below.</p>",
+            body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷总局提示您，您的室友于{current_time}在内卷，请立即采取相应措施！</p>",
             to_emails=target_email,
             from_email=server_email,
             password=server_password,
