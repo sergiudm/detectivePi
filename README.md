@@ -17,6 +17,7 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 - 摄像头 * 2
 - 蜂鸣器
 - LED灯
+- 面包板
 
 ## 安装依赖
 创建虚拟环境
@@ -57,10 +58,16 @@ pip install -r requirements.txt
 >[!CAUTION] 
 实际使用时，请删除`config.json`中的所有注释!
 
+Linux:
 ```bash
 cd detective
 sudo chmod +x run.sh
 ./run.sh
+```
+Windows:
+```bash
+cd detective
+python main.py
 ```
 
 ## 功能
