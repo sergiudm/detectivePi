@@ -9,7 +9,7 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 ## 环境要求
 | 环境   | 版本                         |
 | ------ | ---------------------------- |
-| OS     | Ubuntu22.04, Raspberry Pi OS, Window11 |
+| OS     | Ubuntu22.04, Raspberry Pi OS, Window11, Debian 12|
 | Python | 3.10                         |
 
 ## 硬件清单
@@ -52,7 +52,10 @@ pip install -r requirements.txt
     "video_path": "assets/videos/sit.mp4", # use_camera为false时，使用该视频
     "image_path": "resources", # 邮件中的图片
     "send_delay": 13,
-    "effective_detection_duration": 1
+    "effective_detection_duration": 2,
+    "max_num_hands": 2,
+    "min_detection_confidence": 0.65,
+    "min_tracking_confidence": 0.65
 }
 ```
 >[!CAUTION] 
@@ -82,7 +85,7 @@ python main.py
   - 开关门检测
     - 开关门 检测完成后： 人在寝室，才监控
   - 不良坐姿的检测
-  - 
+  - 魔术
 
 ## 如何贡献
 本仓库仅使用了[mediapipe](https://github.com/google-ai-edge/mediapipe)中的人体姿态检测和手部检测功能，如果你有更多想法，欢迎：

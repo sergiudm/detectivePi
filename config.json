@@ -8,7 +8,7 @@
     "server_ip": "10.13.220.234",
     "server_port": 12345,
     "target_email": [
-        "12212634@mail.sustech.edu.cn",
+        "12212635@mail.sustech.edu.cn",
         "surgiu@qq.com"
 
     ],
@@ -18,7 +18,7 @@
     "video_path": "assets/videos/sit.mp4",
     "image_path": "resources",
     "send_delay": 13,
-    "effective_detection_duration": 0.5,
+    "effective_detection_duration": 2,
     "max_num_hands": 2,
     "min_detection_confidence": 0.65,
     "min_tracking_confidence": 0.65
