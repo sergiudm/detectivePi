@@ -75,7 +75,6 @@ pip install -r requirements.txt
 
 Linux:
 ```bash
-cd detective
 sudo chmod +x run.sh
 ./run.sh
 ```
