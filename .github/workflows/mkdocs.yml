@@ -22,6 +22,9 @@ jobs:
       - name: Install MkDocs and required theme
         run: pip install mkdocs mkdocs-dracula-theme
 
+      - name: Copy files
+        run: cp README.md site_docs/docs/index.md
+
       - name: Deploy to GitHub Pages using mkdocs gh-deploy
         run: |
           mkdocs gh-deploy --config-file site_docs/mkdocs.yml --remote-branch gh-pages --force
