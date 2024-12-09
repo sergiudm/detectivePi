@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install mkdocs
-          # If you have a requirements.txt file, you can use:
+          pip install mkdocs-dracula
           # pip install -r requirements.txt
 
       - name: Build MkDocs site
