@@ -1,2 +1,1 @@
-/assets/videos/*
-/modules/__pycache__/*
+./detective_pi.egg-info/
