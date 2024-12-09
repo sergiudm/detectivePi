@@ -28,7 +28,7 @@ jobs:
         run: pip install mkdocs mkdocs-dracula-theme
 
       - name: Build MkDocs site
-        run: mkdocs build --config-file docs/mkdocs.yml --site-dir docs
+        run: mkdocs build --config-file docs/mkdocs.yml --site-dir site
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -36,7 +36,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: 'docs'
+          path: 'site'
 
       - name: Deploy to GitHub Pages
         id: deployment
