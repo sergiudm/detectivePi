@@ -1,18 +1,14 @@
-name: MkDocs Build and Deploy
+name: Deploy MkDocs site to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-
-permissions:
-  contents: write
+    branches: [main]
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -20,18 +16,13 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
-        run: |
-          pip install mkdocs
-          pip install mkdocs-dracula-theme
-          # pip install -r requirements.txt
+      - name: Install MkDocs and required theme
+        run: pip install mkdocs
+             pip install mkdocs-dracula-theme
 
       - name: Build MkDocs site
-        run: |
-          cd docs
-          mkdocs build --clean
+        run: mkdocs build --config-file docs/mkdocs.yml --site-dir site
 
-      # Optional: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
