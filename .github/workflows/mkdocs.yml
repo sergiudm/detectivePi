@@ -23,11 +23,11 @@ jobs:
         run: pip install mkdocs mkdocs-dracula-theme
 
       - name: Build MkDocs site
-        run: mkdocs build --config-file docs/mkdocs.yml --site-dir site
+        run: mkdocs build --config-file docs/mkdocs.yml
 
       - name: Deploy to GitHub Pages
         run: |
-          cd site
+          cd ./docs/site
           git init
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
