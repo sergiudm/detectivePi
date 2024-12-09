@@ -1,4 +1,4 @@
-name: Deploy MkDocs site to GitHub Pages
+name: Deploy MkDocs site to GitHub Pages (using git commands)
 
 on:
   push:
@@ -23,14 +23,16 @@ jobs:
         run: pip install mkdocs mkdocs-dracula-theme
 
       - name: Build MkDocs site
-        run: mkdocs build --config-file docs/mkdocs.yml --site-dir site -v
+        run: mkdocs build --config-file docs/mkdocs.yml --site-dir site
 
-      - name: Deploy to GitHub Pages (with debug logging)
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
-          publish_branch: gh-pages
-          #debug: true
-          user_name: 'github-actions[bot]'
-          user_email: '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Deploy to GitHub Pages
+        run: |
+          cd site
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          git push --force --set-upstream origin gh-pages:gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
