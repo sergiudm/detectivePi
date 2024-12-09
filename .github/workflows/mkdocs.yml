@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 permissions:
-    contents: write
+  contents: write
 
 jobs:
   build-deploy:
@@ -23,11 +23,14 @@ jobs:
         run: pip install mkdocs mkdocs-dracula-theme
 
       - name: Build MkDocs site
-        run: mkdocs build --config-file docs/mkdocs.yml --site-dir site
+        run: mkdocs build --config-file docs/mkdocs.yml --site-dir site -v
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages (with debug logging)
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
           publish_branch: gh-pages
+          #debug: true
+          user_name: 'github-actions[bot]'
+          user_email: '41898282+github-actions[bot]@users.noreply.github.com'
