@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install mkdocs
-          pip install mkdocs-dracula
+          pip install mkdocs-dracula-theme
           # pip install -r requirements.txt
 
       - name: Build MkDocs site
