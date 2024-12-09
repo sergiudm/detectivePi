@@ -25,6 +25,7 @@ jobs:
 
       - name: Build MkDocs site
         run: |
+          cd docs
           mkdocs build --clean
 
       # Optional: Deploy to GitHub Pages
