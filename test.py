@@ -27,5 +27,4 @@ while True:
 
 # 释放摄像头资源
 cap.release()
-# 关闭所有OpenCV窗口
 cv2.destroyAllWindows()
