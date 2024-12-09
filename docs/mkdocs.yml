@@ -1,0 +1,24 @@
+site_name: My Docs
+nav: 
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - User Guide: user-guide.md
+  - Developer Guide:
+    - Plugins Tutorial: plugins-tutorial.md
+  - About: about.md
+  - Release Notes: release-notes.md
+theme:
+  name: dracula
+# plugins:
+#   - search
+#   - toc:
+#       permalink: true
+#   - git-revision-date-localized:
+#       format: "YYYY-MM-DD HH:mm"
+#       locale: "en"
+
+markdown_extensions:
+  - toc:
+      permalink: "true"
+      baselevel: 2
+      separator: "_"

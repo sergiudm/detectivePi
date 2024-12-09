@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <title>My Docs</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta name="description" content="None">
+        
+        
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="assets/css/darcula-highlight.min.css">
+
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/dracula-ui.min.css">
+        <link rel="stylesheet" href="assets/css/mkdocs.min.css">
+
+        
+            <link  rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
+
+    <main class="d-flex">
+
+        <!-- block sidebar -->
+            <nav id="sidebar" class="sidebar drac-bg-black">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Menu</span>
+        </button>
+    </div>
+
+    <div class="p-4">
+        
+
+        <div class="drac-text-center">
+            
+                <span class="drac-text drac-line-height drac-text-white">My Docs</span>
+            
+        </div>
+
+        <div class="drac-box flex-column">
+            <ul class="dot-ul">
+                <li><div class="dot-li drac-bg-cyan"></div></li>
+                <li><div class="dot-li drac-bg-green"></div></li>
+                <li><div class="dot-li drac-bg-orange"></div></li>
+                <li><div class="dot-li drac-bg-pink"></div></li>
+                <li><div class="dot-li drac-bg-purple"></div></li>
+                <li><div class="dot-li drac-bg-red"></div></li>
+                <li><div class="dot-li drac-bg-yellow"></div></li>
+            </ul>
+        </div>
+
+        <hr class="drac-divider" />
+
+        <!-- block menu -->
+        <ul class="mb-5 drac-list drac-list-none">
+            
+            <li class="drac-box">
+                <a href="."
+                    class=" active 
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Home
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="getting-started/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Getting Started
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="user-guide/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    User Guide
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="."
+                    class="
+                    drac-anchor btn-toggle d-inline-flex align-items-center border-0 drac-text-purple--hover collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#developer-guide-collapse" aria-expanded="false">
+                    Developer Guide
+                </a>
+                <div class="collapse" id="developer-guide-collapse">
+                    <ul class="mb-5 drac-list drac-list-none">
+                            
+    <li class="drac-box-ternary">
+        <a href="plugins-tutorial/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Plugins Tutorial
+        </a>
+    </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="drac-box">
+                <a href="about/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    About
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="release-notes/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Release Notes
+                </a>
+            </li>
+        </ul>
+        <!-- endblock -->
+    </div>
+</nav>
+        <!-- endblock -->
+
+        <nav class="divider drac-bg-purple-cyan"></nav>
+
+        <div class="content">
+            <!-- block header -->
+                <header>
+    <nav class="navbar navbar-expand-xl drac-bg-purple">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
+                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
+                <ul class="navbar-nav text-md-center">
+
+                    <!-- block preview -->
+                    <li class="nav-item">
+                            
+        <div class="container">
+            <div class="row row-preview">
+                <div class="col">
+                    <a 
+                        class="btn-preview drac-btn drac-text-white--hover disabled">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="getting-started/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block search -->
+                    <li class="nav-item"><div role="search" class="search-box">
+	<form id="rtd-search-form" class="wy-form" action="./search.html" method="get">
+		<input type="text" name="q" class="drac-input drac-input-search drac-input-white drac-text-white drac-bg-black-secondary"
+		placeholder="Search docs" title="Type search term here" />
+	</form>
+</div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block source -->
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!--  endblock -->
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+            <!-- endblock -->
+
+            <!-- block content -->
+                <section class="p-md-5 section-content">
+    <article>
+        <p><h2 id="detective">detective：一款更适合中国宝宝的室友内卷监测工具<a class="headerlink" href="#detective" title="Permanent link">&para;</a></h2>
+<h3 id="_1">介绍<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>detective是一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。</p>
+<blockquote>
+<p>TODO：demo</p>
+</blockquote>
+<h3 id="_2">环境要求<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>环境</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS</td>
+<td>Ubuntu22.04, Raspberry Pi OS, Window11, Debian 12</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.10</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">硬件清单<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Raspberry Pi 4B * 2</li>
+<li>摄像头 * 2</li>
+<li>蜂鸣器</li>
+<li>LED灯</li>
+<li>面包板</li>
+</ul>
+<h3 id="_4">安装依赖<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>创建虚拟环境</p>
+<pre><code class="language-bash">conda create -n your_env_name python=3.10
+conda activate your_env_name
+</code></pre>
+<p>安装依赖</p>
+<pre><code class="language-bash">git clone https://github.com/sergiudm/detective.git
+cd detective
+pip install -r requirements.txt
+</code></pre>
+<h3 id="_5">使用说明<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>开始前，你需要配置<code>config.json</code>文件，
+以下是一个示例：</p>
+<pre><code class="language-json">{
+    &quot;default_detect_mode&quot;: &quot;others&quot;,
+    &quot;use_camera&quot;: true,
+    &quot;LED_pin&quot;: 18, # LED灯的引脚
+    &quot;use_visualization&quot;: false, # 是否使用可视化
+    &quot;server_email&quot;: &quot;youremail@example.com&quot;,
+    &quot;server_email_password&quot;: &quot;your email password&quot;,# 请使用授权码
+    &quot;target_email&quot;: [
+        &quot;email1&quot;,
+        &quot;email2&quot;
+    ],
+    &quot;smtp_server&quot;:&quot;your smtp server&quot;,
+    &quot;smtp_port&quot;: 587,
+    &quot;video_path&quot;: &quot;assets/videos/sit.mp4&quot;, # use_camera为false时，使用该视频
+    &quot;image_path&quot;: &quot;resources&quot;, # 邮件中的图片
+    &quot;send_delay&quot;: 13,
+    &quot;effective_detection_duration&quot;: 2,
+    &quot;max_num_hands&quot;: 2,
+    &quot;min_detection_confidence&quot;: 0.65,
+    &quot;min_tracking_confidence&quot;: 0.65
+}
+</code></pre>
+<blockquote>
+<p>[!CAUTION] 
+实际使用时，请删除<code>config.json</code>中的所有注释!</p>
+</blockquote>
+<p>Linux:</p>
+<pre><code class="language-bash">cd detective
+sudo chmod +x run.sh
+./run.sh
+</code></pre>
+<p>Windows:</p>
+<pre><code class="language-bash">cd detective
+python main.py
+</code></pre>
+<h3 id="_6">功能<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>检测是否有室友在内卷<ul>
+<li>如果有，会自动响起警报，并且发微信通知你</li>
+</ul>
+</li>
+<li>检测你是不是卷过头了<ul>
+<li>如果连续工作超过2小时（可在<code>config.json</code>中配置），会自动响起警报，并提醒你休息一下</li>
+</ul>
+</li>
+<li>to do list</li>
+<li>检测 学习 与 玩游戏<ul>
+<li>肩部、髋部、膝盖 夹角； 手部 位置</li>
+</ul>
+</li>
+<li>报警：蜂鸣器（可换为便宜的喇叭）（直到结束学习才消失）、led、微信发消息</li>
+<li>开关门检测<ul>
+<li>开关门 检测完成后： 人在寝室，才监控</li>
+</ul>
+</li>
+<li>不良坐姿的检测</li>
+<li>魔术</li>
+</ul>
+<h3 id="_7">如何贡献<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>本仓库仅使用了<a href="https://github.com/google-ai-edge/mediapipe">mediapipe</a>中的人体姿态检测和手部检测功能，如果你有更多想法，欢迎：</p>
+<ul>
+<li>提交PR</li>
+<li>提交Issue</li>
+<li>传播给更多的室友</li>
+</ul>
+<h3 id="acknowledgement">Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/google-ai-edge/mediapipe">mediapipe</a></p></p>
+    </article>
+</section>
+            <!-- endblock -->
+
+            <!-- block footer -->
+                <footer>
+    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
+        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
+            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
+            Made with Dracula Theme for MkDocs
+        </a>
+    </div>
+</footer>
+            <!-- endblock -->
+        </div>
+
+    </main>
+
+        <script>var base_url = '.';</script>
+        <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/mkdocs.js"></script>
+			<script src="search/main.js" defer></script>
+
+</body>
+
+</html>
