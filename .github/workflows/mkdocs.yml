@@ -1,4 +1,4 @@
-name: Deploy MkDocs site to GitHub Pages (using GitHub Pages setting)
+name: Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)
 
 on:
   push:
@@ -6,14 +6,9 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   build-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -27,17 +22,8 @@ jobs:
       - name: Install MkDocs and required theme
         run: pip install mkdocs mkdocs-dracula-theme
 
-      - name: Build MkDocs site
-        run: mkdocs build --config-file site_docs/mkdocs.yml --site-dir site_docs
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: 'site_docs'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      - name: Deploy to GitHub Pages using mkdocs gh-deploy
+        run: |
+          mkdocs gh-deploy --config-file site_docs/mkdocs.yml --remote-branch gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
