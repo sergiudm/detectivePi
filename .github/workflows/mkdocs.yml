@@ -20,10 +20,10 @@ jobs:
           python-version: '3.10'
 
       - name: Install MkDocs and required theme
-        run: pip install mkdocs mkdocs-dracula-theme
+        run: pip install mkdocs mkdocs-material
 
-      - name: Copy files
-        run: cp README.md site_docs/docs/index.md
+      # - name: Copy files
+      #   run: cp README.md site_docs/docs/index.md
 
       - name: Deploy to GitHub Pages using mkdocs gh-deploy
         run: |
