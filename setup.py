@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="detective_pi",
-    version="0.1.0",  
+    version="0.1.5",  
     author="Sergiu Han",  
     author_email="sergiudm@outlook.com",  
     description="A versatile tool for daily use",

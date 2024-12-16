@@ -11,7 +11,7 @@ import datetime
 # import RPi.GPIO as GPIO
 import os
 import time
-from communication import send_email
+from ..communication import send_email
 
 # import smbus
 
@@ -75,7 +75,7 @@ def handle_detection(
         current_time = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
         send_email(
             subject="国家反卷总局消息",
-            body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷总局提示您，您的室友于{current_time}在内卷，请立即采取相应措施！</p>",
+            body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷中心提示您，您的室友于{current_time}在内卷，请立即采取相应措施！下载[国家反卷中心APP](https://sergiudm.github.io/detective/)，查看更多信息！</p>",
             to_emails=target_email,
             from_email=server_email,
             password=server_password,
@@ -128,7 +128,7 @@ def working_detect(
             results = pose.process(imgRGB)
 
             if results.pose_landmarks:
-                #print("person detected!")
+                # print("person detected!")
                 mpDraw.draw_landmarks(
                     img, results.pose_landmarks, mpPose.POSE_CONNECTIONS
                 )
@@ -209,9 +209,10 @@ def working_detect(
                 cv2.imshow("Image", img)
             cv2.waitKey(1)
 
-        cap.release()
-        cv2.destroyAllWindows()
     except KeyboardInterrupt:
         cap.release()
         cv2.destroyAllWindows()
         print("Exit")
+    finally:
+        cap.release()
+        cv2.destroyAllWindows()
