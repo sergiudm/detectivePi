@@ -20,7 +20,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install MkDocs and required theme
-        run: pip install mkdocs mkdocs-material
+        run: pip install mkdocs mkdocs-material mkdocs-glightbox
 
       # - name: Copy files
       #   run: cp README.md site_docs/docs/index.md
