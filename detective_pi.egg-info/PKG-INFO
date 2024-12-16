@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: detective_pi
-Version: 0.1.0
+Version: 0.1.5
 Summary: A versatile tool for daily use
 Home-page: https://github.com/sergiudm/detective
 Author: Sergiu Han
@@ -35,18 +35,25 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 - LED灯
 - 面包板
 
-## 安装依赖
+## 安装
+## pip安装
+```bash
+conda create -n <your_env_name> python=3.10
+pip install detective-pi
+```
+
+## 源码安装
 克隆仓库
 ```bash
 git clone https://github.com/sergiudm/detective.git
 cd detective
 ```
-### 一键安装
+你可以使用`deploy.sh`脚本自动安装
 ```bash
+sudo chmod +x deploy.sh
 ./deploy.sh
 ```
-### 手动安装
-创建虚拟环境
+或者手动安装
 ```bash
 conda create -n <your_env_name> python=3.10
 conda activate <your_env_name>
@@ -84,7 +91,6 @@ pip install -r requirements.txt
 
 Linux:
 ```bash
-cd detective
 sudo chmod +x run.sh
 ./run.sh
 ```

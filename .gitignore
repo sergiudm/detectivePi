@@ -1,2 +1,4 @@
-./detective_pi.egg-info/
 **/__pycache__/**
+**/dist/**
+**/detective.egg-info/**
+**/build/**

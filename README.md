@@ -22,7 +22,6 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 ## 安装
 ## pip安装
 ```bash
-conda create -n <your_env_name> python=3.10
 pip install detective-pi
 ```
 

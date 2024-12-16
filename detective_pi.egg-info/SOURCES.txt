@@ -1,7 +1,6 @@
 README.md
 setup.py
 detective/__init__.py
-detective/main.py
 detective/communication/__init__.py
 detective/communication/client.py
 detective/communication/mailbot.py
