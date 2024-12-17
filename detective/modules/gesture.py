@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 from .common import detect_all_finger_state, detect_hand_state
-
+from detective.communication import do_client
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(
@@ -29,7 +29,9 @@ recent_states = [""] * 20
 
 
 def gesture_detect(cap):
-    """detect hand gesture"""
+    """detect hand gesture""" 
+
+    global recent_gesture_states #记录最近的手势状态
     while True:
         ret, frame = cap.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -137,6 +139,10 @@ def gesture_detect(cap):
             current_state = detect_hand_state(
                 all_points, bend_states, straighten_states
             )
+            #记录最近的手势状态
+            recent_gesture_states = current_state
+            # 启用客户端，发送手势状态
+            do_client(recent_gesture_states)
 
             # 更新最近状态列表
             recent_states.pop(0)

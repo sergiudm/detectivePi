@@ -7,6 +7,9 @@ nav:
     - Plugins Tutorial: plugins-tutorial.md
   - About: about.md
   - Release Notes: release-notes.md
+  - Feature Plane: feature-plane.md
+  - Application: applications.md
+
 theme:
   name: material
   language: zh

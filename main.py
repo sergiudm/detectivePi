@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 from pathlib import Path
 
-from detective import working_detect, relax_detect
+from detective import working_detect, relax_detect, gesture_detect
 from detective import Config
 
 
@@ -50,7 +50,8 @@ def run_application():
     # Further code to use default_detect_mode
     # q --- quit the program
     if detect_other:
-        working_detect(
+        # 检测别人
+        working_detect( 
             mpPose,
             pose,
             mpDraw,
@@ -64,6 +65,7 @@ def run_application():
             pack_trans=packet_transfer,
         )
     else:
+        # 检测自己
         relax_detect(
             mpPose,
             pose,
@@ -81,3 +83,7 @@ def run_application():
 
 if __name__ == "__main__":
     run_application()
+
+
+
+# 需要添加 线程，对于进行手势识别的树莓派来说，需要两个线程：线程1：进行手势识别，并讲每一个时刻的手势记录到一个全局变量。线程2：读取全局变量，根据全局变量的值，设定 PINstate。
