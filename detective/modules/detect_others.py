@@ -112,6 +112,7 @@ def working_detect(
     smtp_port = int(protocol[3])
     target_email = protocol[4]
     pTime = 0
+    global resent_gesture
     try:
         model_1_time, model_1_state = 0, 0
         sitting_start_time = None

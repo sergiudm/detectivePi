@@ -4,7 +4,8 @@ from pathlib import Path
 
 from detective import working_detect, relax_detect, gesture_detect
 from detective import Config
-
+from detective.communication.server import do_server
+import threading
 
 def run_application():
     # initializations
@@ -56,21 +57,26 @@ def run_application():
     if which_detect == "body":
         if detect_other:
             # 检测别人
-            working_detect( 
-                mpPose,
-                pose,
-                mpDraw,
-                cap,
-                image_path=image_path,
-                send_delay=send_delay,
-                effective_detection_duration=effective_detection_duration,
-                protocol=protocol,
-                pin=LED_pin,
-                use_vis=use_vis,
-                pack_trans=packet_transfer,
-            )
+            resent_gesture = None  
+            t1 = threading.Thread(target=do_server)
+            t2 = threading.Thread(target=working_detect, args=(mpPose, pose, mpDraw, cap, image_path, send_delay, effective_detection_duration, protocol, LED_pin, use_vis, packet_transfer))
+            # working_detect( 
+            #     mpPose,
+            #     pose,
+            #     mpDraw,
+            #     cap,
+            #     image_path=image_path,
+            #     send_delay=send_delay,
+            #     effective_detection_duration=effective_detection_duration,
+            #     protocol=protocol,
+            #     pin=LED_pin,
+            #     use_vis=use_vis,
+            #     pack_trans=packet_transfer,
+            # )
+
         else:
             # 检测自己
+            #参照上述程序，将其改为多线程
             relax_detect(
                 mpPose,
                 pose,
@@ -84,8 +90,6 @@ def run_application():
                 use_vis=use_vis,
                 pack_trans=packet_transfer,
             )
-
-        
 
 
 if __name__ == "__main__":
