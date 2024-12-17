@@ -1,49 +1,96 @@
-# Description: This file contains the RunnerEngine class which is responsible for running the runner.
+import cv2
+import mediapipe as mp
+from pathlib import Path
 
-# import RPi.GPIO as GPIO
-# import time
-
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setwarnings(False)
-
-
-class PinManeger:
-    """PinManeger class to manage pins
-
-    Attributes:
-    pinContainer: a pinContainer is a set of pins with their states
-    """
-
-    def __init__(self):
-        self.pinContainer = dict()
-        for i in range(10):
-            self.pinContainer[i] = dict()
-
-    def set_pin_container(self, pin_id, pin_with_state):
-        self.pinContainer[pin_id] = pin_with_state
-
-    def show_pins(self):
-        for pin_id, pins in self.pinContainer.items():
-            print(f"Pin ID: {pin_id}, Pin Container: {pins}")
+from detective import working_detect, relax_detect, gesture_detect
+from detective import Config
 
 
-def msg2pin_state(msg,state_mapping):
-    """msg2pin_state function to convert message to pin state
+def run_application():
+    # initializations
+    mpPose = mp.solutions.pose
+    pose = mpPose.Pose()
+    mpDraw = mp.solutions.drawing_utils
 
-    Args:
-    msg: message to convert
+    # Use the parsed configuration
+    config = Config()
+    LED_pin = config.get_param("LED_pin")
+    detect_other = config.get_param("default_detect_mode") == "others"
+    use_camera = config.get_param("use_camera")
+    video_path = config.get_param("video_path")
+    image_path = config.get_param("image_path")
+    server_email = config.get_param("server_email")
+    server_password = config.get_param("server_email_password")
+    smtp_server = config.get_param("smtp_server")
+    smtp_port = config.get_param("smtp_port")
+    target_email = config.get_param("target_email")
+    protocol = [server_email, server_password, smtp_server, smtp_port, target_email]
+    use_vis = config.get_param("use_visualization")
+    packet_transfer = config.get_param("packet_tansfer")  # true: windows
+    send_delay = config.get_param("send_delay")
+    effective_detection_duration = config.get_param("effective_detection_duration")
+    max_num_hands = config.get_param("max_num_hands")
+    min_detection_confidence = config.get_param("min_detection_confidence")
+    min_tracking_confidence = config.get_param("min_tracking_confidence")
+    which_detect = config.get_param("which_detect")
+    #print("Configuration:")
+    #config.print_info()
 
-    Returns:
-    pin_state: pin state
-    """
-    pin_manager = PinManeger()
+    if use_camera:
+        cap = cv2.VideoCapture(0)
+        print("Using camera")
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    else:
+        cap = cv2.VideoCapture(video_path)
 
-def run_gpio():
-    pins = PinManeger()
-    pins.set_pin_container(1, {17: 0, 23: 0, 3: 0})
-    pins.set_pin_container(2, {4: 1, 5: 1, 6: 1})
-    pins.show_pins()
+    if not cap.isOpened():
+        print("Error: Cannot open video file")
+        exit()
+
+    # Further code to use default_detect_mode
+    # q --- quit the program
+    
+    if which_detect == "gesture":
+        gesture_detect(cap)
+    if which_detect == "body":
+        if detect_other:
+            # 检测别人
+            working_detect( 
+                mpPose,
+                pose,
+                mpDraw,
+                cap,
+                image_path=image_path,
+                send_delay=send_delay,
+                effective_detection_duration=effective_detection_duration,
+                protocol=protocol,
+                pin=LED_pin,
+                use_vis=use_vis,
+                pack_trans=packet_transfer,
+            )
+        else:
+            # 检测自己
+            relax_detect(
+                mpPose,
+                pose,
+                mpDraw,
+                cap,
+                image_path=image_path,
+                send_delay=send_delay,
+                effective_detection_duration=effective_detection_duration,
+                protocol=protocol,
+                pin=LED_pin,
+                use_vis=use_vis,
+                pack_trans=packet_transfer,
+            )
+
+        
 
 
 if __name__ == "__main__":
-    run_gpio()
+    run_application()
+
+
+
+# 需要添加 线程，对于进行手势识别的树莓派来说，需要两个线程：线程1：进行手势识别，并讲每一个时刻的手势记录到一个全局变量。线程2：读取全局变量，根据全局变量的值，设定 PINstate。
