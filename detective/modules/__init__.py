@@ -5,6 +5,7 @@ from .common import judge_Pause, judge_OK, judge_Like
 from .common import detect_all_finger_state, detect_hand_state
 from .detect_master import relax_detect
 from .detect_others import working_detect
+from .gpio_controller import gpio_state_change
 from .gesture import gesture_detect
 from .utils import Config
 
@@ -20,5 +21,6 @@ __all__ = [
     "judge_OK",
     "judge_Like",
     "detect_all_finger_state",
+    "gpio_state_change",
     "detect_hand_state",
 ]
