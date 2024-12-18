@@ -66,7 +66,38 @@ pip install -r requirements.txt
     "effective_detection_duration": 2,
     "max_num_hands": 2,
     "min_detection_confidence": 0.65,
-    "min_tracking_confidence": 0.65
+    "min_tracking_confidence": 0.65,
+    "pin_data": {
+        "pin_list": [
+            17,
+            23,
+            24,
+            25,
+            27
+        ],
+        "pin_map": {
+            "Right": [
+                17,
+                23,
+                24
+            ],
+            "Return": [
+                23,
+                24
+            ],
+            "Left": [
+                17,
+                24
+            ],
+            "Pause": [],
+            "Like": [
+                25
+            ],
+            "OK": [
+                27
+            ]
+        }
+    }
 }
 ```
 >[!CAUTION] 
