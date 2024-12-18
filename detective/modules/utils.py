@@ -27,3 +27,7 @@ class Config:
     def print_info(self):
         for key, value in self.config_data.items():
             print(f"{key}: {value}")
+
+if __name__ == "__main__":
+    config = Config(config_path=os.path.join(os.path.dirname(__file__), "test.json"))
+    config.print_info()
