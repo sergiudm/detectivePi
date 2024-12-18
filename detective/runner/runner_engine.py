@@ -2,6 +2,18 @@ import cv2
 import mediapipe as mp
 from pathlib import Path
 
+import sys
+
+# 打印当前的 sys.path
+
+# 添加一个新的路径到 sys.path
+
+
+# 现在尝试导入位于新路径中的模块
+
+
+
+from detective.runner.utils import PinManeger
 from detective import working_detect, relax_detect, gesture_detect
 from detective import Config
 from detective.communication.server import do_server
