@@ -20,3 +20,4 @@ echo "Current Python interpreter: $PYTHON_INTERPRETER"
 $PYTHON_INTERPRETER path.py add_path 
 # 使用找到的解释器执行 main.py
 sudo $PYTHON_INTERPRETER main.py
+1
