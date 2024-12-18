@@ -7,6 +7,7 @@ from detective import Config
 from detective.communication.server import do_server
 import threading
 
+
 def run_application():
     # initializations
     mpPose = mp.solutions.pose
@@ -34,8 +35,8 @@ def run_application():
     min_detection_confidence = config.get_param("min_detection_confidence")
     min_tracking_confidence = config.get_param("min_tracking_confidence")
     which_detect = config.get_param("which_detect")
-    #print("Configuration:")
-    #config.print_info()
+    # print("Configuration:")
+    # config.print_info()
 
     if use_camera:
         cap = cv2.VideoCapture(0)
@@ -51,16 +52,31 @@ def run_application():
 
     # Further code to use default_detect_mode
     # q --- quit the program
-    
+
     if which_detect == "gesture":
         gesture_detect(cap)
     if which_detect == "body":
         if detect_other:
             # 检测别人
-            resent_gesture = None  
+            resent_gesture = None
             t1 = threading.Thread(target=do_server)
-            t2 = threading.Thread(target=working_detect, args=(mpPose, pose, mpDraw, cap, image_path, send_delay, effective_detection_duration, protocol, LED_pin, use_vis, packet_transfer))
-            # working_detect( 
+            t2 = threading.Thread(
+                target=working_detect,
+                args=(
+                    mpPose,
+                    pose,
+                    mpDraw,
+                    cap,
+                    image_path,
+                    send_delay,
+                    effective_detection_duration,
+                    protocol,
+                    LED_pin,
+                    use_vis,
+                    packet_transfer,
+                ),
+            )
+            # working_detect(
             #     mpPose,
             #     pose,
             #     mpDraw,
@@ -76,7 +92,7 @@ def run_application():
 
         else:
             # 检测自己
-            #参照上述程序，将其改为多线程
+            # 参照上述程序，将其改为多线程
             relax_detect(
                 mpPose,
                 pose,
@@ -94,7 +110,6 @@ def run_application():
 
 if __name__ == "__main__":
     run_application()
-
 
 
 # 需要添加 线程，对于进行手势识别的树莓派来说，需要两个线程：线程1：进行手势识别，并讲每一个时刻的手势记录到一个全局变量。线程2：读取全局变量，根据全局变量的值，设定 PINstate。
