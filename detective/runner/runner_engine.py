@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 from pathlib import Path
 
-import sys
+import sys, os, platform
 
 # 打印当前的 sys.path
 
@@ -12,8 +12,18 @@ import sys
 # 现在尝试导入位于新路径中的模块
 
 
+def add_path():
+    # 使用os.path.join确保路径的正确性，并替换环境变量
+    path_to_add = os.path.join(os.environ["HOME"], os.environ["USER"], "detectivePy")
 
-from detective.runner.utils import PinManeger
+    # 将路径添加到sys.path
+    sys.path.append(path_to_add)
+
+
+if platform.system() == "Windows":
+    sys.path.append("d:/A_Data_of_2024_Full/MicroPC/project/detectivePy")
+elif platform.system() == "Linux":
+    add_path()
 from detective import working_detect, relax_detect, gesture_detect
 from detective import Config
 from detective.communication.server import do_server
