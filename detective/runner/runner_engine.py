@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 from pathlib import Path
-
+from queue import Queue
 import sys, os, platform
 
 # 打印当前的 sys.path
@@ -93,8 +93,8 @@ def run_application():
     if which_detect == "body":
         if detect_other:
             # 检测别人
-            resent_gesture = None
-            t1 = threading.Thread(target=do_server)
+            resent_gesture_queue = Queue(maxsize=1)
+            t1 = threading.Thread(target=do_server,args=(resent_gesture_queue,))
             t2 = threading.Thread(
                 target=working_detect,
                 args=(
@@ -111,7 +111,7 @@ def run_application():
                     packet_transfer,
                 ),
             )
-            t3 = threading.Thread(target=gpio_state_change, args=(state_machine_obj))
+            t3 = threading.Thread(target=gpio_state_change, args=(state_machine_obj,resent_gesture_queue,))
             t1.start()
             t2.start()
             t3.start()

@@ -4,7 +4,7 @@ import threading
 
 
 
-def do_server():
+def do_server(queue):
     server_ip = "10.12.107.213"  # "10.13.220.234"
     server_port = 12345
     global resent_gesture  # 记录最近的手势状态, 即使开启新的线程也可以调用
@@ -21,13 +21,13 @@ def do_server():
         client_socket, addr = server_socket.accept()
         # 为每个客户端连接创建一个新线程
         client_thread = threading.Thread(
-            target=handle_client, args=(client_socket, addr)
+            target=handle_client, args=(client_socket, addr,queue)
         )
         client_thread.start()
     
 
-def handle_client(client_socket, addr):
-    print(f"Connected by {addr}")
+def handle_client(client_socket, addr,queue):
+    
     global resent_gesture
     try:
         # 接收一个字节的数据
@@ -35,7 +35,11 @@ def handle_client(client_socket, addr):
         if not data:
             return
         resent_gesture = data.decode('utf-8')
+        if queue.full():
+            queue.get()
+        queue.put(resent_gesture)
 
+        print(f"Connected by {addr},resent gesture is: ", resent_gesture)
         # 解包数据
         # bool_array = struct.unpack("B", data)[0]
         # print(f"Received boolean array as integer: {bool_array}")
