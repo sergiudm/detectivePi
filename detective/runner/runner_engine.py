@@ -24,8 +24,9 @@ if platform.system() == "Windows":
     sys.path.append("d:/A_Data_of_2024_Full/MicroPC/project/detectivePy")
 elif platform.system() == "Linux":
     add_path()
-from detective import working_detect, relax_detect, gesture_detect
+from detective import working_detect, relax_detect, gesture_detect, gpio_state_change
 from detective import Config
+from detective.runner import state_machine
 from detective.communication.server import do_server
 import threading
 
@@ -57,8 +58,11 @@ def run_application():
     min_detection_confidence = config.get_param("min_detection_confidence")
     min_tracking_confidence = config.get_param("min_tracking_confidence")
     which_detect = config.get_param("which_detect")
+    pin_data = config.get_param("pin_data")
     # print("Configuration:")
     # config.print_info()
+
+    state_machine_obj = state_machine.StateMachine("stop", pin_data)
 
     if use_camera:
         cap = cv2.VideoCapture(0)
@@ -102,6 +106,10 @@ def run_application():
                     packet_transfer,
                 ),
             )
+            t3 = threading.Thread(target=gpio_state_change, args=(state_machine_obj))
+            t1.start()
+            t2.start()
+            t3.start()
             # working_detect(
             #     mpPose,
             #     pose,
