@@ -22,9 +22,13 @@ def add_path():
 
 if platform.system() == "Windows":
     sys.path.append("d:/A_Data_of_2024_Full/MicroPC/project/detectivePy")
+    print(11111111111111111111111111111111111)
+    print("Current sys.path:", sys.path)
 elif platform.system() == "Linux":
     add_path()
-from detective import working_detect, relax_detect, gesture_detect, gpio_state_change
+
+
+from .. import working_detect, relax_detect, gesture_detect, gpio_state_change
 from detective import Config
 from detective.runner import state_machine
 from detective.communication.server import do_server
@@ -78,6 +82,10 @@ def run_application():
 
     # Further code to use default_detect_mode
     # q --- quit the program
+
+
+
+
 
     if which_detect == "gesture":
         gesture_detect(cap)
