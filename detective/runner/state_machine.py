@@ -11,7 +11,9 @@ class StateMachine:
     def __init__(self, initial_state, pin_data):
         self.current_state = initial_state
         self.pin_data = pin_data
-        self.set_pin_state(self.current_state)  # Set initial pin states
+        for pin in self.pin_data["pin_list"]:
+            GPIO.setup(pin, GPIO.OUT)
+            GPIO.output(pin, GPIO.LOW)
 
     def set_pin_state(self, state):
         high_pins = self.pin_data["pin_map"].get(state, [])

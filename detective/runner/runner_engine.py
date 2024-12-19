@@ -54,6 +54,7 @@ def run_application():
     smtp_port = config.get_param("smtp_port")
     target_email = config.get_param("target_email")
     protocol = [server_email, server_password, smtp_server, smtp_port, target_email]
+    print("Protocol:", protocol)
     use_vis = config.get_param("use_visualization")
     packet_transfer = config.get_param("packet_tansfer")  # true: windows
     send_delay = config.get_param("send_delay")
@@ -102,10 +103,10 @@ def run_application():
                     mpDraw,
                     cap,
                     image_path,
-                    send_delay,
-                    effective_detection_duration,
                     protocol,
                     LED_pin,
+                    send_delay,
+                    effective_detection_duration,
                     use_vis,
                     packet_transfer,
                 ),
@@ -114,6 +115,10 @@ def run_application():
             t1.start()
             t2.start()
             t3.start()
+
+            t1.join()
+            t2.join()
+            t3.join()
             # working_detect(
             #     mpPose,
             #     pose,
