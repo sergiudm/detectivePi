@@ -46,6 +46,7 @@ if __name__ == "__main__":
             "Pause": [],
             "Like": [25],
             "OK": [27],
+            "default": [],
         },
     }
     # Example usage:
