@@ -28,7 +28,7 @@ def show_message(frame, message, position=(10, 30)):
 recent_states = [""] * 20
 
 
-def gesture_detect(cap):
+def gesture_detect(cap, use_vis=True):
     """detect hand gesture""" 
     while True:
         ret, frame = cap.read()
@@ -139,7 +139,7 @@ def gesture_detect(cap):
             )
             #记录最近的手势状态
             recent_gesture_states = current_state
-            
+            print(recent_gesture_states)
             # 启用客户端，发送手势状态
             do_client(recent_gesture_states)
 
@@ -179,8 +179,8 @@ def gesture_detect(cap):
                         color=(255, 0, 0), thickness=2, circle_radius=2
                     ),
                 )
-
-        cv2.imshow("MediaPipe Hands", frame)
+        if use_vis:
+            cv2.imshow("MediaPipe Hands", frame)
         if cv2.waitKey(1) & 0xFF == 27:
             break
     cap.release()

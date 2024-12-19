@@ -89,7 +89,7 @@ def run_application():
 
 
     if which_detect == "gesture":
-        gesture_detect(cap)
+        gesture_detect(cap,use_vis)
     if which_detect == "body":
         if detect_other:
             # 检测别人
