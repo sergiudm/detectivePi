@@ -75,6 +75,10 @@ def run_application():
     # Further code to use default_detect_mode
     # q --- quit the program
 
+
+
+
+
     if which_detect == "gesture":
         gesture_detect(cap)
     if which_detect == "body":
