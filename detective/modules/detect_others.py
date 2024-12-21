@@ -85,7 +85,7 @@ def handle_detection(
         )
         # 发邮件
     os.remove(output_path)
-    print("Thread finished")
+    print("Mail Thread finished")
 
 
 def working_detect(
@@ -176,7 +176,7 @@ def working_detect(
                         ),
                     )
                     detection_thread.start()
-                    print("Detection thread started")
+                    print("Mail thread started")
 
                 if time.time() - model_1_time > send_delay and model_1_state == 1:
                     model_1_state = 0

@@ -5,7 +5,7 @@ def do_client(gesture): # gesture is int
     
 
     # 设置服务器的IP地址和端口号
-    server_ip = "10.13.220.234"  # 替换X为服务器的实际IP地址
+    server_ip = "10.12.196.228"  # 替换X为服务器的实际IP地址
     server_port = 12345
 
     # 创建一个socket对象

@@ -6,7 +6,7 @@
     "use_visualization": false,
     "server_email": "3815288578@qq.com",
     "server_email_password": "vozebkdjzmrkccgf",
-    "server_ip": "10.13.220.234",
+    "server_ip": "10.12.196.228",
     "server_port": 12345,
     "target_email": [
         "12212635@mail.sustech.edu.cn",
@@ -51,7 +51,7 @@
             "OK": [
                 27
             ],
-            "default": []
+            "None": []
         }
     }
 }

@@ -114,6 +114,7 @@ def run_application():
             t3 = threading.Thread(target=gpio_state_change, args=(state_machine_obj,resent_gesture_queue,))
             t1.start()
             t2.start()
+            print("sssssssssssss")
             t3.start()
 
             t1.join()
