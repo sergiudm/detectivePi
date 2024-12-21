@@ -73,6 +73,20 @@ def is_slouching(landmarks, mpPose):
     # Assuming an angle less than 160 degrees indicates slouching
     return angle < 160
 
+def is_running(landmarks, mpPose):
+    left_hip = landmarks[mpPose.PoseLandmark.LEFT_HIP.value]
+    left_knee = landmarks[mpPose.PoseLandmark.LEFT_KNEE.value]
+    left_ankle = landmarks[mpPose.PoseLandmark.LEFT_ANKLE.value]
+    right_hip = landmarks[mpPose.PoseLandmark.RIGHT_HIP.value]
+    right_knee = landmarks[mpPose.PoseLandmark.RIGHT_KNEE.value]
+    right_ankle = landmarks[mpPose.PoseLandmark.RIGHT_ANKLE.value]
+
+    # Calculate angles at both knees
+    left_knee_angle = calculate_angle(left_hip, left_knee, left_ankle)
+    right_knee_angle = calculate_angle(right_hip, right_knee, right_ankle)
+
+    # Assuming running involves a certain range of knee angles
+    return left_knee_angle < 150 and right_knee_angle < 150
 
 def detect_all_finger_state(all_points):
     finger_first_angle_bend_threshold = math.pi * 0.25  # 大拇指弯曲阈值
