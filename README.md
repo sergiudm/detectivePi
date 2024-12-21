@@ -50,6 +50,8 @@ pip install -r requirements.txt
 以下是一个示例：
 ```json
 {
+    "use_pi": false,
+    "plugin": "music_player", # 注意：当插件涉及GPIO操作时，use_pi必须为true
     "default_detect_mode": "others",
     "use_camera": true,
     "LED_pin": 18, # LED灯的引脚
@@ -112,8 +114,7 @@ sudo chmod +x run.sh
 ```
 Windows:
 ```bash
-cd detective
-python main.py
+win_run.bat
 ```
 
 ## 功能

@@ -1,38 +1,35 @@
+""" 
+This module plays music from a directory with different modes and volume control
+using Pygame. It also decodes gestures to control the music playback.
+
+gesture_decode(gesture):
+    
+    returns:
+    ch_mode, volume_up, volume_down, pause, resume, play_next
+
+
+    if gesture == "OK":
+        ch_mode = True
+    elif gesture == "Like":
+        play_next = True
+    elif gesture == "Return":
+        resume = True
+    elif gesture == "Pause":
+        pause = True
+    elif gesture == "Right":
+        volume_down = True
+    elif gesture == "Left":
+        volume_up = True
+    else:
+        ch_mode = False
+        volume_up = False
+        volume_down = False
+"""
+
 import os
 import random
 import time
 import pygame
-
-
-# def gesture_decode(gesture):
-#     ch_mode = False
-#     volume_up = False
-#     volume_down = False
-#     pause = False
-#     resume = False
-#     play_next = False
-#     if gesture == "OK":
-#         ch_mode = True
-#     elif gesture == "Like":
-#         play_next = True
-#     elif gesture == "Return":
-#         resume = True
-#         pause = False
-#     elif gesture == "Pause":
-#         pause = True
-#         resume = False
-#     elif gesture == "Right":
-#         volume_down = True
-#         volume_up = False
-#     elif gesture == "Left":
-#         volume_up = True
-#         volume_down = False
-#     else:
-#         ch_mode = False
-#         volume_up = False
-#         volume_down = False
-
-#     return ch_mode, volume_up, volume_down
 
 
 class MusicPlayer:

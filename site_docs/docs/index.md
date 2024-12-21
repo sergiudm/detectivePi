@@ -1,6 +1,8 @@
 detective：一款更适合中国宝宝的室友内卷监测工具
 ==================================================
-
+[![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
+[![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/detective-pi/0.1.5/)
+![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
 detective是一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。
@@ -19,16 +21,27 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 - LED灯
 - 面包板
 
-## 安装依赖
-创建虚拟环境
+## 安装
+## pip安装
 ```bash
-conda create -n your_env_name python=3.10
-conda activate your_env_name
+pip install detective-pi
 ```
-安装依赖
+
+## 源码安装
+克隆仓库
 ```bash
 git clone https://github.com/sergiudm/detective.git
 cd detective
+```
+你可以使用`deploy.sh`脚本自动安装
+```bash
+sudo chmod +x deploy.sh
+./deploy.sh
+```
+或者手动安装
+```bash
+conda create -n <your_env_name> python=3.10
+conda activate <your_env_name>
 pip install -r requirements.txt
 ```
 
@@ -37,6 +50,8 @@ pip install -r requirements.txt
 以下是一个示例：
 ```json
 {
+    "use_pi": false,
+    "plugin": "music_player", # 注意：当插件涉及GPIO操作时，use_pi必须为true
     "default_detect_mode": "others",
     "use_camera": true,
     "LED_pin": 18, # LED灯的引脚
@@ -55,22 +70,51 @@ pip install -r requirements.txt
     "effective_detection_duration": 2,
     "max_num_hands": 2,
     "min_detection_confidence": 0.65,
-    "min_tracking_confidence": 0.65
+    "min_tracking_confidence": 0.65,
+    "pin_data": {
+        "pin_list": [
+            17,
+            23,
+            24,
+            25,
+            27
+        ],
+        "pin_map": {
+            "Right": [
+                17,
+                23,
+                24
+            ],
+            "Return": [
+                23,
+                24
+            ],
+            "Left": [
+                17,
+                24
+            ],
+            "Pause": [],
+            "Like": [
+                25
+            ],
+            "OK": [
+                27
+            ]
+        }
+    }
 }
 ```
->[!CAUTION] 
-实际使用时，请删除`config.json`中的所有注释!
+!!! warning
+  实际使用时，请删除`config.json`中的所有注释!
 
 Linux:
 ```bash
-cd detective
 sudo chmod +x run.sh
 ./run.sh
 ```
 Windows:
 ```bash
-cd detective
-python main.py
+win_run.bat
 ```
 
 ## 功能
@@ -91,6 +135,7 @@ python main.py
 本仓库仅使用了[mediapipe](https://github.com/google-ai-edge/mediapipe)中的人体姿态检测和手部检测功能，如果你有更多想法，欢迎：
 
 - 提交PR
+  - [插件指南]()
 - 提交Issue
 - 传播给更多的室友
 
