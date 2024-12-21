@@ -1,8 +1,8 @@
 import cv2
 import mediapipe as mp
-from pathlib import Path
 from queue import Queue
 import sys, os, platform
+from detective import Config
 
 # 打印当前的 sys.path
 
@@ -27,22 +27,22 @@ if platform.system() == "Windows":
 elif platform.system() == "Linux":
     add_path()
 
-
+config = Config()
 from .. import working_detect, relax_detect, gesture_detect, gpio_state_change
-from detective import Config
-from detective.runner import state_machine
+if config.get_param("use_pi"):
+    from detective.runner import state_machine
 from detective.communication.server import do_server
 import threading
 
 
-def run_application():
+def run_application(config):
     # initializations
     mpPose = mp.solutions.pose
     pose = mpPose.Pose()
     mpDraw = mp.solutions.drawing_utils
 
     # Use the parsed configuration
-    config = Config()
+    use_pi = config.get_param("use_pi")
     LED_pin = config.get_param("LED_pin")
     detect_other = config.get_param("default_detect_mode") == "others"
     use_camera = config.get_param("use_camera")
@@ -64,10 +64,6 @@ def run_application():
     min_tracking_confidence = config.get_param("min_tracking_confidence")
     which_detect = config.get_param("which_detect")
     pin_data = config.get_param("pin_data")
-    # print("Configuration:")
-    # config.print_info()
-
-    state_machine_obj = state_machine.StateMachine("stop", pin_data)
 
     if use_camera:
         cap = cv2.VideoCapture(0)
@@ -80,13 +76,6 @@ def run_application():
     if not cap.isOpened():
         print("Error: Cannot open video file")
         exit()
-
-    # Further code to use default_detect_mode
-    # q --- quit the program
-
-
-
-
 
     if which_detect == "gesture":
         gesture_detect(cap,use_vis)
@@ -111,15 +100,23 @@ def run_application():
                     packet_transfer,
                 ),
             )
-            t3 = threading.Thread(target=gpio_state_change, args=(state_machine_obj,resent_gesture_queue,))
             t1.start()
             t2.start()
-            print("sssssssssssss")
-            t3.start()
+            if use_pi:
+                state_machine_obj = state_machine.StateMachine("stop", pin_data)
+                t3 = threading.Thread(
+                    target=gpio_state_change,
+                    args=(
+                        state_machine_obj,
+                        resent_gesture_queue,
+                    ),
+                )
+                t3.start()
 
             t1.join()
             t2.join()
-            t3.join()
+            if use_pi:
+                t3.join()
             # working_detect(
             #     mpPose,
             #     pose,
@@ -153,7 +150,8 @@ def run_application():
 
 
 if __name__ == "__main__":
-    run_application()
+    config = Config()
+    run_application(config)
 
 
 # 需要添加 线程，对于进行手势识别的树莓派来说，需要两个线程：线程1：进行手势识别，并讲每一个时刻的手势记录到一个全局变量。线程2：读取全局变量，根据全局变量的值，设定 PINstate。

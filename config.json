@@ -1,4 +1,6 @@
 {
+    "use_pi": false,
+    "plugin": "music_player",
     "default_detect_mode": "others",
     "use_camera": true,
     "LED_pin": 18,
