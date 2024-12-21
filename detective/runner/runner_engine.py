@@ -28,7 +28,7 @@ elif platform.system() == "Linux":
     add_path()
 
 
-from .. import working_detect, relax_detect, gesture_detect, gpio_state_change
+from detective import working_detect, relax_detect, gesture_detect, gpio_state_change
 from detective import Config
 from detective.runner import state_machine
 from detective.communication.server import do_server

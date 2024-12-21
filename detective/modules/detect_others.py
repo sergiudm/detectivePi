@@ -1,6 +1,6 @@
 import cv2
 import time
-from .common import is_sitting, is_slouching
+from .common import is_sitting, is_slouching,is_running
 from .common import check_status
 import socket
 import struct
@@ -105,6 +105,9 @@ def working_detect(
     # Pin_buzzer = pin
     # GPIO.setmode(GPIO.BCM)
     # GPIO.setup(Pin_buzzer, GPIO.OUT)
+    walking_pose_angle_a = False
+    walking_pose_angle_b = False
+    walking_counters = 0
     path = get_path(image_path)
     server_email = protocol[0]
     server_password = protocol[1]
@@ -120,7 +123,7 @@ def working_detect(
         sitting = False
         slouching = False
         while True:
-            success, img = cap.read()
+            success, img = cap.read()#img is the frame
 
             if not success:
                 print("Error: Failed to read frame")
@@ -156,7 +159,22 @@ def working_detect(
                     slouching_start_time,
                     effective_detection_duration,
                 )
+                is_running(landmarks,mpPose,walking_pose_angle_a,walking_pose_angle_b)
 
+                start_walking = True
+                start_walking_time = None
+                if walking_pose_angle_a and start_walking:
+                    sitting_start_time = time.time()
+                    start_walking = False
+
+                if walking_pose_angle_a and walking_pose_angle_b:
+                    walking_counters += 1
+                    walking_pose_angle_a,walking_pose_angle_b = False,False
+                    print("Walking_counter:",walking_counters)
+
+                walking_frequence = walking_counters / (time.time() - start_walking_time)
+                walking_frequence = round(walking_frequence, 2) 
+                print(walking_frequence)
                 working = sitting and slouching
 
                 if sitting and model_1_time == 0:
@@ -200,10 +218,15 @@ def working_detect(
             cTime = time.time()
             fps = 1.0 / (cTime - pTime)
             pTime = cTime
-            cv2.putText(
-                img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3
-            )
-
+            if not start_walking:
+                cv2.putText(
+                    img, (str(int(fps))+","+str(walking_frequence)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3
+                )
+            else:
+                cv2.putText(
+                    img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3
+                )
+                
             if cv2.waitKey(1) == ord("q"):
                 break
             if use_vis:
