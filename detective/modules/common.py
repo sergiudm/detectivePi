@@ -99,14 +99,18 @@ def is_running(landmarks, mpPose, walking_pose_angle_a, walking_pose_angle_b ):
     cb_magnitude = math.hypot(cb[0], cb[1])
 
     angle = math.acos(dot_product / (ab_magnitude * cb_magnitude))
-
+    #print(angle,5*math.pi / 18)
     if angle > 5*math.pi / 18:
+        #print("angle > 5*math.pi / 18")
         walking_pose_angle_a = True
         return walking_pose_angle_a, walking_pose_angle_b
     
-    if angle < math.pi / 18:
+    if angle < 3*math.pi / 18:
+        #print("angle < 3*math.pi / 18")
         walking_pose_angle_b = True
         return walking_pose_angle_a, walking_pose_angle_b
+    return walking_pose_angle_a, walking_pose_angle_b
+    
     
 def detect_all_finger_state(all_points):
     finger_first_angle_bend_threshold = math.pi * 0.25  # 大拇指弯曲阈值

@@ -4,7 +4,12 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 
-def send_email(subject, body, to_emails, from_email, password, smtp_server, smtp_port, image_path=None):
+def send_email(data,subject, body, to_emails, from_email, password, smtp_server, smtp_port, image_path=None):
+    
+    if data is None:
+       pass
+    if data is not None:
+        body = f"<h1>你真棒！</h1><p>你完成了跑步运动，步频最高达到：{data} 次每秒 。休息一下吧</p>"
     # Create the email
     msg = MIMEMultipart('related')
     msg['From'] = from_email
@@ -19,6 +24,7 @@ def send_email(subject, body, to_emails, from_email, password, smtp_server, smtp
         <br>
         <img src="cid:image1">
     </body>
+    <a href="https://sergiudm.github.io/detective/" target="_blank">国家反卷中心</a>
     </html>
     """
     msg.attach(MIMEText(html_body, 'html'))
