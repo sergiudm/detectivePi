@@ -189,8 +189,6 @@ def working_detect(
                     walking_frequence = round(walking_frequence, 2) 
                     if maximum_running_frequence<walking_frequence:
                         maximum_running_frequence = walking_frequence
-
-                    print(walking_frequence)
                 working = sitting and slouching
 
                 if sitting and model_1_time == 0:
