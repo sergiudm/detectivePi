@@ -3,6 +3,8 @@ import mediapipe as mp
 from queue import Queue
 import sys, os, platform
 from detective import Config
+from detective.communication.server import do_server
+import threading
 
 # 打印当前的 sys.path
 
@@ -28,11 +30,16 @@ elif platform.system() == "Linux":
     add_path()
 
 config = Config()
-from .. import working_detect, relax_detect, gesture_detect, gpio_state_change
+from .. import (
+    working_detect,
+    relax_detect,
+    gesture_detect,
+    gpio_state_change,
+    play_music,
+)
+
 if config.get_param("use_pi"):
     from detective.runner import state_machine
-from detective.communication.server import do_server
-import threading
 
 
 def run_application(config):
@@ -43,6 +50,7 @@ def run_application(config):
 
     # Use the parsed configuration
     use_pi = config.get_param("use_pi")
+    plugin = config.get_param("plugin")
     LED_pin = config.get_param("LED_pin")
     detect_other = config.get_param("default_detect_mode") == "others"
     use_camera = config.get_param("use_camera")
@@ -78,13 +86,15 @@ def run_application(config):
         exit()
 
     if which_detect == "gesture":
-        gesture_detect(cap,use_vis)
+        gesture_detect(cap, use_vis)
     if which_detect == "body":
         if detect_other:
-            # 检测别人
             resent_gesture_queue = Queue(maxsize=1)
-            t1 = threading.Thread(target=do_server,args=(resent_gesture_queue,))
-            t2 = threading.Thread(
+
+            server_thread = threading.Thread(
+                target=do_server, args=(resent_gesture_queue,)
+            )
+            working_detect_thread = threading.Thread(
                 target=working_detect,
                 args=(
                     mpPose,
@@ -100,36 +110,35 @@ def run_application(config):
                     packet_transfer,
                 ),
             )
-            t1.start()
-            t2.start()
             if use_pi:
                 state_machine_obj = state_machine.StateMachine("stop", pin_data)
-                t3 = threading.Thread(
+                gpio_controller_thread = threading.Thread(
                     target=gpio_state_change,
                     args=(
                         state_machine_obj,
                         resent_gesture_queue,
                     ),
                 )
-                t3.start()
+            music_thread = threading.Thread(
+                target=play_music,
+                args=(
+                    "assets/music",
+                    resent_gesture_queue,
+                ),
+            )
 
-            t1.join()
-            t2.join()
-            if use_pi:
-                t3.join()
-            # working_detect(
-            #     mpPose,
-            #     pose,
-            #     mpDraw,
-            #     cap,
-            #     image_path=image_path,
-            #     send_delay=send_delay,
-            #     effective_detection_duration=effective_detection_duration,
-            #     protocol=protocol,
-            #     pin=LED_pin,
-            #     use_vis=use_vis,
-            #     pack_trans=packet_transfer,
-            # )
+            client_thread = None
+            if plugin == "working_detect":
+                client_thread = working_detect_thread
+            if use_pi and plugin == "gpio_state_change":
+                client_thread = gpio_controller_thread
+            if plugin == "music_player":
+                client_thread = music_thread
+
+            server_thread.start()
+            client_thread.start()
+            server_thread.join()
+            client_thread.join()
 
         else:
             # 检测自己

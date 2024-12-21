@@ -3,7 +3,6 @@ import struct
 import threading
 
 
-
 def do_server(queue):
     server_ip = "10.12.196.228"  # "10.13.220.234"
     server_port = 12345
@@ -21,19 +20,19 @@ def do_server(queue):
         client_socket, addr = server_socket.accept()
         # 为每个客户端连接创建一个新线程
         client_thread = threading.Thread(
-            target=handle_client, args=(client_socket, addr,queue)
+            target=handle_client, args=(client_socket, addr, queue)
         )
         client_thread.start()
-    
 
-def handle_client(client_socket, addr,queue):
-    
+
+def handle_client(client_socket, addr, queue):
+
     try:
         # 接收一个字节的数据
         data = client_socket.recv(10)
         if not data:
             return
-        resent_gesture = data.decode('utf-8')
+        resent_gesture = data.decode("utf-8")
         if queue.full():
             queue.get()
         queue.put(resent_gesture)
