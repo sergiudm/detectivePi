@@ -1,12 +1,12 @@
 import socket
 import struct
 
-def do_client(gesture): # gesture is int
+def do_client(gesture,server_ip,server_port): # gesture is int
     
 
     # 设置服务器的IP地址和端口号
-    server_ip = "10.12.196.228"  # 替换X为服务器的实际IP地址
-    server_port = 12345
+    #server_ip = "10.13.220.234"  # 替换X为服务器的实际IP地址 
+    #server_port = 12345
 
     # 创建一个socket对象
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

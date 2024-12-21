@@ -72,6 +72,8 @@ def run_application(config):
     min_tracking_confidence = config.get_param("min_tracking_confidence")
     which_detect = config.get_param("which_detect")
     pin_data = config.get_param("pin_data")
+    server_ip = config.get_param("server_ip")
+    server_port = config.get_param("server_port")
 
     if use_camera:
         cap = cv2.VideoCapture(0)
@@ -86,13 +88,18 @@ def run_application(config):
         exit()
 
     if which_detect == "gesture":
-        gesture_detect(cap, use_vis)
+        gesture_detect(cap, server_ip, server_port, use_vis)
     if which_detect == "body":
         if detect_other:
             resent_gesture_queue = Queue(maxsize=1)
 
             server_thread = threading.Thread(
-                target=do_server, args=(resent_gesture_queue,)
+                target=do_server,
+                args=(
+                    resent_gesture_queue,
+                    server_ip,
+                    server_port,
+                ),
             )
             working_detect_thread = threading.Thread(
                 target=working_detect,
@@ -137,8 +144,10 @@ def run_application(config):
 
             server_thread.start()
             client_thread.start()
+            working_detect_thread.start()
             server_thread.join()
             client_thread.join()
+            working_detect_thread.join()
 
         else:
             # 检测自己

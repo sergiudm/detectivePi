@@ -26,6 +26,7 @@ gesture_decode(gesture):
         volume_down = False
 """
 
+import copy
 import os
 import random
 import time
@@ -132,6 +133,7 @@ def play_music(music_dir, resent_gesture_queue, mode="sequence", initial_volume=
 
         # Main playback loop
         track_num = 0
+        gesture = "None"
         while True:
             # Repeat the sequence from the beginning
             if track_num >= len(music_files):
@@ -148,7 +150,9 @@ def play_music(music_dir, resent_gesture_queue, mode="sequence", initial_volume=
                 while pygame.mixer.music.get_busy():
                     # Check for gesture
                     if not resent_gesture_queue.empty():
-                        gesture = resent_gesture_queue.get()
+                        resent_gesture_queue_copy = copy(resent_gesture_queue)
+                        print("resent_gesture_queue_copy = copy(resent_gesture_queue)")
+                        gesture = resent_gesture_queue_copy.get()
                         print(f"Received gesture: {gesture}")
                         player.gesture_decode(gesture)
 
@@ -158,7 +162,7 @@ def play_music(music_dir, resent_gesture_queue, mode="sequence", initial_volume=
                         pygame.mixer.music.unpause()
 
                     pygame.mixer.music.set_volume(player.volume)
-
+                    
                     if gesture == "Like" and player.mode == "change_mode":
                         pygame.mixer.music.stop()
 
