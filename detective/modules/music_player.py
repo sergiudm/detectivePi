@@ -150,7 +150,7 @@ def play_music(music_dir, resent_gesture_queue, mode="sequence", initial_volume=
                 # Inner loop for handling events while music is playing
                 while pygame.mixer.music.get_busy():
                     # Check for gesture
-                    if not resent_gesture_queue:
+                    if not resent_gesture_queue.empty():
                         gesture = resent_gesture_queue.get()
                         print(f"Received gesture: {gesture}")
                         player.gesture_decode(gesture)
