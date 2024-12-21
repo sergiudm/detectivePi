@@ -38,7 +38,7 @@ class MusicPlayer:
         self.previous_gesture = "None"  # Keep track of the previous gesture
         self.mode = "normal"  # "normal" or "change_mode"
         self.volume_debounce_time = (
-            1.5  # Seconds to ignore volume gestures after a change
+            1.0  # Seconds to ignore volume gestures after a change
         )
         self.last_volume_change_time = 0
         self.paused = False
@@ -59,7 +59,7 @@ class MusicPlayer:
                 
 
         # Pause/Resume
-        elif gesture == "Return" and self.previous_gesture != "Return":
+        elif gesture == "Return": #and self.previous_gesture != "Return":
             if self.mode == "normal":
                 if self.paused:
                     print("Resuming")
@@ -75,7 +75,7 @@ class MusicPlayer:
                 and current_time - self.last_volume_change_time
                 > self.volume_debounce_time
             ):
-                self.volume = max(self.volume - 0.1, 0.0)
+                self.volume = max(self.volume - 0.4, 0.0)
                 print(f"Volume: {self.volume:.1f}")
                 self.last_volume_change_time = current_time
 
@@ -86,7 +86,7 @@ class MusicPlayer:
                 and current_time - self.last_volume_change_time
                 > self.volume_debounce_time
             ):
-                self.volume = min(self.volume + 0.1, 1.0)
+                self.volume = min(self.volume + 0.4, 1.0)
                 print(f"Volume: {self.volume:.1f}")
                 self.last_volume_change_time = current_time
 
@@ -150,7 +150,7 @@ def play_music(music_dir, resent_gesture_queue, mode="sequence", initial_volume=
                 while pygame.mixer.music.get_busy():
                     # Check for gesture
                     if not resent_gesture_queue.empty():
-                        resent_gesture_queue_copy = copy(resent_gesture_queue)
+                        resent_gesture_queue_copy = resent_gesture_queue
                         print("resent_gesture_queue_copy = copy(resent_gesture_queue)")
                         gesture = resent_gesture_queue_copy.get()
                         print(f"Received gesture: {gesture}")
@@ -162,9 +162,11 @@ def play_music(music_dir, resent_gesture_queue, mode="sequence", initial_volume=
                         pygame.mixer.music.unpause()
 
                     pygame.mixer.music.set_volume(player.volume)
+                    print(f"Volume: {player.volume:.1f}")
                     
-                    if gesture == "Like" and player.mode == "change_mode":
+                    if gesture == "Like":
                         pygame.mixer.music.stop()
+                        break
 
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:

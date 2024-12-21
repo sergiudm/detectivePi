@@ -4,7 +4,7 @@
     "default_detect_mode": "others",
     "use_camera": true,
     "LED_pin": 18,
-    "which_detect":"gesture",
+    "which_detect":"body",
     "use_visualization": true,
     "server_email": "3815288578@qq.com",
     "server_email_password": "vozebkdjzmrkccgf",
