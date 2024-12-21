@@ -38,7 +38,7 @@ class MusicPlayer:
         self.previous_gesture = "None"  # Keep track of the previous gesture
         self.mode = "normal"  # "normal" or "change_mode"
         self.volume_debounce_time = (
-            0.3  # Seconds to ignore volume gestures after a change
+            1.5  # Seconds to ignore volume gestures after a change
         )
         self.last_volume_change_time = 0
         self.paused = False
@@ -56,7 +56,7 @@ class MusicPlayer:
             if self.mode == "change_mode":
                 # play next song
                 print("Playing next song")
-                pass
+                
 
         # Pause/Resume
         elif gesture == "Return" and self.previous_gesture != "Return":
@@ -168,11 +168,12 @@ def play_music(music_dir, resent_gesture_queue, mode="sequence", initial_volume=
 
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
+                            print("Exiting...")
                             pygame.mixer.music.stop()
                             pygame.mixer.quit()
                             return
 
-                    time.sleep(0.1)  # Check for events less frequently
+                    time.sleep(2)  # Check for events less frequently
 
             except pygame.error as e:
                 print(f"Error playing {music_files[track_num]}: {e}")
