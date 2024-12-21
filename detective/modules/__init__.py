@@ -6,6 +6,7 @@ from .common import detect_all_finger_state, detect_hand_state
 from .detect_master import relax_detect
 from .detect_others import working_detect
 from .gpio_controller import gpio_state_change
+from .music_player import play_music
 from .gesture import gesture_detect
 from .utils import Config
 
@@ -23,4 +24,5 @@ __all__ = [
     "detect_all_finger_state",
     "gpio_state_change",
     "detect_hand_state",
+    "play_music",
 ]

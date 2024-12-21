@@ -3,6 +3,7 @@ from .modules import (
     working_detect,
     gesture_detect,
     gpio_state_change,
+    play_music,
     Config,
 )
 
@@ -11,5 +12,6 @@ __all__ = [
     "working_detect",
     "gesture_detect",
     "gpio_state_change",
+    "play_music",
     "Config",
 ]
