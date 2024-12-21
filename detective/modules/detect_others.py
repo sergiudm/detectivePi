@@ -36,6 +36,7 @@ def handle_detection(
     smtp_server,
     smtp_port,
     target_email,
+    data=None,
 ):
     output_path = os.path.join(path, "output_image.jpeg")
     success, img_output = cap.read()
@@ -72,14 +73,16 @@ def handle_detection(
     else:
         current_time = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
         send_email(
+            data,
             subject="国家反卷总局消息",
-            body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷中心提示您，您的室友于{current_time}在内卷，请立即采取相应措施！下载[国家反卷中心APP](https://sergiudm.github.io/detective/)，查看更多信息！</p>",
+            body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷中心提示您，您的室友于{current_time}在内卷，请立即采取相应措施！下载国家反卷中心APP，查看更多信息！</p>",
             to_emails=target_email,
             from_email=server_email,
             password=server_password,
             smtp_server=smtp_server,
             smtp_port=smtp_port,
             image_path=output_path,  # Use the first image found
+            
         )
         # 发邮件
     os.remove(output_path)
@@ -103,6 +106,9 @@ def working_detect(
     # Pin_buzzer = pin
     # GPIO.setmode(GPIO.BCM)
     # GPIO.setup(Pin_buzzer, GPIO.OUT)
+    soft_stop_running_counter=0
+    hard_stop_running_counter=0
+    maximum_running_frequence = 0
     walking_pose_angle_a = False
     walking_pose_angle_b = False
     walking_counters = 0
@@ -113,6 +119,8 @@ def working_detect(
     smtp_port = int(protocol[3])
     target_email = protocol[4]
     pTime = 0
+    start_walking = True
+    start_walking_time = None
     global resent_gesture # 全局变量
     try:
         model_1_time, model_1_state = 0, 0
@@ -157,12 +165,18 @@ def working_detect(
                     slouching_start_time,
                     effective_detection_duration,
                 )
-                is_running(landmarks,mpPose,walking_pose_angle_a,walking_pose_angle_b)
+                walking_pose_angle_a,walking_pose_angle_b=is_running(landmarks,mpPose,walking_pose_angle_a,walking_pose_angle_b)
 
-                start_walking = True
-                start_walking_time = None
+                if start_walking ==False:
+                    if walking_pose_angle_a ==walking_pose_angle_a_OLD and walking_pose_angle_b == walking_pose_angle_b_OLD:
+                        soft_stop_running_counter+=1
+                    if walking_pose_angle_a !=walking_pose_angle_a_OLD or walking_pose_angle_b != walking_pose_angle_b_OLD:
+                        soft_stop_running_counter+=0
+
+               
                 if walking_pose_angle_a and start_walking:
-                    sitting_start_time = time.time()
+                    start_walking_time = time.time()
+                    print(start_walking_time)
                     start_walking = False
 
                 if walking_pose_angle_a and walking_pose_angle_b:
@@ -170,9 +184,13 @@ def working_detect(
                     walking_pose_angle_a,walking_pose_angle_b = False,False
                     print("Walking_counter:",walking_counters)
 
-                walking_frequence = walking_counters / (time.time() - start_walking_time)
-                walking_frequence = round(walking_frequence, 2) 
-                print(walking_frequence)
+                if not start_walking:
+                    walking_frequence = walking_counters / (time.time() - start_walking_time+1)
+                    walking_frequence = round(walking_frequence, 2) 
+                    if maximum_running_frequence<walking_frequence:
+                        maximum_running_frequence = walking_frequence
+
+                    print(walking_frequence)
                 working = sitting and slouching
 
                 if sitting and model_1_time == 0:
@@ -189,6 +207,7 @@ def working_detect(
                             smtp_server,
                             smtp_port,
                             target_email,
+                            None,
                         ),
                     )
                     detection_thread.start()
@@ -212,6 +231,34 @@ def working_detect(
                     (0, 255, 0) if sitting else (0, 0, 255),
                     3,
                 )
+                walking_pose_angle_a_OLD = walking_pose_angle_a
+                walking_pose_angle_b_OLD = walking_pose_angle_b
+                
+            
+            if soft_stop_running_counter>=50:
+                hard_stop_running_counter+=1
+                soft_stop_running_counter=0
+            if hard_stop_running_counter>=10:
+                walking_counters=0
+                start_walking = True
+                hard_stop_running_counter=0
+                print("Stop Running")
+                stop_running_thread = threading.Thread(
+                        target=handle_detection,
+                        args=(
+                            cap,
+                            path,
+                            pack_trans,
+                            server_email,
+                            server_password,
+                            smtp_server,
+                            smtp_port,
+                            target_email,
+                            maximum_running_frequence,
+                        ),
+                    )
+                stop_running_thread.start()
+                print("stop_running_thread started")
 
             cTime = time.time()
             fps = 1.0 / (cTime - pTime)
@@ -224,7 +271,7 @@ def working_detect(
                 cv2.putText(
                     img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3
                 )
-                
+
             if cv2.waitKey(1) == ord("q"):
                 break
             if use_vis:
