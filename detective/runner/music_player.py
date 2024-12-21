@@ -66,7 +66,7 @@ def play_music(music_dir, mode="sequence"):
 
 
 if __name__ == "__main__":
-    music_directory = "/path/to/your/music/directory"  # Replace with the actual path
+    music_directory = "assets/music"  # Replace with the actual path
     playback_mode = "shuffle"  # Change to 'sequence' or 'repeat' as needed
 
     play_music(music_directory, playback_mode)

@@ -7,8 +7,6 @@ import struct
 import threading
 import datetime
 
-# from .device import activate_buzzer
-# import RPi.GPIO as GPIO
 import os
 import time
 from ..communication import send_email
