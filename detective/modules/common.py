@@ -7,7 +7,7 @@ def points_distance(x0, y0, x1, y1):
     return math.sqrt((x0 - x1) ** 2 + (y0 - y1) ** 2)
 
 
-def calculate_angle(a, b, c):
+def calculate_angle(a, b, c): #计算角B
     a = [a.x, a.y]
     b = [b.x, b.y]
     c = [c.x, c.y]
@@ -73,21 +73,41 @@ def is_slouching(landmarks, mpPose):
     # Assuming an angle less than 160 degrees indicates slouching
     return angle < 160
 
-def is_running(landmarks, mpPose):
+def is_running(landmarks, mpPose, walking_pose_angle_a, walking_pose_angle_b ):
     left_hip = landmarks[mpPose.PoseLandmark.LEFT_HIP.value]
     left_knee = landmarks[mpPose.PoseLandmark.LEFT_KNEE.value]
-    left_ankle = landmarks[mpPose.PoseLandmark.LEFT_ANKLE.value]
+
     right_hip = landmarks[mpPose.PoseLandmark.RIGHT_HIP.value]
     right_knee = landmarks[mpPose.PoseLandmark.RIGHT_KNEE.value]
-    right_ankle = landmarks[mpPose.PoseLandmark.RIGHT_ANKLE.value]
 
-    # Calculate angles at both knees
-    left_knee_angle = calculate_angle(left_hip, left_knee, left_ankle)
-    right_knee_angle = calculate_angle(right_hip, right_knee, right_ankle)
+    # 计算虚拟髋关节的坐标
+    virtual_hip_x = (left_hip.x + right_hip.x) / 2
+    virtual_hip_y = (left_hip.y + right_hip.y) / 2
 
-    # Assuming running involves a certain range of knee angles
-    return left_knee_angle < 150 and right_knee_angle < 150
+    a = left_knee
+    c = right_knee
 
+    a = [a.x, a.y]
+    b = [virtual_hip_x , virtual_hip_y]
+    c = [c.x, c.y]
+
+    ab = [a[0] - b[0], a[1] - b[1]]
+    cb = [c[0] - b[0], c[1] - b[1]]
+
+    dot_product = ab[0] * cb[0] + ab[1] * cb[1]
+    ab_magnitude = math.hypot(ab[0], ab[1])
+    cb_magnitude = math.hypot(cb[0], cb[1])
+
+    angle = math.acos(dot_product / (ab_magnitude * cb_magnitude))
+
+    if angle > 5*math.pi / 18:
+        walking_pose_angle_a = True
+        return walking_pose_angle_a, walking_pose_angle_b
+    
+    if angle < math.pi / 18:
+        walking_pose_angle_b = True
+        return walking_pose_angle_a, walking_pose_angle_b
+    
 def detect_all_finger_state(all_points):
     finger_first_angle_bend_threshold = math.pi * 0.25  # 大拇指弯曲阈值
     finger_other_angle_bend_threshold = math.pi * 0.5  # 其他手指弯曲阈值
