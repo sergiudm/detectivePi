@@ -238,7 +238,6 @@ def meditation_helper(
     effective_detection_duration,
     use_vis,
     pack_trans,
-    setting_time,
     setting_time_queue,
 ):
     while True:
