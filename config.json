@@ -2,7 +2,7 @@
     "use_pi": false,
     "plugin_list": [
         "information_server",
-        "GPIO_controller",
+        "working_detect",
         "music_server",
         "gpio_controller",
         "gesture_detection",
@@ -18,6 +18,7 @@
     "server_ip": "10.13.220.234",
     "server_port": 12345,
     "server_list": [
+        "10.12.196.228",
         "10.13.220.234"
     ],
     "target_email": [
