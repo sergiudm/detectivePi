@@ -3,10 +3,7 @@
     "plugin_list": [
         "information_server",
         "working_detect",
-        "music_server",
-        "gpio_controller",
-        "gesture_detection",
-        "relax_detect"
+        "music_server"
     ],
     "default_detect_mode": "others",
     "use_camera": true,
@@ -15,11 +12,11 @@
     "use_visualization": true,
     "server_email": "3815288578@qq.com",
     "server_email_password": "vozebkdjzmrkccgf",
-    "server_ip": "10.13.220.234",
+    "server_ip": "192.168.220.208", 
     "server_port": 12345,
     "server_list": [
-        "10.12.196.228",
-        "10.13.220.234"
+        "192.168.220.68",
+        "192.168.220.208"
     ],
     "target_email": [
         "12212635@mail.sustech.edu.cn",

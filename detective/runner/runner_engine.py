@@ -74,7 +74,7 @@ def run_application(config):
     which_detect = config.get_param("which_detect")
     pin_data = config.get_param("pin_data")
     server_ip = config.get_param("server_ip")
-    server_ips = config.get_param("server_ips")
+    server_ips = config.get_param("server_list")
     server_port = config.get_param("server_port")
     plugin_list = config.get_param("plugin_list")
 
