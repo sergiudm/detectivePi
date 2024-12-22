@@ -3,7 +3,7 @@ from .common import is_slouching
 from .common import check_status
 from .common import judge_Pause, judge_OK, judge_Like
 from .common import detect_all_finger_state, detect_hand_state
-from .medetation_assistant import meditation_helper
+from .meditation_assistant import meditation_helper
 from .detect_others import working_detect
 from .gpio_controller import gpio_state_change
 from .music_player import music_play

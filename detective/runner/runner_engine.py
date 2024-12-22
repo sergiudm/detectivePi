@@ -7,18 +7,9 @@ from detective.communication.server import do_server
 from detective.runner import music_engine
 import threading
 
-# 打印当前的 sys.path
-
-# 添加一个新的路径到 sys.path
-
-
-# 现在尝试导入位于新路径中的模块
-
 
 def add_path():
-    # 使用os.path.join确保路径的正确性，并替换环境变量
     path_to_add = os.path.join(os.environ["HOME"], os.environ["USER"], "detectivePy")
-
     # 将路径添加到sys.path
     sys.path.append(path_to_add)
 
@@ -32,7 +23,7 @@ elif platform.system() == "Linux":
 config = Config()
 from .. import (
     working_detect,
-    relax_detect,
+    meditation_helper,
     gesture_detect,
     gpio_state_change,
     music_play,
@@ -52,7 +43,6 @@ def run_application(config):
     use_pi = config.get_param("use_pi")
     plugin = config.get_param("plugin")
     LED_pin = config.get_param("LED_pin")
-    detect_other = config.get_param("default_detect_mode") == "others"
     use_camera = config.get_param("use_camera")
     video_path = config.get_param("video_path")
     image_path = config.get_param("image_path")
@@ -94,7 +84,6 @@ def run_application(config):
     resent_gesture_queue = Queue(maxsize=1)
     music_player = music_engine.MusicPlayer(music_path)
 
-
     # Start threads
     server_thread = threading.Thread(
         target=do_server,
@@ -128,7 +117,6 @@ def run_application(config):
         ),
     )
 
-
     gesture_detection_thread = threading.Thread(
         target=gesture_detect,
         args=(
@@ -139,20 +127,21 @@ def run_application(config):
         ),
     )
 
-    relax_detect_thread = threading.Thread(
-        target=relax_detect,
+    meditation_helper_thread = threading.Thread(
+        target=meditation_helper,
         args=(
             mpPose,
             pose,
             mpDraw,
             cap,
             image_path,
-            send_delay,
-            effective_detection_duration,
             protocol,
             LED_pin,
+            send_delay,
+            effective_detection_duration,
             use_vis,
             packet_transfer,
+            resent_gesture_queue,
         ),
     )
     if use_pi:
@@ -171,7 +160,7 @@ def run_application(config):
                 "music_server": music_thread,
                 "gpio_controller": gpio_controller_thread,
                 "gesture_detection": gesture_detection_thread,
-                "relax_detect": relax_detect_thread,
+                "meditation_helper": meditation_helper_thread,
             }[name]
     else:
         def name2thread(name):
@@ -179,8 +168,8 @@ def run_application(config):
                 "information_server": server_thread,
                 "working_detect": working_detect_thread,
                 "music_server": music_thread,
+                "meditation_helper": meditation_helper_thread,
                 "gesture_detection": gesture_detection_thread,
-                "relax_detect": relax_detect_thread,
             }[name]
 
     thread_list = []

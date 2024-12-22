@@ -72,7 +72,7 @@ def send_relax_signal(
         current_time = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
         send_email(
             subject="国家反卷总局消息",
-            body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷中心提示您，您应该休息了！！下载[国家反卷中心APP](https://sergiudm.github.io/detective/)，查看更多信息！</p>",
+            body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷中心提示您，您应该休息了！！下载[国家反卷中心APP](https://sergiudm.github.io/detective/)，查看更多信息！</p >",
             to_emails=target_email,
             from_email=server_email,
             password=server_password,
@@ -113,12 +113,13 @@ def relax_detect(
     totle_time = 0
 
     try:
-        model_1_time, model_1_state = 0, 0
+        #model_1_time, model_1_state = 0, 0
         sitting_start_time = None
         slouching_start_time = None
         sitting = False
         slouching = False
         end_time = time.time()
+        CD_time = 4
         while totle_time < setting_time:
             success, img = cap.read()
 
@@ -161,10 +162,8 @@ def relax_detect(
 
                 working = sitting and slouching
 
-                if sitting and model_1_time == 0:
-                    model_1_time = time.time()
-                    model_1_state = 1
-                    detection_thread = threading.Thread(
+                if sitting and (not slouching) and (CD_time<=0):
+                    mail_thread = threading.Thread(
                         target=send_relax_signal,
                         args=(
                             cap,
@@ -177,12 +176,9 @@ def relax_detect(
                             target_email,
                         ),
                     )
-                    detection_thread.start()
-                    print("Detection thread started")
-
-                if time.time() - model_1_time > send_delay and model_1_state == 1:
-                    model_1_state = 0
-                    model_1_time = 0
+                    CD_time=send_delay
+                    mail_thread.start()
+                    print("Mail thread started")
 
                 status_text = "Sitting" if sitting else "Not Sitting"
                 j_text = ""
@@ -212,8 +208,9 @@ def relax_detect(
                 cv2.imshow("Image", img)
             cv2.waitKey(1)
             end_time = time.time()
+            spending_time = end_time - start_time
+            CD_time-=spending_time
             if sitting and slouching:
-                spending_time = end_time - start_time
                 totle_time += spending_time
 
     except KeyboardInterrupt:
@@ -248,6 +245,7 @@ def meditation_helper(
             "OK": 240,
             "Left": 300,
             "Right": 360,
+            "None":0
         }
 
         relax_detect(
