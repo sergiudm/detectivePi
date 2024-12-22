@@ -23,7 +23,7 @@ def get_path(parent_path):
 
     # 构建指向父文件夹中的 mailPic 目录的路径
     paths = os.path.join(parent_parent_directory, parent_path)
-    print(paths)
+    #print(paths)
     return paths
 
 
@@ -238,6 +238,7 @@ def meditation_helper(
     setting_time_queue,
 ):
     while True:
+        time.sleep(1)
         setting_time_queue2time = {
             "Pause": 60,
             "Like": 120,
