@@ -1,12 +1,7 @@
 {
     "use_pi": false,
     "plugin_list": [
-        "information_server",
-        "working_detect",
-        "music_server",
-        "gpio_controller",
-        "gesture_detection",
-        "relax_detect"
+        "gesture_detection"
     ],
     "default_detect_mode": "others",
     "use_camera": true,

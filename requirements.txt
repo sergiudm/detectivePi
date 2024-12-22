@@ -26,6 +26,7 @@ ghp-import==2.1.0
 idna==3.10
 imagesize==1.4.1
 importlib_metadata @ file:///home/conda/feedstock_root/build_artifacts/importlib-metadata_1733223117029/work
+iniconfig==2.0.0
 ipykernel @ file:///home/conda/feedstock_root/build_artifacts/ipykernel_1719845459717/work
 ipython @ file:///home/conda/feedstock_root/build_artifacts/ipython_1732896932739/work
 jaraco.classes==3.4.0
@@ -75,6 +76,7 @@ pickleshare @ file:///home/conda/feedstock_root/build_artifacts/pickleshare_1733
 pillow==10.4.0
 pkginfo==1.12.0
 platformdirs==4.2.2
+pluggy==1.5.0
 prompt_toolkit @ file:///home/conda/feedstock_root/build_artifacts/prompt-toolkit_1733302527033/work
 protobuf==4.25.5
 psutil @ file:///home/conda/feedstock_root/build_artifacts/psutil_1729847040822/work
@@ -89,6 +91,7 @@ pymdown-extensions==10.12
 pyparsing==3.2.0
 pyphen==0.15.0
 pyproject_hooks==1.2.0
+pytest==8.3.4
 python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1733215673016/work
 PyYAML==6.0.2
 pyyaml_env_tag==0.1

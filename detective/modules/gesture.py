@@ -142,6 +142,8 @@ def gesture_detect(cap, server_ips, server_port, use_vis):
             recent_gesture_states = current_state
             print(recent_gesture_states)
             # 启用客户端，发送手势状态
+            print("Sending gesture state to server...")
+            print(server_ips, server_port)
             do_client(recent_gesture_states, server_ips, server_port)
 
             # 更新最近状态列表

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="detective_pi",
-    version="0.1.5",  
+    version="0.2.0",  
     author="Sergiu Han",  
     author_email="sergiudm@outlook.com",  
     description="A versatile tool for daily use",
@@ -14,6 +14,7 @@ setup(
         "opencv-python",
         "opencv-python-headless",
         "mediapipe",
+        "pygame"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
