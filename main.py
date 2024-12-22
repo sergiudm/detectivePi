@@ -66,7 +66,7 @@ def run_application():
         )
     else:
         # 检测自己
-        relax_detect(
+        meditation_helper(
             mpPose,
             pose,
             mpDraw,
