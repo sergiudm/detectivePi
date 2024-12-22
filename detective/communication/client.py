@@ -1,6 +1,7 @@
 import socket
 
-def do_client(gesture,server_ip,server_port): # gesture is int
+
+def do_client(gesture, server_ip, server_port):  # gesture is int
     # 创建一个socket对象
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -8,7 +9,7 @@ def do_client(gesture,server_ip,server_port): # gesture is int
     client_socket.connect((server_ip, server_port))
 
     try:
-        client_socket.sendall(gesture.encode('utf-8'))
+        client_socket.sendall(gesture.encode("utf-8"))
 
     except KeyboardInterrupt:
         # shutdown the connection

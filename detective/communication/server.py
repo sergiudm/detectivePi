@@ -2,7 +2,7 @@ import socket
 import threading
 
 
-def do_server(queue,server_ip,server_port):
+def do_server(queue, server_ip, server_port):
     global resent_gesture  # 记录最近的手势状态, 即使开启新的线程也可以调用
     # 创建一个socket对象
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
