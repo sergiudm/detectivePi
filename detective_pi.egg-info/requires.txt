@@ -1,4 +1,0 @@
-opencv-python
-opencv-python-headless
-mediapipe
-pygame
