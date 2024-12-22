@@ -71,7 +71,7 @@ def is_slouching(landmarks, mpPose):
     angle = calculate_angle(left_shoulder, left_hip, left_knee)
 
     # Assuming an angle less than 160 degrees indicates slouching
-    return angle < 160
+    return angle < 100
 
 def is_running(landmarks, mpPose, walking_pose_angle_a, walking_pose_angle_b ):
     left_hip = landmarks[mpPose.PoseLandmark.LEFT_HIP.value]

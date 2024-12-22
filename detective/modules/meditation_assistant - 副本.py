@@ -71,7 +71,6 @@ def send_relax_signal(
     else:
         current_time = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
         send_email(
-            data=None,
             subject="国家反卷总局消息",
             body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷中心提示您，您的休息姿势不正确！！下载[国家反卷中心APP](https://sergiudm.github.io/detective/)，查看更多信息！</p >",
             to_emails=target_email,
@@ -122,7 +121,7 @@ def relax_detect(
         end_time = time.time()
         CD_time = 4
         while totle_time < setting_time:
-            print("totle_time:", totle_time,"setting_time: ",setting_time,"CD_time: ",CD_time)
+            print("totle_time:", totle_time,"setting_time: ",setting_time)
             success, img = cap.read()
 
             start_time = end_time
@@ -182,10 +181,7 @@ def relax_detect(
                     mail_thread.start()
                     print("Mail thread started")
 
-                status_text_a = "Sitting" if sitting else "Not Sitting"
-
-                status_text_b = "slouching" if slouching else "Not slouching"
-                status_text = status_text_a + " , " + status_text_b
+                status_text = "Sitting" if sitting else "Not Sitting"
                 j_text = ""
                 if slouching:
                     j_text = "内卷！"
@@ -195,7 +191,7 @@ def relax_detect(
                     status_text,
                     (100, 100),
                     cv2.FONT_HERSHEY_SIMPLEX,
-                    1,
+                    3,
                     (0, 255, 0) if sitting else (0, 0, 255),
                     3,
                 )
@@ -242,29 +238,33 @@ def meditation_helper(
     pack_trans,
     setting_time_queue,
 ):  
+    while True:
+        time.sleep(1)
+        setting_time_queue2time = {
+            "Pause": 60,
+            "Like": 120,
+            "Return": 180,
+            "OK": 240,
+            "Left": 300,
+            "Right": 360,
+            "None":0
+        }
 
-    time.sleep(1)
-    setting_time_queue2time = {
-        "Pause": 60,
-        "Like": 120,
-        "Return": 180,
-        "OK": 240,
-        "Left": 300,
-        "Right": 360,
-        "None":0
-    }
-
-    relax_detect(
-        mpPose,
-        pose,
-        mpDraw,
-        cap,
-        image_path,
-        protocol,
-        pin,
-        send_delay,
-        effective_detection_duration,
-        use_vis,
-        pack_trans,
-        setting_time=500,
-    )
+        relax_detect(
+            mpPose,
+            pose,
+            mpDraw,
+            cap,
+            image_path,
+            protocol,
+            pin,
+            send_delay,
+            effective_detection_duration,
+            use_vis,
+            pack_trans,
+            setting_time=(
+                setting_time_queue2time[setting_time_queue.get()]
+                if setting_time_queue.qsize() > 0
+                else 0
+            ),
+        )
