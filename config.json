@@ -3,10 +3,7 @@
     "plugin_list": [
         "information_server",
         "working_detect",
-        "music_server",
-        "gpio_controller",
-        "gesture_detection",
-        "relax_detect"
+        "music_server"
     ],
     "default_detect_mode": "others",
     "use_camera": true,

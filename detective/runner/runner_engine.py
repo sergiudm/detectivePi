@@ -94,6 +94,13 @@ def run_application(config):
     music_player = music_engine.MusicPlayer(music_path)
     if use_pi:
         state_machine_obj = state_machine.StateMachine("stop", pin_data)
+        gpio_controller_thread = threading.Thread(
+        target=gpio_state_change,
+        args=(
+            state_machine_obj,
+            resent_gesture_queue,
+        ),
+    )
 
     # Start threads
     server_thread = threading.Thread(
@@ -127,13 +134,7 @@ def run_application(config):
             resent_gesture_queue,
         ),
     )
-    gpio_controller_thread = threading.Thread(
-        target=gpio_state_change,
-        args=(
-            state_machine_obj,
-            resent_gesture_queue,
-        ),
-    )
+
 
     gesture_detection_thread = threading.Thread(
         target=gesture_detect,
