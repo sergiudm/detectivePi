@@ -85,7 +85,7 @@ def send_relax_signal(
     print("Thread finished")
 
 
-def relax_detect(  # 坐姿不正，发送邮件
+def relax_detect(
     mpPose,
     pose,
     mpDraw,
@@ -161,7 +161,7 @@ def relax_detect(  # 坐姿不正，发送邮件
 
                 working = sitting and slouching
 
-                if sitting and model_1_time == 0:  # FIXME: relace with working
+                if sitting and model_1_time == 0:
                     model_1_time = time.time()
                     model_1_state = 1
                     detection_thread = threading.Thread(
@@ -226,7 +226,7 @@ def relax_detect(  # 坐姿不正，发送邮件
         cv2.destroyAllWindows()
 
 
-def relax_thread(
+def meditation_helper(
     mpPose,
     pose,
     mpDraw,
@@ -242,7 +242,14 @@ def relax_thread(
     setting_time_queue,
 ):
     while True:
-        
+        setting_time_queue2time = {
+            "Pause": 60,
+            "Like": 120,
+            "Return": 180,
+            "OK": 240,
+            "Left": 300,
+            "Right": 360,
+        }
 
         relax_detect(
             mpPose,
@@ -256,5 +263,9 @@ def relax_thread(
             effective_detection_duration,
             use_vis,
             pack_trans,
-            setting_time,
+            setting_time=(
+                setting_time_queue2time[setting_time_queue.get()]
+                if setting_time_queue.qsize() > 0
+                else 0
+            ),
         )
