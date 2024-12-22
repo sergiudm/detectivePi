@@ -121,6 +121,7 @@ def relax_detect(
         end_time = time.time()
         CD_time = 4
         while totle_time < setting_time:
+            print("totle_time:", totle_time)
             success, img = cap.read()
 
             start_time = end_time
