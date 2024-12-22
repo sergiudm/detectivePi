@@ -92,15 +92,7 @@ def run_application(config):
         exit()
     resent_gesture_queue = Queue(maxsize=1)
     music_player = music_engine.MusicPlayer(music_path)
-    if use_pi:
-        state_machine_obj = state_machine.StateMachine("stop", pin_data)
-        gpio_controller_thread = threading.Thread(
-        target=gpio_state_change,
-        args=(
-            state_machine_obj,
-            resent_gesture_queue,
-        ),
-    )
+
 
     # Start threads
     server_thread = threading.Thread(
@@ -162,16 +154,33 @@ def run_application(config):
             packet_transfer,
         ),
     )
-
-    def name2thread(name):
-        return {
-            "information_server": server_thread,
-            "working_detect": working_detect_thread,
-            "music_server": music_thread,
-            "gpio_controller": gpio_controller_thread,
-            "gesture_detection": gesture_detection_thread,
-            "relax_detect": relax_detect_thread,
-        }[name]
+    if use_pi:
+        state_machine_obj = state_machine.StateMachine("stop", pin_data)
+        gpio_controller_thread = threading.Thread(
+        target=gpio_state_change,
+        args=(
+            state_machine_obj,
+            resent_gesture_queue,
+        ),
+    )
+        def name2thread(name):
+            return {
+                "information_server": server_thread,
+                "working_detect": working_detect_thread,
+                "music_server": music_thread,
+                "gpio_controller": gpio_controller_thread,
+                "gesture_detection": gesture_detection_thread,
+                "relax_detect": relax_detect_thread,
+            }[name]
+    else:
+        def name2thread(name):
+            return {
+                "information_server": server_thread,
+                "working_detect": working_detect_thread,
+                "music_server": music_thread,
+                "gesture_detection": gesture_detection_thread,
+                "relax_detect": relax_detect_thread,
+            }[name]
 
     thread_list = []
     for plugin in plugin_list:
