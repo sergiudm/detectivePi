@@ -1,5 +1,5 @@
 from .modules import (
-    relax_detect,
+    meditation_helper,
     working_detect,
     gesture_detect,
     gpio_state_change,
@@ -8,7 +8,7 @@ from .modules import (
 )
 
 __all__ = [
-    "relax_detect",
+    "meditation_helper",
     "working_detect",
     "gesture_detect",
     "gpio_state_change",
