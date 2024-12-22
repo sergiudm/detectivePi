@@ -72,7 +72,7 @@ def send_relax_signal(
         current_time = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
         send_email(
             subject="国家反卷总局消息",
-            body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷中心提示您，您应该休息了！！下载[国家反卷中心APP](https://sergiudm.github.io/detective/)，查看更多信息！</p >",
+            body=f"<h1>来自 🤡🤡🤡🤡🤡</h1><p>国家反卷中心提示您，您的休息姿势不正确！！下载[国家反卷中心APP](https://sergiudm.github.io/detective/)，查看更多信息！</p >",
             to_emails=target_email,
             from_email=server_email,
             password=server_password,
