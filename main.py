@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 from pathlib import Path
 
-from detective import working_detect, relax_detect, gesture_detect
+from detective import working_detect, meditation_helper, gesture_detect
 from detective import Config
 
 
