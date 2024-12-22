@@ -111,7 +111,7 @@ def relax_detect(  # 坐姿不正，发送邮件
     target_email = protocol[4]
     pTime = 0
     totle_time = 0
-
+    CD_time=4
     try:
         model_1_time, model_1_state = 0, 0
         sitting_start_time = None
@@ -161,10 +161,8 @@ def relax_detect(  # 坐姿不正，发送邮件
 
                 working = sitting and slouching
 
-                if sitting and model_1_time == 0:  # FIXME: relace with working
-                    model_1_time = time.time()
-                    model_1_state = 1
-                    detection_thread = threading.Thread(
+                if sitting and (not slouching) and (CD_time<=0):
+                    mail_thread = threading.Thread(
                         target=send_relax_signal,
                         args=(
                             cap,
@@ -177,17 +175,12 @@ def relax_detect(  # 坐姿不正，发送邮件
                             target_email,
                         ),
                     )
-                    detection_thread.start()
-                    print("Detection thread started")
-
-                if time.time() - model_1_time > send_delay and model_1_state == 1:
-                    model_1_state = 0
-                    model_1_time = 0
+                    CD_time+=60
+                    mail_thread.start() # 开启线程 
+                    print("Mail thread started")
 
                 status_text = "Sitting" if sitting else "Not Sitting"
                 j_text = ""
-                if slouching:
-                    j_text = "内卷！"
 
                 cv2.putText(
                     img,
@@ -212,8 +205,9 @@ def relax_detect(  # 坐姿不正，发送邮件
                 cv2.imshow("Image", img)
             cv2.waitKey(1)
             end_time = time.time()
+            spending_time = end_time - start_time
+            CD_time-=spending_time
             if sitting and slouching:
-                spending_time = end_time - start_time
                 totle_time += spending_time
 
     except KeyboardInterrupt:
