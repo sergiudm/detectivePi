@@ -29,7 +29,7 @@ def show_message(frame, message, position=(10, 30)):
 recent_states = [""] * 20
 
 
-def gesture_detect(cap, server_ip, server_port, use_vis=True):
+def gesture_detect(cap, server_ip, server_port, use_vis):
     """detect hand gesture"""
     while True:
         ret, frame = cap.read()
