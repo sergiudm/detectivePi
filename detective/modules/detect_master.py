@@ -85,7 +85,7 @@ def send_relax_signal(
     print("Thread finished")
 
 
-def relax_detect(
+def relax_detect(  # 坐姿不正，发送邮件
     mpPose,
     pose,
     mpDraw,
@@ -97,6 +97,7 @@ def relax_detect(
     effective_detection_duration,
     use_vis,
     pack_trans,
+    setting_time,
 ):
     # initial sensor pin
     # Pin_buzzer = pin
@@ -109,14 +110,19 @@ def relax_detect(
     smtp_port = int(protocol[3])
     target_email = protocol[4]
     pTime = 0
+    totle_time = 0
+
     try:
         model_1_time, model_1_state = 0, 0
         sitting_start_time = None
         slouching_start_time = None
         sitting = False
         slouching = False
-        while True:
+        end_time = time.time()
+        while totle_time < setting_time:
             success, img = cap.read()
+
+            start_time = end_time
 
             if not success:
                 print("Error: Failed to read frame")
@@ -205,6 +211,11 @@ def relax_detect(
             if use_vis:
                 cv2.imshow("Image", img)
             cv2.waitKey(1)
+            end_time = time.time()
+            if sitting and slouching:
+                spending_time = end_time - start_time
+                totle_time += spending_time
+
     except KeyboardInterrupt:
         cap.release()
         cv2.destroyAllWindows()
@@ -213,3 +224,37 @@ def relax_detect(
     finally:
         cap.release()
         cv2.destroyAllWindows()
+
+
+def relax_thread(
+    mpPose,
+    pose,
+    mpDraw,
+    cap,
+    image_path,
+    protocol,
+    pin,
+    send_delay,
+    effective_detection_duration,
+    use_vis,
+    pack_trans,
+    setting_time,
+    setting_time_queue,
+):
+    while True:
+        
+
+        relax_detect(
+            mpPose,
+            pose,
+            mpDraw,
+            cap,
+            image_path,
+            protocol,
+            pin,
+            send_delay,
+            effective_detection_duration,
+            use_vis,
+            pack_trans,
+            setting_time,
+        )

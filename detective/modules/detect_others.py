@@ -220,15 +220,15 @@ def working_detect(
                 if slouching:
                     j_text = "内卷！"
 
-                cv2.putText(
-                    img,
-                    status_text,
-                    (100, 100),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    3,
-                    (0, 255, 0) if sitting else (0, 0, 255),
-                    3,
-                )
+                # cv2.putText(
+                #     img,
+                #     status_text,
+                #     (100, 100),
+                #     cv2.FONT_HERSHEY_SIMPLEX,
+                #     3,
+                #     (0, 255, 0) if sitting else (0, 0, 255),
+                #     3,
+                # )
                 walking_pose_angle_a_OLD = walking_pose_angle_a
                 walking_pose_angle_b_OLD = walking_pose_angle_b
 
