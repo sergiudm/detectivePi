@@ -175,6 +175,7 @@ def run_application(config):
     thread_list = []
     for plugin in plugin_list:
         thread_list.append(name2thread(plugin))
+    print("Thread list:", thread_list)
     for thread in thread_list:
         thread.start()
     for thread in thread_list:
