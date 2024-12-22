@@ -85,7 +85,7 @@ def send_relax_signal(
     print("Thread finished")
 
 
-def relax_detect(  # 坐姿不正，发送邮件
+def relax_detect(
     mpPose,
     pose,
     mpDraw,
@@ -111,7 +111,7 @@ def relax_detect(  # 坐姿不正，发送邮件
     target_email = protocol[4]
     pTime = 0
     totle_time = 0
-    CD_time=4
+
     try:
         model_1_time, model_1_state = 0, 0
         sitting_start_time = None
@@ -161,8 +161,10 @@ def relax_detect(  # 坐姿不正，发送邮件
 
                 working = sitting and slouching
 
-                if sitting and (not slouching) and (CD_time<=0):
-                    mail_thread = threading.Thread(
+                if sitting and model_1_time == 0:
+                    model_1_time = time.time()
+                    model_1_state = 1
+                    detection_thread = threading.Thread(
                         target=send_relax_signal,
                         args=(
                             cap,
@@ -175,12 +177,17 @@ def relax_detect(  # 坐姿不正，发送邮件
                             target_email,
                         ),
                     )
-                    CD_time+=60
-                    mail_thread.start() # 开启线程 
-                    print("Mail thread started")
+                    detection_thread.start()
+                    print("Detection thread started")
+
+                if time.time() - model_1_time > send_delay and model_1_state == 1:
+                    model_1_state = 0
+                    model_1_time = 0
 
                 status_text = "Sitting" if sitting else "Not Sitting"
                 j_text = ""
+                if slouching:
+                    j_text = "内卷！"
 
                 cv2.putText(
                     img,
@@ -205,9 +212,8 @@ def relax_detect(  # 坐姿不正，发送邮件
                 cv2.imshow("Image", img)
             cv2.waitKey(1)
             end_time = time.time()
-            spending_time = end_time - start_time
-            CD_time-=spending_time
             if sitting and slouching:
+                spending_time = end_time - start_time
                 totle_time += spending_time
 
     except KeyboardInterrupt:
@@ -220,7 +226,7 @@ def relax_detect(  # 坐姿不正，发送邮件
         cv2.destroyAllWindows()
 
 
-def relax_thread(
+def meditation_helper(
     mpPose,
     pose,
     mpDraw,
@@ -236,7 +242,14 @@ def relax_thread(
     setting_time_queue,
 ):
     while True:
-        
+        setting_time_queue2time = {
+            "Pause": 60,
+            "Like": 120,
+            "Return": 180,
+            "OK": 240,
+            "Left": 300,
+            "Right": 360,
+        }
 
         relax_detect(
             mpPose,
@@ -250,5 +263,9 @@ def relax_thread(
             effective_detection_duration,
             use_vis,
             pack_trans,
-            setting_time,
+            setting_time=(
+                setting_time_queue2time[setting_time_queue.get()]
+                if setting_time_queue.qsize() > 0
+                else 0
+            ),
         )

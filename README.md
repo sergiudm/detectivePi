@@ -2,7 +2,7 @@ detective：一款更适合中国宝宝的室友内卷监测工具
 ==================================================
 [![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
 [![CI Tests](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
-[![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/detective-pi/0.1.5/)
+[![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/detective-pi/0.2.0/)
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
@@ -122,7 +122,7 @@ sudo chmod +x run.sh
 ```
 Windows:
 ```bash
-win_run.bat
+./win_run.bat
 ```
 
 ## 功能
