@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: detective_pi
-Version: 0.1.5
+Version: 0.2.0
 Summary: A versatile tool for daily use
 Home-page: https://github.com/sergiudm/detective
 Author: Sergiu Han
@@ -10,13 +10,18 @@ Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: opencv-python
 Requires-Dist: opencv-python-headless
 Requires-Dist: mediapipe
+Requires-Dist: pygame
 
 detective：一款更适合中国宝宝的室友内卷监测工具
 ==================================================
-
+[![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
+[![CI Tests](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
+[![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/detective-pi/0.1.5/)
+![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
 detective是一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。
@@ -38,7 +43,6 @@ detective是一款更适合中国宝宝的室友内卷监测工具，它可以�
 ## 安装
 ## pip安装
 ```bash
-conda create -n <your_env_name> python=3.10
 pip install detective-pi
 ```
 
@@ -65,6 +69,15 @@ pip install -r requirements.txt
 以下是一个示例：
 ```json
 {
+    "use_pi": false,
+    "plugin_list": [
+        "information_server",
+        "GPIO_controller",
+        "music_server",
+        "gpio_controller",
+        "gesture_detection",
+        "relax_detect"
+    ], # 注意：涉及GPIO的插件要开启`use_pi`，如果不使用GPIO相关的库则关闭
     "default_detect_mode": "others",
     "use_camera": true,
     "LED_pin": 18, # LED灯的引脚
@@ -83,7 +96,38 @@ pip install -r requirements.txt
     "effective_detection_duration": 2,
     "max_num_hands": 2,
     "min_detection_confidence": 0.65,
-    "min_tracking_confidence": 0.65
+    "min_tracking_confidence": 0.65,
+    "pin_data": {
+        "pin_list": [
+            17,
+            23,
+            24,
+            25,
+            27
+        ],
+        "pin_map": {
+            "Right": [
+                17,
+                23,
+                24
+            ],
+            "Return": [
+                23,
+                24
+            ],
+            "Left": [
+                17,
+                24
+            ],
+            "Pause": [],
+            "Like": [
+                25
+            ],
+            "OK": [
+                27
+            ]
+        }
+    }
 }
 ```
 >[!CAUTION] 
@@ -96,8 +140,7 @@ sudo chmod +x run.sh
 ```
 Windows:
 ```bash
-cd detective
-python main.py
+win_run.bat
 ```
 
 ## 功能
