@@ -4,6 +4,7 @@ from queue import Queue
 import sys, os, platform
 from detective import Config
 from detective.communication.server import do_server
+from detective.runner import music_engine
 import threading
 
 # 打印当前的 sys.path
@@ -24,7 +25,6 @@ def add_path():
 
 if platform.system() == "Windows":
     sys.path.append("d:/A_Data_of_2024_Full/MicroPC/project/detectivePy")
-    print(11111111111111111111111111111111111)
     print("Current sys.path:", sys.path)
 elif platform.system() == "Linux":
     add_path()
@@ -35,7 +35,7 @@ from .. import (
     relax_detect,
     gesture_detect,
     gpio_state_change,
-    play_music,
+    music_play,
 )
 
 if config.get_param("use_pi"):
@@ -126,10 +126,11 @@ def run_application(config):
                         resent_gesture_queue,
                     ),
                 )
+            music_player = music_engine.MusicPlayer("assets/music")
             music_thread = threading.Thread(
-                target=play_music,
+                target=music_play,
                 args=(
-                    "assets/music",
+                    music_player,
                     resent_gesture_queue,
                 ),
             )
