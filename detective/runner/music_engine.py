@@ -35,7 +35,7 @@ gesture_decode(gesture):
 
 class MusicPlayer:
     def __init__(
-        self, music_dir="assets/music", volume_step=5, volume_update_interval=0.5
+        self, music_dir, volume_step=5, volume_update_interval=0.5
     ):
         pygame.init()
         pygame.mixer.init()

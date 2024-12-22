@@ -56,6 +56,7 @@ def run_application(config):
     use_camera = config.get_param("use_camera")
     video_path = config.get_param("video_path")
     image_path = config.get_param("image_path")
+    music_path = config.get_param("music_path")
     server_email = config.get_param("server_email")
     server_password = config.get_param("server_email_password")
     smtp_server = config.get_param("smtp_server")
@@ -126,7 +127,7 @@ def run_application(config):
                         resent_gesture_queue,
                     ),
                 )
-            music_player = music_engine.MusicPlayer("assets/music")
+            music_player = music_engine.MusicPlayer(music_path)
             music_thread = threading.Thread(
                 target=music_play,
                 args=(
