@@ -1,7 +1,8 @@
 detective：一款更适合中国宝宝的室友内卷监测工具
 ==================================================
 [![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
-[![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/detective-pi/0.1.5/)
+[![CI Tests](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
+[![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/detective-pi/0.2.0/)
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
@@ -51,7 +52,14 @@ pip install -r requirements.txt
 ```json
 {
     "use_pi": false,
-    "plugin": "music_player", # 注意：当插件涉及GPIO操作时，use_pi必须为true
+    "plugin_list": [
+        "information_server",
+        "GPIO_controller",
+        "music_server",
+        "gpio_controller",
+        "gesture_detection",
+        "relax_detect"
+    ], # 注意：涉及GPIO的插件要开启`use_pi`，如果不使用GPIO相关的库则关闭
     "default_detect_mode": "others",
     "use_camera": true,
     "LED_pin": 18, # LED灯的引脚
@@ -105,7 +113,7 @@ pip install -r requirements.txt
 }
 ```
 !!! warning
-  实际使用时，请删除`config.json`中的所有注释!
+    实际使用时，请删除`config.json`中的所有注释!
 
 Linux:
 ```bash
@@ -114,7 +122,7 @@ sudo chmod +x run.sh
 ```
 Windows:
 ```bash
-win_run.bat
+./win_run.bat
 ```
 
 ## 功能
