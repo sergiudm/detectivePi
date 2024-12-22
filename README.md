@@ -52,7 +52,14 @@ pip install -r requirements.txt
 ```json
 {
     "use_pi": false,
-    "plugin": "music_player", # 注意：当插件涉及GPIO操作时，use_pi必须为true
+    "plugin_list": [
+        "information_server",
+        "GPIO_controller",
+        "music_server",
+        "gpio_controller",
+        "gesture_detection",
+        "relax_detect"
+    ], # 注意：涉及GPIO的插件要开启`use_pi`，如果不使用GPIO相关的库则关闭
     "default_detect_mode": "others",
     "use_camera": true,
     "LED_pin": 18, # LED灯的引脚
