@@ -74,8 +74,11 @@ def run_application(config):
     which_detect = config.get_param("which_detect")
     pin_data = config.get_param("pin_data")
     server_ip = config.get_param("server_ip")
+    server_ips = config.get_param("server_ips")
     server_port = config.get_param("server_port")
+    plugin_list = config.get_param("plugin_list")
 
+    # initializations
     if use_camera:
         cap = cv2.VideoCapture(0)
         print("Using camera")
@@ -87,86 +90,95 @@ def run_application(config):
     if not cap.isOpened():
         print("Error: Cannot open video file")
         exit()
+    resent_gesture_queue = Queue(maxsize=1)
+    music_player = music_engine.MusicPlayer(music_path)
+    if use_pi:
+        state_machine_obj = state_machine.StateMachine("stop", pin_data)
 
-    if which_detect == "gesture":
-        gesture_detect(cap, server_ip, server_port, use_vis)
-    if which_detect == "body":
-        if detect_other:
-            resent_gesture_queue = Queue(maxsize=1)
+    # Start threads
+    server_thread = threading.Thread(
+        target=do_server,
+        args=(
+            resent_gesture_queue,
+            server_ip,
+            server_port,
+        ),
+    )
+    working_detect_thread = threading.Thread(
+        target=working_detect,
+        args=(
+            mpPose,
+            pose,
+            mpDraw,
+            cap,
+            image_path,
+            protocol,
+            LED_pin,
+            send_delay,
+            effective_detection_duration,
+            use_vis,
+            packet_transfer,
+        ),
+    )
+    music_thread = threading.Thread(
+        target=music_play,
+        args=(
+            music_player,
+            resent_gesture_queue,
+        ),
+    )
+    gpio_controller_thread = threading.Thread(
+        target=gpio_state_change,
+        args=(
+            state_machine_obj,
+            resent_gesture_queue,
+        ),
+    )
 
-            server_thread = threading.Thread(
-                target=do_server,
-                args=(
-                    resent_gesture_queue,
-                    server_ip,
-                    server_port,
-                ),
-            )
-            working_detect_thread = threading.Thread(
-                target=working_detect,
-                args=(
-                    mpPose,
-                    pose,
-                    mpDraw,
-                    cap,
-                    image_path,
-                    protocol,
-                    LED_pin,
-                    send_delay,
-                    effective_detection_duration,
-                    use_vis,
-                    packet_transfer,
-                ),
-            )
-            if use_pi:
-                state_machine_obj = state_machine.StateMachine("stop", pin_data)
-                gpio_controller_thread = threading.Thread(
-                    target=gpio_state_change,
-                    args=(
-                        state_machine_obj,
-                        resent_gesture_queue,
-                    ),
-                )
-            music_player = music_engine.MusicPlayer(music_path)
-            music_thread = threading.Thread(
-                target=music_play,
-                args=(
-                    music_player,
-                    resent_gesture_queue,
-                ),
-            )
+    gesture_detection_thread = threading.Thread(
+        target=gesture_detect,
+        args=(
+            cap,
+            server_ips,
+            server_port,
+            use_vis,
+        ),
+    )
 
-            client_thread = None
-            if plugin == "working_detect":
-                client_thread = working_detect_thread
-            if use_pi and plugin == "gpio_state_change":
-                client_thread = gpio_controller_thread
-            if plugin == "music_player":
-                client_thread = music_thread
+    relax_detect_thread = threading.Thread(
+        target=relax_detect,
+        args=(
+            mpPose,
+            pose,
+            mpDraw,
+            cap,
+            image_path,
+            send_delay,
+            effective_detection_duration,
+            protocol,
+            LED_pin,
+            use_vis,
+            packet_transfer,
+        ),
+    )
 
-            server_thread.start()
-            client_thread.start()
-            working_detect_thread.start()
-            server_thread.join()
-            client_thread.join()
-            working_detect_thread.join()
+    def name2thread(name):
+        return {
+            "information_server": server_thread,
+            "working_detect": working_detect_thread,
+            "music_server": music_thread,
+            "gpio_controller": gpio_controller_thread,
+            "gesture_detection": gesture_detection_thread,
+            "relax_detect": relax_detect_thread,
+        }[name]
 
-        else:
-            # 检测自己
-            # 参照上述程序，将其改为多线程
-            relax_detect(
-                mpPose,
-                pose,
-                mpDraw,
-                cap,
-                image_path=image_path,
-                send_delay=send_delay,
-                effective_detection_duration=effective_detection_duration,
-                protocol=protocol,
-                pin=LED_pin,
-                use_vis=use_vis,
-                pack_trans=packet_transfer,
-            )
+    thread_list = []
+    for plugin in plugin_list:
+        thread_list.append(name2thread(plugin))
+    for thread in thread_list:
+        thread.start()
+    for thread in thread_list:
+        thread.join()
 
 
 if __name__ == "__main__":

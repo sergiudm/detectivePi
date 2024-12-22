@@ -29,7 +29,7 @@ def show_message(frame, message, position=(10, 30)):
 recent_states = [""] * 20
 
 
-def gesture_detect(cap, server_ip, server_port, use_vis):
+def gesture_detect(cap, server_ips, server_port, use_vis):
     """detect hand gesture"""
     while True:
         ret, frame = cap.read()
@@ -142,7 +142,7 @@ def gesture_detect(cap, server_ip, server_port, use_vis):
             recent_gesture_states = current_state
             print(recent_gesture_states)
             # 启用客户端，发送手势状态
-            do_client(recent_gesture_states, server_ip, server_port)
+            do_client(recent_gesture_states, server_ips, server_port)
 
             # 更新最近状态列表
             recent_states.pop(0)

@@ -1,15 +1,25 @@
 {
     "use_pi": false,
-    "plugin": "music_player",
+    "plugin_list": [
+        "information_server",
+        "GPIO_controller",
+        "music_server",
+        "gpio_controller",
+        "gesture_detection",
+        "relax_detect"
+    ],
     "default_detect_mode": "others",
     "use_camera": true,
     "LED_pin": 18,
-    "which_detect":"gesture",
+    "which_detect": "gesture",
     "use_visualization": true,
     "server_email": "3815288578@qq.com",
     "server_email_password": "vozebkdjzmrkccgf",
     "server_ip": "10.13.220.234",
     "server_port": 12345,
+    "server_list": [
+        "10.13.220.234"
+    ],
     "target_email": [
         "12212635@mail.sustech.edu.cn",
         "surgiu@qq.com"
