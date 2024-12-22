@@ -1,3 +1,4 @@
+LICENSE
 README.md
 setup.py
 detective/__init__.py
@@ -9,9 +10,14 @@ detective/modules/__init__.py
 detective/modules/common.py
 detective/modules/detect_master.py
 detective/modules/detect_others.py
-detective/modules/device.py
 detective/modules/gesture.py
+detective/modules/gpio_controller.py
+detective/modules/music_player.py
 detective/modules/utils.py
+detective/runner/__init__.py
+detective/runner/music_engine.py
+detective/runner/runner_engine.py
+detective/runner/state_machine.py
 detective_pi.egg-info/PKG-INFO
 detective_pi.egg-info/SOURCES.txt
 detective_pi.egg-info/dependency_links.txt

@@ -77,6 +77,7 @@ def run_application(config):
     server_ips = config.get_param("server_list")
     server_port = config.get_param("server_port")
     plugin_list = config.get_param("plugin_list")
+    config.print_info()
 
     # initializations
     if use_camera:

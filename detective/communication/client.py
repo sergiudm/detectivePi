@@ -12,6 +12,7 @@ def do_client(gesture, server_ips, server_port):  # gesture is int, server_ips i
     """
     sockets = []
     for server_ip in server_ips:
+        print(f"Connecting to {server_ip}:{server_port}...")
         try:
             # Create a socket object
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

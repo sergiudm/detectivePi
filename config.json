@@ -4,6 +4,7 @@
         "information_server",
         "working_detect",
         "music_server"
+        "gesture_detection"
     ],
     "default_detect_mode": "others",
     "use_camera": true,
