@@ -2,4 +2,4 @@
 **/dist/**
 **/detective_pi.egg-info/**
 **/build/**
-config.json
+/config.json

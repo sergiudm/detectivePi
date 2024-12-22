@@ -58,7 +58,7 @@ pip install -r requirements.txt
         "music_server",
         "gpio_controller",
         "gesture_detection",
-        "meditation_helper" 
+        "meditation_helper",
     ], # 注意：涉及GPIO的插件要开启`use_pi`，如果不使用GPIO相关的库则关闭
     "default_detect_mode": "others",
     "use_camera": true,
