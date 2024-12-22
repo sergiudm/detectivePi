@@ -122,7 +122,7 @@ def relax_detect(
         end_time = time.time()
         CD_time = 4
         while totle_time < setting_time:
-            print("totle_time:", totle_time,"setting_time: ",setting_time,"CD_time: ",CD_time)
+            #print("totle_time:", totle_time,"setting_time: ",setting_time,"CD_time: ",CD_time)
             success, img = cap.read()
 
             start_time = end_time
@@ -134,7 +134,7 @@ def relax_detect(
             results = pose.process(imgRGB)
 
             if results.pose_landmarks:
-                # print("person detected!")
+                print("person detected!")
                 mpDraw.draw_landmarks(
                     img, results.pose_landmarks, mpPose.POSE_CONNECTIONS
                 )
@@ -186,6 +186,7 @@ def relax_detect(
 
                 status_text_b = "slouching" if slouching else "Not slouching"
                 status_text = status_text_a + " , " + status_text_b
+                print(status_text)
                 j_text = ""
                 if slouching:
                     j_text = "内卷！"
