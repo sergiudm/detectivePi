@@ -149,14 +149,13 @@ class MusicPlayer:
 
 
 # Fixture for creating a MusicPlayer instance with a temporary directory.
-# The temporary directory is not used anymore since the music files are in assets/music
 @pytest.fixture
 def player():
     # Initialize the MusicPlayer with the temporary directory
     pygame.init()
-    pygame.mixer.init()
-    player = MusicPlayer("assets/music")
-    yield player
+    with patch("pygame.mixer.init") as mock_mixer_init:  # Mock mixer.init
+        yield MusicPlayer("assets/music")
+
     pygame.quit()
 
 
@@ -166,7 +165,6 @@ def test_play_music(mock_play, player):
     player.play_music()
     mock_play.assert_called_once()
     assert player.is_playing
-
 
 
 def test_gesture_decode_volume_right(player):
