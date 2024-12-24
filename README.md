@@ -13,7 +13,7 @@ Thread-Everything: 一个简单易用的跨平台多端通信工具
 - 使用单个 Windows 客户端控制远程机器人。
 - 基于手势识别的在线动作游戏。
 - 智能KTV（手势切歌、氛围灯等）。
-- 通用GPIO调度器，零代码配置GPIO电平，秒杀大学Lab作业。
+- 通用GPIO调度器，零代码配置GPIO电平，秒杀大学里各种Lab作业。
 
 ## 架构
 ```mermaid
@@ -59,18 +59,11 @@ graph TD
 ```
 本项目的核心模块是一个插件调度器，它负责加载插件并调度插件的执行。插件是一个独立的 Python 模块，它可以实现一些特定的功能，如控制GPIO电平、面部识别等。插件调度器会根据一个统一的配置文件控制插件的加载和执行。插件调度器是一个非常灵活的框架，用户可以根据需求自定义插件的功能。我们提供了视觉后端引擎、音乐引擎和状态机来简化插件的开发。基于现有框架，本项目实现了音乐播放器、手势识别、坐姿检测、GPIO切换器这几个插件。另外，这些功能还可通过通信模块实现P2P通信。
 
-## 环境要求
+## 运行环境
 | 环境   | 版本                         |
 | ------ | ---------------------------- |
 | OS     | Ubuntu22.04, Raspberry Pi OS, Window11, Debian 12|
 | Python | 3.10                         |
-
-## 硬件清单
-- Raspberry Pi 4B * 2
-- 摄像头 * 2
-- 蜂鸣器
-- LED灯
-- 面包板
 
 ## 安装
 ## pip安装
@@ -98,7 +91,7 @@ pip install -r requirements.txt
 
 ## 使用说明
 开始前，你需要配置在项目根目录创建一个`config.json`文件，
-以下是一个示例：
+以下是一个示例，完整的配置文件请参考`config_template.json`。
 ```json
 {
     "use_pi": false,
@@ -110,9 +103,7 @@ pip install -r requirements.txt
         "gesture_detection",
         "meditation_helper",
     ], # 注意：涉及GPIO的插件要开启`use_pi`，如果不使用GPIO相关的库则关闭
-    "default_detect_mode": "others",
     "use_camera": true,
-    "LED_pin": 18, # LED灯的引脚
     "use_visualization": false, # 是否使用可视化
     "server_email": "youremail@example.com",
     "server_email_password": "your email password",# 请使用授权码
@@ -197,28 +188,38 @@ Windows:
 
 
 ## 应用场景举例
-Thread-Everything具有高度的可扩展性，可以应用于多种场景。基于现有的插件，我们实现了以下应用场景：
+Thread-Everything具有高度的可扩展性，可以应用于多种场景。基于现有的插件，我们打造了以下应用：
 
-- 打坐助手
-    - 应用场景的假设：用户希望在打坐时不希望被外界干扰，如电话、微信等。现阶段的计时器需要使用手机或者闹钟进行接触式的时间设定，并无法观测用户的姿势是否正确。使用Thread-Everything 实现的打坐助手可以进行无接触式的时间设定与姿势校正提示。
+- 基于视觉识别的打坐助手
+    - 应用场景的假设：修行者打坐时不希望被外界干扰，如电话、微信等。现阶段的计时器需要使用手机或者闹钟进行接触式的时间设定，而且对于初学者，无法得知自己的姿势是否正确。使用Thread-Everything 视觉引擎实现的打坐助手可以进行无接触式的时间设定与姿势校正提示。
     - 用户使用手势设定打坐时间，并进行打坐。
-    - 打坐过程中，树莓派会使用摄像头监控人体姿势，如发现姿势不正确，就会亮灯提醒（可自己配置），并且结束时会通过邮件发送不正确姿势的照片，提醒用户校正姿势。
+    - 打坐过程中，树莓派（或Windows）会使用摄像头监控人体姿势，如发现姿势不正确，就会亮灯提醒（可自己配置），并且结束时会通过邮件发送不正确姿势的照片，提醒用户校正姿势。
+<div style="display: flex; justify-content: space-around;">
+    <img src="assets/images/sittingdemo.gif" alt="Animation 1" width="200">
+</div>
 
- - 智能健身房：步频检测与音乐控制
-    - 应用场景的假设：用户在室内健身时，有检测步频的需求。在健身领域中，智能手表常常作为步频检测的工具，但是智能手表有着相当大的局限性，如智能手表的数据采样为随机选取若干周期内的震荡信息（周期性采样），并通过函数映射，获取步频信息。周期性采样方式对与有着长期跑步经验的用户有有效，对于锻炼经验少、身体素质不佳的用户效果不佳。原因是后者的数据周期性远低于前者。使用Thread-Everything 实现的室内健身步频检测可以通过检测图像来记录步数，计算步频，避免了上述问题，实现了更好的效果。基于图像信息，用户还可以通过手势，改变音响播放的音乐，不必在健身时随身携带手机。
-    - 检测到人体运动后会计算步频
-    - 运动结束后，会发送运动报告邮件，包含运动快照、最高步频等信息。
+ - 智能健身房：步频检测、BGM控制
+    - 通过引体向上的动作控制健身房BGM以及光效等炫库操作。
+    - 检测到人跑步或者椭圆仪运动会计算步频（基于视觉，比手表更准确）。
+    - 运动结束后，会自动发送运动报告邮件，包含运动快照、最高步频等信息。
     - 运动时，用户可以通过手势对音乐流进行操作，如：切歌、播放与暂停等。
+  
+<div style="display: flex; justify-content: space-around;">
+    <img src="assets/images/fitness.gif" alt="Animation 1" width="200">
+    <img src="assets/images/fitness2.gif" alt="Animation 2" width="200">
+    <img src="assets/images/f3.gif" alt="Animation 3" width="200">
+</div>
 
 ## 后续工作
 
-- 完善视觉后端引擎
+- 核心模块
+  - 完善视觉后端引擎
+    - 目前的视觉引擎完全基于[mediapipe](https://github.com/google-ai-edge/mediapipe)，我们希望后续提供一个通用的视觉处理模块，支持不同的视觉库和自定义算法。
 
-目前的视觉引擎完全基于[mediapipe](https://github.com/google-ai-edge/mediapipe)，我们希望后续提供一个通用的视觉处理模块，支持不同的视觉库和自定义算法。
-
-- 集成语音处理模块
-
-新增一个简单的语音处理模块，便于远程呼叫、语音输入等插件的开发。
+  - 集成语音处理模块
+    - 新增一个简单的语音处理模块，便于远程呼叫、语音输入等插件的开发。
+  - GPIO控制器
+    - 完善GPIO控制器，支持更丰富的GPIO操作，如PWM、I2C等。
 
 ## 如何贡献
 - 添加更多[插件](https://sergiudm.github.io/Thread-Everything/plugins-tutorial/)
