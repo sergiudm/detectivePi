@@ -27,12 +27,9 @@ jobs:
         pip install -r requirements.txt
         pip install pytest  # Install pytest
 
-    - name: Create dummy music files
+    - name: copy music files in 'assets/music'
       run: |
-        mkdir -p tests/test_music
-        for i in {1..3}; do
-          touch tests/test_music/test_song$i.mp3
-        done
+        
     - name: Run tests with pytest
       run: |
         pytest tests/  # Run all tests in the 'tests' directory
