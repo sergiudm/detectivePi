@@ -1,4 +1,4 @@
-detectivePi：一款更适合中国宝宝的室友内卷监测工具
+Thread-Everything: 一个简单易用的跨平台多端通信工具
 ==================================================
 [![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
 [![CI Tests](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
@@ -6,8 +6,13 @@ detectivePi：一款更适合中国宝宝的室友内卷监测工具
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
-detectivePi是用于一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。
-> TODO：demo
+Thread-Everything 提供了一个简单的 API，可以集成来自*不同*主机的任何Python线程（插件,它可以帮助您更有效地管理线程和通信。
+
+例如：
+- 使用单个 Windows 客户端控制远程机器人。
+- 与朋友一起使用手势玩在线游戏。
+- 使用单个服务器监控您的家。
+
 
 ## 环境要求
 | 环境   | 版本                         |
