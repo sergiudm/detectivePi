@@ -27,7 +27,9 @@ For instance:
     Thread-Everything supports machines running on different operating systems, including Ubuntu, Raspberry Pi OS, and Windows
 
 ## Architecture
+
 ```mermaid
+
 graph TD
     subgraph "Resource Manager"
         C[config.json]
