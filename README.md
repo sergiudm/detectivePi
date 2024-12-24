@@ -6,13 +6,62 @@ Thread-Everything: 一个简单易用的跨平台多端通信工具
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
-Thread-Everything 提供了一个简单的 API，可以集成来自*不同*主机的任何Python线程（插件,它可以帮助您更有效地管理线程和通信。
+Thread-Everything 提供了易用的 Python API 集成*不同*主机上的任何线程
 
 例如：
 - 使用单个 Windows 客户端控制远程机器人。
-- 与朋友一起使用手势玩在线游戏。
-- 使用单个服务器监控您的家。
+- 基于手势识别的在线动作游戏。
+- 智能KTV（手势切歌、氛围灯等）。
 
+## 架构
+```mermaid
+
+graph TD
+    subgraph "Resource Manager"
+        C[config.json]
+        C-->P[Assets Loder]
+    end
+
+    subgraph "Core Components"
+        B(Plugin Manager) -- loads--> C
+        B --> D[Runner Engine]
+        D --> E[State Machine]
+        D --> N[Vision Engine]
+        D --> F[Music Engine]
+    end
+
+    subgraph "Plugins (modules)"
+        F --> G[Music Player]
+        N --> H[Body Feature Extractor]
+        N --> O[Gesture detector]
+        E --> I[GPIO Controller]
+        D --> J[Other User Defined Plugins] 
+    end
+    
+    subgraph "Communication Module"
+      D --> K[Socket Module]
+      D --> L[Mailbot]
+      K <--> M[Other Machines]
+    end
+
+    style B fill:#ccf,stroke:#333,stroke-width:2px
+    style D fill:#cfc,stroke:#333,stroke-width:2px
+    style G fill:#f9f,stroke:#333,stroke-width:2px
+    style H fill:#f9f,stroke:#333,stroke-width:2px
+    style I fill:#f9f,stroke:#333,stroke-width:2px
+    style J fill:#f9f,stroke:#333,stroke-width:2px
+    style O fill:#f9f,stroke:#333,stroke-width:2px
+    style K fill:#ccf,stroke:#333,stroke-width:2px
+    style L fill:#ccf,stroke:#333,stroke-width:2px
+```
+本项目的核心组件包括：
+- 插件管理器
+  - 加载插件
+- 运行引擎
+- 状态机
+- 视觉引擎
+- 音乐引擎
+- 通信模块
 
 ## 环境要求
 | 环境   | 版本                         |
@@ -131,17 +180,18 @@ Windows:
 ```
 
 ## 功能
+根据你的需求，你可以在`modules`目录下定义自己的插件，我们已经实现了一些插件，包括：
 - 手势检测
-    - 开启手势线程之后，计算机使用搭载的摄像头捕捉图像信息，并分析画面中的手势，如“OK”、“Like”等。
-    - 会反馈当前的手势信息。
+    - 开启手势线程之后，计算机使用搭载的摄像头捕捉图像信息，并分析画面中的手势，如“OK”、“赞”等。
+    - 可以将识别到的手势信息通过通信模块发给多个目标主机。
 - 姿势检测
     - 开启姿势线程之后，计算机使用搭载的摄像头捕捉图像信息，并分析画面中的人体姿势，如“sitting”、“slouching”等。
     - 会反馈当前的姿势信息。
 - 音乐控制
-    - 音乐线程可以控制设备上的音乐流。
+    - 音乐线程可以控制设备上的音乐流，如播放模式、音量、播放与暂停等。
     - 该线程需要信息的输入，如：通过命令行输入、手势线程的输入。 
     - 将音乐文件放入指定路径，音乐线程即可自动控制。
-- GPIO控制
+- 通用GPIO控制器
     - GPIO控制线程只能在树莓派上使用，用于控制GPIO引脚的电平。
     - 该线程需要信息的输入，如：通过命令行输入、手势线程的输入。
 - 个性化邮件发送
@@ -150,8 +200,8 @@ Windows:
 
 
 
-## 应用场景
-
+## 应用场景举例
+Thread-Everything具有高度的可扩展性，可以应用于多种场景。基于现有的插件，我们实现了以下应用场景：
 
 - 冥想助手
     - 应用场景的假设：用户希望在冥想的时候不被外界干扰，如电话、微信等。现阶段的计时器（番茄钟）需要使用手机或者闹钟进行接触式的时间设定，并无法观测用户的姿势是否正确。使用Thread-Everything 实现的冥想助手可以进行无接触式的时间设定与姿势校正提示。
@@ -161,25 +211,16 @@ Windows:
  - 智能健身房：步频检测与音乐控制
     - 应用场景的假设：用户在室内健身时，有检测步频的需求。在健身领域中，智能手表常常作为步频检测的工具，但是智能手表有着相当大的局限性，如智能手表的数据采样为随机选取若干周期内的震荡信息（周期性采样），并通过函数映射，获取步频信息。周期性采样方式对与有着长期跑步经验的用户有有效，对于锻炼经验少、身体素质不佳的用户效果不佳。原因是后者的数据周期性远低于前者。使用Thread-Everything 实现的室内健身步频检测可以通过检测图像来记录步数，计算步频，避免了上述问题，实现了更好的效果。基于图像信息，用户还可以通过手势，改变音响播放的音乐，不必在健身时随身携带手机。
     - 检测到人体运动后会计算步频
-    - 运动结束后，会发送运动报告，包含运动快照、最高步频。
+    - 运动结束后，会发送运动报告邮件，包含运动快照、最高步频等信息。
     - 运动时，用户可以通过手势对音乐流进行操作，如：切歌、播放与暂停等。
 
 ## 未来的工作
 
-- 完成检测人物 学习 与 玩游戏
-- 使用GPIO，实现更多功能，如：报警，蜂鸣器（可换为便宜的喇叭）（直到结束学习才消失）；led；微信发消息
-- 开关门检测
-  - 开关门 检测完成后： 人在寝室，才监控
-- 不良坐姿的检测
-- 魔术
+- 完善视觉后端引擎
 
 ## 如何贡献
-本仓库仅使用了[mediapipe](https://github.com/google-ai-edge/mediapipe)中的人体姿态检测和手部检测功能，如果你有更多想法，欢迎：
-
-- 提交PR
-  - [插件指南]()
-- 提交Issue
-- 传播给更多的室友
+- 添加更多[插件](https://sergiudm.github.io/Thread-Everything/plugins-tutorial/)
+- 提交issue
 
 ## Acknowledgement
 [mediapipe](https://github.com/google-ai-edge/mediapipe)|
