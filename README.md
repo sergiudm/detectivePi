@@ -6,7 +6,7 @@ Thread-Everything: 一个简单易用的跨平台多端通信工具
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
-Thread-Everything 提供了易用的 Python API 集成*不同*主机上的任何线程
+[Thread-Everything](https://sergiudm.github.io/Thread-Everything/) 提供了易用的 Python API 集成*不同*主机上的任何线程
 
 例如：
 - 使用单个 Windows 客户端控制远程机器人。
@@ -55,14 +55,7 @@ graph TD
     style K fill:#336,stroke:#ccc,stroke-width:2px
     style L fill:#336,stroke:#ccc,stroke-width:2px
 ```
-本项目的核心组件包括：
-- 插件管理器
-  - 加载插件
-- 运行引擎
-- 状态机
-- 视觉引擎
-- 音乐引擎
-- 通信模块
+本项目的核心模块是一个插件调度器，它负责加载插件并调度插件的执行。插件是一个独立的 Python 模块，它可以实现一些特定的功能，如控制GPIO电平、面部识别等。插件调度器会根据一个统一的配置文件控制插件的加载和执行。插件调度器是一个非常灵活的框架，用户可以根据需求自定义插件的功能。我们提供了视觉后端引擎、音乐引擎和状态机来简化插件的开发。基于现有框架，本项目实现了音乐播放器、手势识别、坐姿检测、GPIO切换器这几个插件。另外，这些功能还可通过通信模块实现P2P通信。
 
 ## 环境要求
 | 环境   | 版本                         |
