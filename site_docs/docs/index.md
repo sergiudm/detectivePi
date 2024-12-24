@@ -10,10 +10,13 @@ Thread-Everything provides a simple API to integrate any thread(plugin) from dif
 
 ## Features
 - Single-function plugin
+
     Add your own plugin to the system by simply creating a single Python function in the `plugins` directory
 - One-file management
+
     All the plugins are managed in a single file(`config.json`), which makes it easy to maintain and manage
 - Multi-OS support
+  
     Thread-Everything supports machines running on different operating systems, including Ubuntu, Raspberry Pi OS, and Windows
 
 ## Environment Requirements       
