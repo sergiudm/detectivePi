@@ -15,11 +15,10 @@ Thread-Everything 提供了易用的 Python API 集成*不同*主机上的任何
 
 ## 架构
 ```mermaid
-
 graph TD
     subgraph "Resource Manager"
         C[config.json]
-        C-->P[Assets Loder]
+        C-->P[Assets Loader]
     end
 
     subgraph "Core Components"
@@ -32,10 +31,10 @@ graph TD
 
     subgraph "Plugins (modules)"
         F --> G[Music Player]
+        D --> J[Other User Defined Plugins] 
         N --> H[Body Feature Extractor]
         N --> O[Gesture detector]
         E --> I[GPIO Controller]
-        D --> J[Other User Defined Plugins] 
     end
     
     subgraph "Communication Module"
@@ -44,15 +43,17 @@ graph TD
       K <--> M[Other Machines]
     end
 
-    style B fill:#ccf,stroke:#333,stroke-width:2px
-    style D fill:#cfc,stroke:#333,stroke-width:2px
-    style G fill:#f9f,stroke:#333,stroke-width:2px
-    style H fill:#f9f,stroke:#333,stroke-width:2px
-    style I fill:#f9f,stroke:#333,stroke-width:2px
-    style J fill:#f9f,stroke:#333,stroke-width:2px
-    style O fill:#f9f,stroke:#333,stroke-width:2px
-    style K fill:#ccf,stroke:#333,stroke-width:2px
-    style L fill:#ccf,stroke:#333,stroke-width:2px
+   
+
+    style B fill:#336,stroke:#ccc,stroke-width:2px
+    style D fill:#363,stroke:#ccc,stroke-width:2px
+    style G fill:#663,stroke:#ccc,stroke-width:2px
+    style H fill:#663,stroke:#ccc,stroke-width:2px
+    style I fill:#663,stroke:#ccc,stroke-width:2px
+    style J fill:#663,stroke:#ccc,stroke-width:2px
+    style O fill:#663,stroke:#ccc,stroke-width:2px
+    style K fill:#336,stroke:#ccc,stroke-width:2px
+    style L fill:#336,stroke:#ccc,stroke-width:2px
 ```
 本项目的核心组件包括：
 - 插件管理器
