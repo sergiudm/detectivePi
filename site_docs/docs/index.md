@@ -30,31 +30,44 @@ For instance:
 ```mermaid
 
 graph TD
-    subgraph "Runner"
-        A[Runner Engine] --> B(Plugin Manager)
-        B --> C{Configuration}
-        A --> SM(State Machine)
-        SM -.-> UI(Visualization UI)
+    subgraph "Resource Manager"
+        C[config.json]
+        C-->P[Assets Loder]
     end
 
-    subgraph "Plugins/Modules"
-        B --> D(Body Feature Extractor)
-        B --> E(Communication)
-        B --> F(GPIO Control)
-        B --> G(Music Player)
-
-        E --> E1(Client/Server)
-        E --> E2(Mail Bot)
-        G --> Assets
+    subgraph "Core Components"
+        B(Plugin Manager) -- loads--> C
+        B --> D[Runner Engine]
+        D --> E[State Machine]
+        D --> N[Vision Engine]
+        D --> F[Music Engine]
     end
 
-    D --> OpenCV
-    E1 --> Socket
-    G --> Pygame
-    Assets --> MusicFiles
+    subgraph "Plugins (modules)"
+        F --> G[Music Player]
+        N --> H[Body Feature Extractor]
+        N --> O[Gesture detector]
+        E --> I[GPIO Controller]
+        D --> J[Other User Defined Plugins] 
+    end
+    
+    subgraph "Communication Module"
+      D --> K[Socket Module]
+      D --> L[Mailbot]
+      K <--> M[Other Machines]
+    end
 
-    style C fill:#f9f,stroke:#333,stroke-width:2px
-    style UI stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
+   
+
+    style B fill:#ccf,stroke:#333,stroke-width:2px
+    style D fill:#cfc,stroke:#333,stroke-width:2px
+    style G fill:#f9f,stroke:#333,stroke-width:2px
+    style H fill:#f9f,stroke:#333,stroke-width:2px
+    style I fill:#f9f,stroke:#333,stroke-width:2px
+    style J fill:#f9f,stroke:#333,stroke-width:2px
+    style O fill:#f9f,stroke:#333,stroke-width:2px
+    style K fill:#ccf,stroke:#333,stroke-width:2px
+    style L fill:#ccf,stroke:#333,stroke-width:2px
 ```
 
 ## Environment Requirements       
