@@ -1,4 +1,4 @@
-detective：一款更适合中国宝宝的室友内卷监测工具
+detectivePi：一款更适合中国宝宝的室友内卷监测工具
 ==================================================
 [![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
 [![CI Tests](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
@@ -6,7 +6,7 @@ detective：一款更适合中国宝宝的室友内卷监测工具
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
-detective是一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。
+detectivePi是用于一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。
 > TODO：demo
 
 ## 环境要求
