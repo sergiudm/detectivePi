@@ -1,4 +1,4 @@
-site_name: DETECTIVE
+site_name: Thread-Everything
 nav: 
   - Home: index.md
   - Getting Started: getting-started.md
@@ -12,7 +12,7 @@ nav:
 
 theme:
   name: material
-  language: zh
+  language: en
   icon:
     repo: fontawesome/brands/github
     admonition:
