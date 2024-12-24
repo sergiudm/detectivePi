@@ -195,7 +195,7 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
     - 用户使用手势设定打坐时间，并进行打坐。
     - 打坐过程中，树莓派（或Windows）会使用摄像头监控人体姿势，如发现姿势不正确，就会亮灯提醒（可自己配置），并且结束时会通过邮件发送不正确姿势的照片，提醒用户校正姿势。
   - <div style="text-align: center;">
-        <img src="assets/images/sittingdemo.gif" alt="Animation 1" width="200">
+        <img src="assets/images/sittingdemo.gif" alt="Animation 1" width="400">
     </div>
 
  - 智能健身房：步频检测、BGM控制
