@@ -194,9 +194,9 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
     - 应用场景的假设：修行者打坐时不希望被外界干扰，如电话、微信等。现阶段的计时器需要使用手机或者闹钟进行接触式的时间设定，而且对于初学者，无法得知自己的姿势是否正确。使用Thread-Everything 视觉引擎实现的打坐助手可以进行无接触式的时间设定与姿势校正提示。
     - 用户使用手势设定打坐时间，并进行打坐。
     - 打坐过程中，树莓派（或Windows）会使用摄像头监控人体姿势，如发现姿势不正确，就会亮灯提醒（可自己配置），并且结束时会通过邮件发送不正确姿势的照片，提醒用户校正姿势。
-<div style="text-align: center;">
-    <img src="assets/images/sittingdemo.gif" alt="Animation 1" width="200">
-</div>
+  - <div style="text-align: center;">
+        <img src="assets/images/sittingdemo.gif" alt="Animation 1" width="200">
+    </div>
 
  - 智能健身房：步频检测、BGM控制
     - 通过引体向上的动作控制健身房BGM以及光效等炫库操作。
@@ -205,8 +205,8 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
     - 运动时，用户可以通过手势对音乐流进行操作，如：切歌、播放与暂停等。
   
 <div style="display: flex; justify-content: space-around;">
-    <img src="assets/images/fitness.gif" alt="Animation 1" width="220">
-    <img src="assets/images/fitness2.gif" alt="Animation 2" width="220">
+    <img src="assets/images/fitness.gif" alt="Animation 1" width="300">
+    <img src="assets/images/fitness2.gif" alt="Animation 2" width="300">
     <img src="assets/images/f3.gif" alt="Animation 3" width="200">
 </div>
 
