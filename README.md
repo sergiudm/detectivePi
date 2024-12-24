@@ -73,13 +73,13 @@ graph TD
 ## 安装
 ## pip安装
 ```bash
-pip install detective-pi
+pip install Thread-Everything
 ```
 
 ## 源码安装
 克隆仓库
 ```bash
-git clone https://github.com/sergiudm/detective.git
+git clone https://github.com/sergiudm/Thread-Everything.git
 cd detective
 ```
 你可以使用`deploy.sh`脚本自动安装
@@ -217,9 +217,11 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
 - 提交issue
 
 ## Acknowledgement
-[mediapipe](https://github.com/google-ai-edge/mediapipe)|
-[cv2](https://docs.opencv.org/4.x/index.html)|
-[pygame](https://www.pygame.org/docs/)
+- [mediapipe](https://github.com/google-ai-edge/mediapipe)
+
+- [cv2](https://docs.opencv.org/4.x/index.html)
+
+- [pygame](https://www.pygame.org/docs/)
 
 
 
