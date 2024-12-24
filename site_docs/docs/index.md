@@ -16,6 +16,7 @@ For instance:
 - Intelligent fitness room, control the music and lights with gestures.
 
 ## Features
+
 - Single-function plugin
 
     Add your own plugin to the system by simply creating a single Python function in the `plugins` directory
