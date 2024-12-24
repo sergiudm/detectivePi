@@ -1,93 +1,84 @@
-detective：一款更适合中国宝宝的室友内卷监测工具
+Thread-Everything：An easy-to-use interface to run threads from different machines
 ==================================================
-[![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
+[![site deployment](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
 [![CI Tests](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
 [![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/detective-pi/0.2.0/)
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
-## 介绍
+## Introduction
 
-detective是一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。
-> TODO：demo
+Thread-Everything provides a simple API to integrate any thread(plugin) from different machines with Python scripts. It can help you to manage your threads and communications more efficiently.
 
-## 环境要求
-| 环境   | 版本                                              |
-| ------ | ------------------------------------------------- |
-| OS     | Ubuntu22.04, Raspberry Pi OS, Window11, Debian 12 |
-| Python | 3.10                                              |
+## Features
+- Single-function plugin
+    Add your own plugin to the system by simply creating a single Python function in the `plugins` directory
+- One-file management
+    All the plugins are managed in a single file(`config.json`), which makes it easy to maintain and manage
+- Multi-OS support
+    Thread-Everything supports machines running on different operating systems, including Ubuntu, Raspberry Pi OS, and Windows
 
-## 硬件清单
-- Raspberry Pi 4B * 2
-- 摄像头 * 2
-- 蜂鸣器
-- LED灯
-- 面包板
+## Environment Requirements       
+|  Environment  |      Version                    |
+| ------ | -------------------------------------- |
+| OS     | Ubuntu22.04, Raspberry Pi OS, Window11 |
+| Python | >=3.8                                  |
 
-## 安装
-## pip安装
+## Installation        
+## pip install
 ```bash
 pip install detective-pi
 ```
 
-## 源码安装
-克隆仓库
+## Source code installation
+
 ```bash
 git clone https://github.com/sergiudm/detective.git
 cd detective
-```
-你可以使用`deploy.sh`脚本自动安装
-```bash
-sudo chmod +x deploy.sh
-./deploy.sh
-```
-或者手动安装
-```bash
-conda create -n <your_env_name> python=3.10
-conda activate <your_env_name>
+conda create -n detective python=3.10 -y
+echo "conda environment created"
+conda activate detective
 pip install -r requirements.txt
 ```
 
-## 使用说明
-开始前，你需要配置`config.json`文件，
-以下是一个示例：
+## Usage
+Before you start, you need to create a `config.json` file in the root directory of the project,
+Here is an example(you can find it in the `config_template.json`):
+
 ```json
 {
     "use_pi": false,
-    "plugin_list": [
+    "plugin_list": [ # Note: plugins related to GPIO need to enable `use_pi`, if you don't use GPIO-related libraries, turn it off
         "information_server",
         "GPIO_controller",
         "music_server",
         "gpio_controller",
-        "gesture_detection",
-        "relax_detect"
-    ], # 注意：涉及GPIO的插件要开启`use_pi`，如果不使用GPIO相关的库则关闭
+    ],
     "default_detect_mode": "others",
     "use_camera": true,
-    "LED_pin": 18, # LED灯的引脚
-    "use_visualization": false, # 是否使用可视化
+    "use_visualization": false, # if you want to see the detection result, set it to true
     "server_email": "youremail@example.com",
-    "server_email_password": "your email password",# 请使用授权码
+    "server_email_password": "your email password",# Note: if you use QQ email, you need to set an app password
     "target_email": [
         "email1",
         "email2"
     ],
     "smtp_server":"your smtp server",
     "smtp_port": 587,
-    "video_path": "assets/videos/sit.mp4", # use_camera为false时，使用该视频
-    "image_path": "resources", # 邮件中的图片
-    "send_delay": 13,
+    "video_path": "assets/videos/sit.mp4", # if you want to use a video file for detection, set it here
+    "image_path": "resources", # if you want to use an image file for detection, set it here
+    "send_delay": 13, # the interval between sending emails
     "effective_detection_duration": 2,
     "max_num_hands": 2,
     "min_detection_confidence": 0.65,
     "min_tracking_confidence": 0.65,
     "pin_data": {
-        "pin_list": [
+        "pin_list": [ # if you use GPIO, you need to set the pin list
             17,
             23,
             24,
             25,
             27
         ],
-        "pin_map": {
+        "pin_map": { # mapping the gesture to the pin
             "Right": [
                 17,
                 23,
@@ -113,8 +104,9 @@ pip install -r requirements.txt
 }
 ```
 !!! warning
-    实际使用时，请删除`config.json`中的所有注释!
+    In the `config.json` file, you need to remove all the comments before running the program.     
 
+### Run the program
 Linux:
 ```bash
 sudo chmod +x run.sh
@@ -125,27 +117,14 @@ Windows:
 ./win_run.bat
 ```
 
-## 功能
-- 检测是否有室友在内卷
-    - 如果有，会自动响起警报，并且发微信通知你
-- 检测你是不是卷过头了
-    - 如果连续工作超过2小时（可在`config.json`中配置），会自动响起警报，并提醒你休息一下
-- to do list
-  - 检测 学习 与 玩游戏
-    - 肩部、髋部、膝盖 夹角； 手部 位置
-  - 报警：蜂鸣器（可换为便宜的喇叭）（直到结束学习才消失）、led、微信发消息
-  - 开关门检测
-    - 开关门 检测完成后： 人在寝室，才监控
-  - 不良坐姿的检测
-  - 魔术
+## Contribution
+This project is open to contributions. You can contribute in the following ways:
 
-## 如何贡献
-本仓库仅使用了[mediapipe](https://github.com/google-ai-edge/mediapipe)中的人体姿态检测和手部检测功能，如果你有更多想法，欢迎：
+- Add more plugins
+- Improve the existing code
 
-- 提交PR
-  - [插件指南]()
-- 提交Issue
-- 传播给更多的室友
+## Future Work
 
 ## Acknowledgement
 [mediapipe](https://github.com/google-ai-edge/mediapipe)
+[pygame](https://www.pygame.org/news)
