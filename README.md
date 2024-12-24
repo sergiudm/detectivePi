@@ -47,7 +47,7 @@ pip install -r requirements.txt
 ```
 
 ## 使用说明
-开始前，你需要配置`config.json`文件，
+开始前，你需要配置在项目根目录创建一个`config.json`文件，
 以下是一个示例：
 ```json
 {
