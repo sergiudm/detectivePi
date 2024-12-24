@@ -1,5 +1,6 @@
 **/__pycache__/**
 **/dist/**
-**/detective_pi.egg-info/**
+**/Thread_Everything.egg-info/**
 **/build/**
 config.json
+.pytest_cache/
