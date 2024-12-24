@@ -1,18 +1,13 @@
-Thread-Everything：利用多线程模拟多IOT设备的同信与控制
+detectivePi：一款更适合中国宝宝的室友内卷监测工具
 ==================================================
 [![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
 [![CI Tests](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
 [![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/detective-pi/0.2.0/)
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
-
-
 ## 介绍
 
-在Thread-Everything中，我们希望将所有对传感器、元件、IOT设备的控制代码将被封装为对应的模块，开发者可以通过开启对应线程进行调用或者信息流的读取。
+detectivePi是用于一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。
 > TODO：demo
-
-## 特点
-
 
 ## 环境要求
 | 环境   | 版本                         |
