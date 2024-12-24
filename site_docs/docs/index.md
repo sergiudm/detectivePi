@@ -6,19 +6,21 @@ Thread-Everything：An easy-to-use interface to run threads from different machi
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## Introduction
 
-Thread-Everything provides a simple API to integrate any thread(plugin) from different machines with Python scripts. It can help you to manage your threads and communications more efficiently.
+[Thread-Everything](https://github.com/sergiudm/Thread-Everything) provides a simple API to integrate any thread(plugin) from different machines with Python scripts. It can help you to manage your threads and communications more efficiently.
 
 For instance:
 - Control remote robots with a single windows client.
 - Play online games with gestures with your friends.
 - Monitor your home with a single server.
+- Universal GPIO scheduler, zero code configuration of GPIO levels, killing all kinds of Lab assignments in college.
+- Intelligent fitness room, control the music and lights with gestures.
 
 ## Features
 - Single-function plugin
 
     Add your own plugin to the system by simply creating a single Python function in the `plugins` directory
 
-- One-file management
+- Single-file management
 
     All the plugins are managed in a single file(`config.json`), which makes it easy to maintain and manage
 
