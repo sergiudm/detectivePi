@@ -26,6 +26,37 @@ For instance:
   
     Thread-Everything supports machines running on different operating systems, including Ubuntu, Raspberry Pi OS, and Windows
 
+## Architecture
+```mermaid
+
+graph TD
+    subgraph "Runner"
+        A[Runner Engine] --> B(Plugin Manager)
+        B --> C{Configuration}
+        A --> SM(State Machine)
+        SM -.-> UI(Visualization UI)
+    end
+
+    subgraph "Plugins/Modules"
+        B --> D(Body Feature Extractor)
+        B --> E(Communication)
+        B --> F(GPIO Control)
+        B --> G(Music Player)
+
+        E --> E1(Client/Server)
+        E --> E2(Mail Bot)
+        G --> Assets
+    end
+
+    D --> OpenCV
+    E1 --> Socket
+    G --> Pygame
+    Assets --> MusicFiles
+
+    style C fill:#f9f,stroke:#333,stroke-width:2px
+    style UI stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
+```
+
 ## Environment Requirements       
 | Environment | Version                                |
 | ----------- | -------------------------------------- |
