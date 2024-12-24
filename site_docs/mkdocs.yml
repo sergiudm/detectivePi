@@ -9,6 +9,8 @@ nav:
   - Release Notes: release-notes.md
   - Feature Plane: feature-plane.md
   - Application: applications.md
+    
+repo_url: https://github.com/sergiudm/Thread-Everything
 
 theme:
   name: material
