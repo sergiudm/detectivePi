@@ -8,6 +8,7 @@ Thread-Everything: 一个简单易用的跨平台多端通信工具
 
 [Thread-Everything](https://sergiudm.github.io/Thread-Everything/) 提供了易用的 Python API 集成*不同*主机上的任何线程，支持Windows, Linux, 可在X86, ARM主机上运行。
 
+通过Thread-Everything，你可以轻松地把你的功能部署到不同的主机上，实现多机通信。Thread-Everything提供了一套插件机制，你可以根据自己的需求编写插件，实现不同的功能，
 例如：
 - 使用单个 Windows 客户端控制远程机器人。
 - 基于手势识别的在线动作游戏。
