@@ -152,10 +152,9 @@ class MusicPlayer:
 @pytest.fixture
 def player():
     # Initialize the MusicPlayer with the temporary directory
+    os.environ["SDL_AUDIODRIVER"] = "dummy"  # Set dummy audio driver
     pygame.init()
-    with patch("pygame.mixer.init") as mock_mixer_init:  # Mock mixer.init
-        yield MusicPlayer("assets/music")
-
+    yield MusicPlayer("assets/music")
     pygame.quit()
 
 
