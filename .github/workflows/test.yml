@@ -28,4 +28,4 @@ jobs:
         
     - name: Run tests with pytest
       run: |
-        pytest tests/  # Run all tests in the 'tests' directory
+        pytest TESTS/  # Run all tests in the 'tests' directory
