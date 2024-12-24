@@ -7,16 +7,18 @@
     "use_camera": true,
     "which_detect": "body",
     "use_visualization": true,
-    "server_email": "3815288578@qq.com",
-    "server_email_password": "vozebkdjzmrkccgf",
-    "server_ip": "10.12.107.213",
+    "server_email": "your_name@example.com",
+    "server_email_password": "your app password",
+    "server_ip": "xx.xx.xx.xx",
     "server_port": 12345,
     "server_list": [
-        "10.12.196.228"
+        "server1_ip",
+        "server2_ip",
+        "..."
     ],
     "target_email": [
-        "12212635@mail.sustech.edu.cn",
-        "surgiu@qq.com"
+        "target1@example.com",
+        "target2@example.com"
     ],
     "packet_tansfer": false,
     "smtp_server": "smtp.qq.com",
