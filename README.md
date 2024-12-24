@@ -1,13 +1,18 @@
-detectivePi：一款更适合中国宝宝的室友内卷监测工具
+Thread-Everything：利用多线程模拟多IOT设备的同信与控制
 ==================================================
 [![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
 [![CI Tests](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
 [![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/detective-pi/0.2.0/)
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
+
+
 ## 介绍
 
-detectivePi是用于一款更适合中国宝宝的室友内卷监测工具，它可以帮助你监测室友的内卷行为，让你的寝室生活更加和谐。
+在Thread-Everything中，我们希望将所有对传感器、元件、IOT设备的控制代码将被封装为对应的模块，开发者可以通过开启对应线程进行调用或者信息流的读取。
 > TODO：demo
+
+## 特点
+
 
 ## 环境要求
 | 环境   | 版本                         |
@@ -126,10 +131,32 @@ Windows:
 ```
 
 ## 功能
-- 检测是否有室友在内卷
-    - 如果有，会自动响起警报，并且发微信通知你
-- 检测你是不是卷过头了
-    - 如果连续工作超过2小时（可在`config.json`中配置），会自动响起警报，并提醒你休息一下
+- 手势检测
+    - 开启手势线程之后，计算机使用搭载的摄像头捕捉图像信息，并分析画面中的手势，如“OK”、“Like”等。
+    - 会反馈当前的手势信息。
+- 姿势检测
+    - 开启姿势线程之后，计算机使用搭载的摄像头捕捉图像信息，并分析画面中的人体姿势，如“sitting”、“slouching”等。
+    - 会反馈当前的姿势信息。
+- 音乐控制
+    - 音乐线程可以控制设备上的音乐流。
+    - 该线程需要信息的输入，如：通过命令行输入、手势线程的输入。 
+    - 将音乐文件放入指定路径，音乐线程即可自动控制。
+- GPIO控制
+    - GPIO控制线程只能在树莓派上使用，用于控制GPIO引脚的电平。
+    - 该线程需要信息的输入，如：通过命令行输入、手势线程的输入。
+- 个性化邮件发送
+    - GPIO控制线程只能在树莓派上使用，用于控制GPIO引脚的电平。
+    - 该线程需要信息的输入，如：通过命令行输入、手势线程的输入。
+
+
+
+## 应用场景
+
+
+- 冥想助手
+    - 用户可使用该线程自主设定所需的冥想时间。
+    - 该线程需要信息的输入
+    - 
 - to do list
   - 检测 学习 与 玩游戏
     - 肩部、髋部、膝盖 夹角； 手部 位置
