@@ -1,11 +1,9 @@
-name: Auto Release on Push
+name: Auto Release on Keyword in Commit
 
 on:
   push:
     branches:
       - main
-    tags:
-      - 'v*.*.*'
 
 permissions:
   contents: write
@@ -18,23 +16,35 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      - name: Check for Release Keyword in Commit Message
+        id: check_commit
+        run: |
+          if echo "${{ github.event.head_commit.message }}" | grep -q "[release]"; then
+            echo "should_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_release=false" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Create ZIP Archive
+        if: steps.check_commit.outputs.should_release == 'true' # Only run if keyword is found
         run: |
           zip -r release.zip ./
 
       - name: Create Release
         id: create_release
+        if: steps.check_commit.outputs.should_release == 'true' # Only run if keyword is found
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: 'v${{ github.run_number }}'
           release_name: 'Release v${{ github.run_number }}'
-          body: 'Automated release generated after push.'
+          body: 'Automated release triggered by [release] keyword in commit message.'
           draft: false
           prerelease: false
 
       - name: Upload Release Asset
+        if: steps.check_commit.outputs.should_release == 'true' # Only run if keyword is found
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
