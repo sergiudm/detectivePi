@@ -6,7 +6,7 @@ Thread-Everything: 一个简单易用的跨平台多端通信工具
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
-[Thread-Everything](https://sergiudm.github.io/Thread-Everything/) 提供了易用的 Python API 集成*不同*主机上的任何线程，支持Windows, Linux, 可在X86, ARM主机上运行。
+[Thread-Everything](https://sergiudm.github.io/Thread-Everything/) 提供了易用的 Python API,同时运行*不同*主机上的任何线程，支持Windows, Linux, 可在X86, ARM主机上运行。
 
 通过Thread-Everything，你可以轻松地把你的功能部署到不同的主机上，实现多机通信。Thread-Everything提供了一套插件机制，你可以根据自己的需求[编写插件](https://sergiudm.github.io/Thread-Everything/plugins-tutorial/)，实现不同的功能，
 例如：
