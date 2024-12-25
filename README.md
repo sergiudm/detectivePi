@@ -205,10 +205,10 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
   - 运动时，用户可以通过手势对音乐流进行操作，如：切歌、播放与暂停等。
   
 <div style="display: flex; justify-content: space-around;">
-    <img src="assets/images/fitness.gif" alt="Animation 1" width="250">
-    <img src="assets/images/fitness2.gif" alt="Animation 2" width="250">
-    <img src="assets/images/f3.gif" alt="Animation 3" width="180">
-    <img src="assets/images/email0.jpg" alt="Animation 3" width="185">
+    <img src="assets/images/fitness.gif" alt="Animation 1" width="200">
+    <img src="assets/images/fitness2.gif" alt="Animation 2" width="200">
+    <img src="assets/images/f3.gif" alt="Animation 3" width="150">
+    <img src="assets/images/email0.jpg" alt="Animation 3" width="155">
 </div>
 
 - 反卷中心APP
