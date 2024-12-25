@@ -198,11 +198,11 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
         <img src="assets/images/sittingdemo.gif" alt="Animation 1" width="400">
     </div>
 
- - 智能健身房：步频检测、BGM控制
-    - 通过引体向上的动作控制健身房BGM以及光效等炫库操作。
-    - 检测到人跑步或者椭圆仪运动会计算步频（基于视觉，比手表更准确）。
-    - 运动结束后，会自动发送运动报告邮件，包含运动快照、最高步频等信息。
-    - 运动时，用户可以通过手势对音乐流进行操作，如：切歌、播放与暂停等。
+- 智能健身房：步频检测、BGM控制
+  - 通过引体向上的动作控制健身房BGM以及光效等炫库操作。
+  - 检测到人跑步或者椭圆仪运动会计算步频（基于视觉，比手表更准确）。
+  - 运动结束后，会自动发送运动报告邮件，包含运动快照、最高步频等信息。
+  - 运动时，用户可以通过手势对音乐流进行操作，如：切歌、播放与暂停等。
   
 <div style="display: flex; justify-content: space-around;">
     <img src="assets/images/fitness.gif" alt="Animation 1" width="300">
@@ -210,6 +210,11 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
     <img src="assets/images/f3.gif" alt="Animation 3" width="200">
 </div>
 
+- 反卷中心APP
+ - 检测寝室夜晚内卷的室友，自动发送邮件提醒。让你的室友不再内卷。
+<div style="text-align: center;">
+    <img src="assets/images/f195e0766591f9ed445fd77e4a8f1046.jpg" alt="email",width="150">
+</div>
 ## 后续工作
 
 - 核心模块
