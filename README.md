@@ -213,8 +213,9 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
 - 反卷中心APP
  - 检测寝室夜晚内卷的室友，自动发送邮件提醒。让你的室友不再内卷。
 <div style="text-align: center;">
-    <img src="assets/images/f195e0766591f9ed445fd77e4a8f1046.jpg" alt="email",width="150">
+    <img src="assets/images/f195e0766591f9ed445fd77e4a8f1046.jpg" alt="email" width="150">
 </div>
+
 ## 后续工作
 
 - 核心模块
