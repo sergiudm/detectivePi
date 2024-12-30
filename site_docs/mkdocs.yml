@@ -29,6 +29,8 @@ theme:
       bug: fontawesome/solid/robot
       example: fontawesome/solid/flask
       quote: fontawesome/solid/quote-left
+    previous: fontawesome/solid/angle-left
+    next: fontawesome/solid/angle-right
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
@@ -52,6 +54,11 @@ theme:
   features:
     - content.code.copy
     - content.code.select
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.path
+    - toc.integrate 
+  custom_dir: overrides
 plugins:
   - glightbox
   - search
