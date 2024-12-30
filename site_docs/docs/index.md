@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 Thread-Everything：An easy-to-use interface to run threads from different machines
 ==================================================
 [![site deployment](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)

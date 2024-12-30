@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 How to write your own plugins
 =============================
 Thread-Everything is a highly extensible project that allows you to define your own plugins in the `modules` directory. We have implemented some plugins, they lie in:

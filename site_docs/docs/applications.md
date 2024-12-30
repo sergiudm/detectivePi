@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Example Applications
 Thread-Everything's versatility allows it to be used in a wide range of applications. Here are a few examples built using the existing plugins:
 
