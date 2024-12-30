@@ -1,4 +1,3 @@
-import mediapipe as mp
 import math
 import time
 
@@ -104,14 +103,14 @@ def is_running(landmarks, mpPose, walking_pose_angle_a, walking_pose_angle_b ):
         #print("angle > 5*math.pi / 18")
         walking_pose_angle_a = True
         return walking_pose_angle_a, walking_pose_angle_b
-    
+
     if angle < 3*math.pi / 18:
         #print("angle < 3*math.pi / 18")
         walking_pose_angle_b = True
         return walking_pose_angle_a, walking_pose_angle_b
     return walking_pose_angle_a, walking_pose_angle_b
-    
-    
+
+
 def detect_all_finger_state(all_points):
     finger_first_angle_bend_threshold = math.pi * 0.25  # 大拇指弯曲阈值
     finger_other_angle_bend_threshold = math.pi * 0.5  # 其他手指弯曲阈值

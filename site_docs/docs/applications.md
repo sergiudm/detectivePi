@@ -1,15 +1,35 @@
-# 应用场景举例
-Thread-Everything具有高度的可扩展性，可以应用于多种场景。基于现有的插件，我们实现了以下应用场景：
+# Example Applications
+Thread-Everything's versatility allows it to be used in a wide range of applications. Here are a few examples built using the existing plugins:
 
-# 冥想助手
-- 应用场景的假设：用户希望在冥想的时候不被外界干扰，如电话、微信等。现阶段的计时器（番茄钟）需要使用手机或者闹钟进行接触式的时间设定，并无法观测用户的姿势是否正确。使用Thread-Everything 实现的冥想助手可以进行无接触式的时间设定与姿势校正提示。
-- 用户使用手势设定冥想时间，并进行冥想。
-- 冥想过程中，树莓派会使用摄像头监控人体姿势，如发现姿势不正确，就会发送提示邮件，提醒用户校正姿势。
+## Visual Meditation Assistant:
 
-# 智能健身房：步频检测与音乐控制
-- 应用场景的假设：用户在室内健身时，有检测步频的需求。在健身领域中，智能手表常常作为步频检测的工具，但是智能手表有着相当大的局限性，如智能手表的数据采样为随机选取若干周期内的震荡信息（周期性采样），并通过函数映射，获取步频信息。周期性采样方式对与有着长期跑步经验的用户有有效，对于锻炼经验少、身体素质不佳的用户效果不佳。原因是后者的数据周期性远低于前者。使用Thread-Everything 实现的室内健身步频检测可以通过检测图像来记录步数，计算步频，避免了上述问题，实现了更好的效果。基于图像信息，用户还可以通过手势，改变音响播放的音乐，不必在健身时随身携带手机。
-- 检测到人体运动后会计算步频
-- 运动结束后，会发送运动报告邮件，包含运动快照、最高步频等信息。
-- 运动时，用户可以通过手势对音乐流进行操作，如：切歌、播放与暂停等。
+### Problem: Meditators want a distraction-free environment and a way to track their posture without using their phones or alarms.
+
+### Solution: Thread-Everything's vision engine powers a contactless meditation timer with posture correction.
+
+### How it works:
+
+Users set the meditation duration using hand gestures.
+
+During meditation, a Raspberry Pi or Windows machine monitors posture via the camera.
+
+Configurable alerts (e.g., lights) signal poor posture.
+
+A summary email with posture snapshots is sent upon completion.
 
 
+## Smart Gym - Pace Detection and BGM Control:
+
+### Features:
+
+- Control gym lighting and music using pull-up movements.
+
+- Accurately measure running or elliptical pace using computer vision (more precise than wearables).
+
+- Receive detailed workout reports via email, including snapshots and peak pace.
+
+- Control music playback (next song, play/pause) using hand gestures.
+
+## Anti-Distraction App:
+
+Detects late-night studying (or other distractions) and sends a reminder email.

@@ -10,7 +10,7 @@ class Config:
     def modify_path(self, path):
         if os.name == "nt":
             print("running on Windows")
-            json_file_path = json_file_path.replace("/", "\\")
+            json_file_path = path.replace("/", "\\")
             path = os.path.abspath(json_file_path)
 
         return path

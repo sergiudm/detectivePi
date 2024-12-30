@@ -8,7 +8,6 @@ import threading
 import datetime
 
 import os
-import time
 from ..communication import send_email
 
 

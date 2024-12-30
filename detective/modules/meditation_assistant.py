@@ -8,7 +8,6 @@ import threading
 import datetime
 
 import os
-import time
 from ..communication import send_email
 
 # import smbus
@@ -242,7 +241,7 @@ def meditation_helper(
     use_vis,
     pack_trans,
     setting_time_queue,
-):  
+):
 
     time.sleep(1)
     setting_time_queue2time = {
