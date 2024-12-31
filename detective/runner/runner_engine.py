@@ -7,19 +7,6 @@ from detective.communication.server import do_server
 from detective.runner import music_engine
 import threading
 
-
-def add_path():
-    path_to_add = os.path.join(os.environ["HOME"], os.environ["USER"], "detectivePy")
-    # 将路径添加到sys.path
-    sys.path.append(path_to_add)
-
-
-if platform.system() == "Windows":
-    sys.path.append("d:/A_Data_of_2024_Full/MicroPC/project/detectivePy")
-    print("Current sys.path:", sys.path)
-elif platform.system() == "Linux":
-    add_path()
-
 config = Config()
 from .. import (
     working_detect,

@@ -293,3 +293,6 @@ def working_detect(
     finally:
         cap.release()
         cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    working_detect()
