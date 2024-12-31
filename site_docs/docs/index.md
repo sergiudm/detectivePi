@@ -12,6 +12,8 @@ Thread-Everything：An easy-to-use interface to run threads from different machi
 
 [Thread-Everything](https://github.com/sergiudm/Thread-Everything) is a powerful and user-friendly Python framework that simplifies multi-threaded communication and control across different devices. It supports Windows and Linux, works seamlessly on x86 and ARM architectures, and enables you to effortlessly deploy and coordinate tasks across multiple machines.
 
+![Thread-Everything](images/logo.webp)
+
 Thread-Everything empowers you to:
 
 - Easily distribute your functionalities to separate devices for enhanced performance and flexibility.
@@ -125,7 +127,7 @@ Built upon this framework are several pre-built plugins like:
 
 Furthermore, the communication module enables seamless peer-to-peer (P2P) communication between devices.
 
-## Contribution
+## Contributing
 This project is open to contributions. You can contribute in the following ways:
 
 - Add more plugins
@@ -149,8 +151,14 @@ This project is open to contributions. You can contribute in the following ways:
   - Expand the GPIO controller to support advanced features like PWM and I2C.
 
 ## Acknowledgement
+This project is built on the following libraries:
+
 - [mediapipe](https://github.com/google-ai-edge/mediapipe)
 
-- [cv2](https://docs.opencv.org/4.x/index.html)
+- [opencv](https://docs.opencv.org/4.x/index.html)
 
 - [pygame](https://www.pygame.org/docs/)
+
+- [RPi.GPIO](https://sourceforge.net/projects/raspberry-gpio-python/)
+
+Thanks for their great work!

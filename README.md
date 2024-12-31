@@ -1,14 +1,14 @@
 Thread-Everything: 一个简单易用的跨平台多端通信工具
 ==================================================
 [![Deploy MkDocs site to GitHub Pages (using mkdocs gh-deploy)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflows/mkdocs.yml)
-[![CI Tests](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
+[![CI](https://github.com/sergiudm/detectivePi/actions/workflows/test.yml/badge.svg)](https://github.com/sergiudm/detectivePi/actions/workflowstest.yml)
 [![PyPI version](https://badge.fury.io/py/detective-pi.svg)](https://pypi.org/project/Thread-Everything/)
 ![GitHub license](https://img.shields.io/github/license/sergiudm/detectivePi)
 ## 介绍
 
 [Thread-Everything](https://sergiudm.github.io/Thread-Everything/) 提供了易用的 Python API,同时运行*不同*主机上的任何线程，支持Windows, Linux, 可在X86, ARM主机上运行。
 
-![Thread-Everything](assets/images/logo.webp)
+![Thread-Everything](logo.webp)
 
 通过Thread-Everything，你可以轻松地把你的功能部署到不同的主机上，实现多机通信。Thread-Everything提供了一套插件机制，你可以根据自己的需求[编写插件](https://sergiudm.github.io/Thread-Everything/plugins-tutorial/)，实现不同的功能，
 例如：
@@ -234,12 +234,14 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
 - 添加更多[插件](https://sergiudm.github.io/Thread-Everything/plugins-tutorial/)
 - 提交issue
 
-## Acknowledgement
+## 致谢
 - [mediapipe](https://github.com/google-ai-edge/mediapipe)
 
-- [cv2](https://docs.opencv.org/4.x/index.html)
+- [opencv](https://docs.opencv.org/4.x/index.html)
 
 - [pygame](https://www.pygame.org/docs/)
+
+- [RPi.GPIO](https://sourceforge.net/projects/raspberry-gpio-python/)
 
 
 
