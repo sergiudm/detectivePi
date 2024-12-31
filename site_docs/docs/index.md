@@ -12,7 +12,6 @@ Thread-Everything：An easy-to-use interface to run threads from different machi
 
 [Thread-Everything](https://github.com/sergiudm/Thread-Everything) is a powerful and user-friendly Python framework that simplifies multi-threaded communication and control across different devices. It supports Windows and Linux, works seamlessly on x86 and ARM architectures, and enables you to effortlessly deploy and coordinate tasks across multiple machines.
 
-![Thread-Everything](images/logo.webp)
 
 Thread-Everything empowers you to:
 
