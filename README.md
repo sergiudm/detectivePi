@@ -12,12 +12,12 @@ Thread-Everything: 一个简单易用的跨平台多端通信工具
 
 通过Thread-Everything，你可以轻松地把你的功能部署到不同的主机上，实现多机通信。Thread-Everything提供了一套插件机制，你可以根据自己的需求[编写插件](https://sergiudm.github.io/Thread-Everything/plugins-tutorial/)，实现不同的功能，
 例如：
-- 使用单个 Windows 客户端控制远程机器人。
-- 基于手势识别的在线动作游戏。
-- 智能KTV（手势切歌、氛围灯等）。
-- 通用GPIO调度器，零代码配置GPIO电平，秒杀大学里各种Lab作业。
+- 🤖 使用单个 Windows 客户端控制远程机器人。
+- 🎮 基于手势识别的在线动作游戏。
+- 🎤 智能KTV（手势切歌、氛围灯等）。
+- ⚡ 通用GPIO调度器，零代码配置GPIO电平，秒杀大学里各种Lab作业。
 
-## 架构
+## 🏗️ 架构
 ```mermaid
 graph TD
     subgraph "Resource Manager"
@@ -67,7 +67,7 @@ graph TD
 | OS     | Ubuntu22.04, Raspberry Pi OS, Window11, Debian 12|
 | Python | 3.10                         |
 
-## 安装
+## 🚀 安装
 ## pip安装
 ```bash
 pip install Thread-Everything
@@ -91,7 +91,7 @@ conda activate <your_env_name>
 pip install -r requirements.txt
 ```
 
-## 使用说明
+## 🛠️ 使用说明
 开始前，你需要配置在项目根目录创建一个`config.json`文件，
 以下是一个示例，完整的配置文件请参考`config_template.json`。
 ```json
@@ -168,7 +168,7 @@ Windows:
 ./win_run.bat
 ```
 
-## 功能
+## 🌟 功能
 根据你的需求，你可以在`modules`目录下定义自己的插件，我们已经实现了一些插件，包括：
 - 手势检测
     - 开启手势线程之后，计算机使用搭载的摄像头捕捉图像信息，并分析画面中的手势，如“OK”、“赞”等。
@@ -230,7 +230,7 @@ Thread-Everything具有高度的可扩展性，可以应用于多种场景。基
   - GPIO控制器
     - 完善GPIO控制器，支持更丰富的GPIO操作，如PWM、I2C等。
 
-## 如何贡献
+## 🤝 如何贡献
 - 添加更多[插件](https://sergiudm.github.io/Thread-Everything/plugins-tutorial/)
 - 提交issue
 
